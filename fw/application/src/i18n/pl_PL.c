@@ -26,6 +26,7 @@ const char * const lang_pl_PL[_L_COUNT] = {
     [_L_APP_SET_DISPLAY_ORIENTATION] = "Orientacja ekranu",
     [_L_APP_SET_LANDSCAPE] = "Pozioma",
     [_L_APP_SET_LANDSCAPE_FLIPPED] = "Pozioma (180deg)",
+    [_L_APP_SET_CONTROLS_SWAP_LEFT_RIGHT] = "Zamień sterowanie lewy/prawy (L/P)",
     [_L_APP_SET_LIPO_BAT] = "Bateria LiPO",
     [_L_APP_SET_SHOW_MEM_USAGE] = "Wskaźnik Pamięci",
     [_L_APP_SET_HIBERNATE] = "Szybkie Wybudzanie",

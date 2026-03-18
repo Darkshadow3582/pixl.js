@@ -26,6 +26,7 @@ const char * const lang_ru_RU[_L_COUNT] = {
     [_L_APP_SET_DISPLAY_ORIENTATION] = "Ориентация экрана",
     [_L_APP_SET_LANDSCAPE] = "Горизонтальная",
     [_L_APP_SET_LANDSCAPE_FLIPPED] = "Горизонтальная (180deg)",
+    [_L_APP_SET_CONTROLS_SWAP_LEFT_RIGHT] = "Поменять управление лево/право (Л/П)",
     [_L_APP_SET_LIPO_BAT] = "Батарея LiPO",
     [_L_APP_SET_SHOW_MEM_USAGE] = "Статус памяти",
     [_L_APP_SET_HIBERNATE] = "Гибернация",

@@ -40,6 +40,7 @@ typedef struct {
     uint8_t chameleon_slot_num; // chameleon available slot count (8-50)
     ble_amiibolink_mode_t amiibolink_mode; // user's preferred AmiiboLink mode (0 = not set, use default)
     uint8_t display_orientation;
+    bool controls_swap_lr;
 } settings_data_t;
 
 int32_t settings_init();

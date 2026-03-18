@@ -37,6 +37,7 @@ const settings_data_t def_settings_data = {.backlight = 0,
                                            .chameleon_slot_num = 8,
                                            .amiibolink_mode = 0, // 0 = not set, use default (manual)
                                            .display_orientation = DISPLAY_ORIENTATION_LANDSCAPE,
+                                           .controls_swap_lr = false,
                                         };
 
 settings_data_t m_settings_data = {0};
@@ -88,6 +89,7 @@ static void validate_settings() {
 
     INT8_VALIDATE(m_settings_data.display_orientation, 0, DISPLAY_ORIENTATION_COUNT - 1,
                   DISPLAY_ORIENTATION_LANDSCAPE);
+    BOOL_VALIDATE(m_settings_data.controls_swap_lr, 0);
 }
 
 int32_t settings_init() {

@@ -26,6 +26,7 @@ const char * const lang_de_DE[_L_COUNT] = {
     [_L_APP_SET_DISPLAY_ORIENTATION] = "Bildschirmausrichtung",
     [_L_APP_SET_LANDSCAPE] = "Querformat",
     [_L_APP_SET_LANDSCAPE_FLIPPED] = "Querformat (180deg)",
+    [_L_APP_SET_CONTROLS_SWAP_LEFT_RIGHT] = "Links/Rechts-Steuerung tauschen (L/R)",
     [_L_APP_SET_LIPO_BAT] = "LiPO Batterie",
     [_L_APP_SET_SHOW_MEM_USAGE] = "Speicheranzeige",
     [_L_APP_SET_HIBERNATE] = "Schnelles Aufwachen",

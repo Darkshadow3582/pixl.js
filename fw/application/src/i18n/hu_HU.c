@@ -26,6 +26,7 @@ const char * const lang_hu_HU[_L_COUNT] = {
     [_L_APP_SET_DISPLAY_ORIENTATION] = "Kijelző tájolása",
     [_L_APP_SET_LANDSCAPE] = "Fekvő",
     [_L_APP_SET_LANDSCAPE_FLIPPED] = "Fekvő (180deg)",
+    [_L_APP_SET_CONTROLS_SWAP_LEFT_RIGHT] = "Bal/Jobb vezérlés csere (B/J)",
     [_L_APP_SET_LIPO_BAT] = "LiPO Akkumulátor",
     [_L_APP_SET_SHOW_MEM_USAGE] = "Használt Memória",
     [_L_APP_SET_HIBERNATE] = "Gyors Ébresztés",

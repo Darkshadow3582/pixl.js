@@ -26,6 +26,7 @@ const char * const lang_zh_TW[_L_COUNT] = {
     [_L_APP_SET_DISPLAY_ORIENTATION] = "顯示方向",
     [_L_APP_SET_LANDSCAPE] = "橫向",
     [_L_APP_SET_LANDSCAPE_FLIPPED] = "橫向（180度）",
+    [_L_APP_SET_CONTROLS_SWAP_LEFT_RIGHT] = "交換左右控制按鍵(左/右)",
     [_L_APP_SET_LIPO_BAT] = "LiPO電池",
     [_L_APP_SET_SHOW_MEM_USAGE] = "記憶體使用率",
     [_L_APP_SET_HIBERNATE] = "快速喚醒",
