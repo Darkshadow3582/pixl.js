@@ -305,6 +305,7 @@ SRC_FILES += \
   $(PROJ_DIR)/app/settings/scene/settings_scene_lcd_backlight.c \
   $(PROJ_DIR)/app/settings/scene/settings_scene_oled_contrast.c \
   $(PROJ_DIR)/app/settings/scene/settings_scene_language.c \
+  $(PROJ_DIR)/app/settings/scene/settings_scene_display_orientation.c \
   $(PROJ_DIR)/app/settings/scene/settings_scene_storage.c \
   $(PROJ_DIR)/app/settings/scene/settings_scene_about.c \
   $(PROJ_DIR)/app/settings/scene/settings_scene_app_management.c \

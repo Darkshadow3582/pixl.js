@@ -32,10 +32,11 @@ const settings_data_t def_settings_data = {.backlight = 0,
                                            .amiidb_data_slot_num = 20,
                                            .qrcode_enabled = true,
                                            .chameleon_default_slot_index = INVALID_SLOT_INDEX,
-                                            .app_enable_bits = 0xFFFF,
-                                            .amiidb_sort_column = 0,
-                                            .chameleon_slot_num = 8,
-                                            .amiibolink_mode = 0, // 0 = not set, use default (manual)
+                                           .app_enable_bits = 0xFFFF,
+                                           .amiidb_sort_column = 0,
+                                           .chameleon_slot_num = 8,
+                                           .amiibolink_mode = 0, // 0 = not set, use default (manual)
+                                           .display_orientation = DISPLAY_ORIENTATION_LANDSCAPE,
                                         };
 
 settings_data_t m_settings_data = {0};
@@ -75,15 +76,18 @@ static void validate_settings() {
     INT8_VALIDATE(m_settings_data.amiidb_data_slot_num, 1, 100, 20);
     INT8_VALIDATE(m_settings_data.chameleon_slot_num, 8, 50, 8);
     INT8_VALIDATE(m_settings_data.chameleon_default_slot_index, 0, m_settings_data.chameleon_slot_num, INVALID_SLOT_INDEX);
-    
+
     // Validate amiibolink_mode: 0 = not set, 1-4 are valid modes
-    if (m_settings_data.amiibolink_mode != 0 && 
+    if (m_settings_data.amiibolink_mode != 0 &&
         m_settings_data.amiibolink_mode != BLE_AMIIBOLINK_MODE_RANDOM &&
         m_settings_data.amiibolink_mode != BLE_AMIIBOLINK_MODE_CYCLE &&
         m_settings_data.amiibolink_mode != BLE_AMIIBOLINK_MODE_NTAG &&
         m_settings_data.amiibolink_mode != BLE_AMIIBOLINK_MODE_RANDOM_AUTO_GEN) {
         m_settings_data.amiibolink_mode = 0; // Reset to "not set" if invalid
     }
+
+    INT8_VALIDATE(m_settings_data.display_orientation, 0, DISPLAY_ORIENTATION_COUNT - 1,
+                  DISPLAY_ORIENTATION_LANDSCAPE);
 }
 
 int32_t settings_init() {

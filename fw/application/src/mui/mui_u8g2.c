@@ -72,6 +72,7 @@
 #include "nrf_gpio.h"
 #include "nrf_log.h"
 #include "settings.h"
+#include "mui_core.h"
 
 #include "u8g2.h"
 #include "u8x8.h"
@@ -198,6 +199,7 @@ void mui_u8g2_init(u8g2_t *p_u8g2) {
 
     settings_data_t *p_settings = settings_get_data();
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
+    mui_u8g2_set_display_orientation(p_settings->display_orientation);
 
     u8g2_SetPowerSave(p_u8g2, 0);
 
@@ -210,6 +212,7 @@ void mui_u8g2_init(u8g2_t *p_u8g2) {
 
     settings_data_t *p_settings = settings_get_data();
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
+    mui_u8g2_set_display_orientation(p_settings->display_orientation);
 
     u8g2_SetPowerSave(p_u8g2, 0);
 
@@ -256,6 +259,19 @@ void mui_u8g2_set_contrast_level(uint8_t value) {
     }
 #endif
     u8g2_SetContrast(&p_mui->u8g2, (value - 1) * (255.0 / 99.0));
+}
+
+void mui_u8g2_set_display_orientation(uint8_t mode) {
+    mui_t *p_mui = mui();
+    switch (mode) {
+    case DISPLAY_ORIENTATION_LANDSCAPE_180:
+        u8g2_SetDisplayRotation(&p_mui->u8g2, U8G2_R2);
+        break;
+    case DISPLAY_ORIENTATION_LANDSCAPE:
+    default:
+        u8g2_SetDisplayRotation(&p_mui->u8g2, U8G2_R0);
+        break;
+    }
 }
 
 const spi_device_t *mui_u8g2_get_spi_device() { return &m_dev; }

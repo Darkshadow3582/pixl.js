@@ -1,6 +1,8 @@
 #include "app_settings.h"
+#include <stdint.h>
 #include "i18n/language.h"
 #include "mini_app_launcher.h"
+#include "mui_icons.h"
 #include "nrf_pwr_mgmt.h"
 #include "settings.h"
 #include "settings_scene.h"
@@ -19,6 +21,7 @@ enum settings_main_menu_t {
     SETTINGS_MAIN_MENU_SHOW_MEM_USAGE,
     SETTINGS_MAIN_MENU_SLEEP_TIMEOUT,
     SETTINGS_MAIN_MENU_ANIM_ENABLED,
+    SETTINGS_MAIN_MENU_DISPLAY_ORIENTATION,
     SETTINGS_MAIN_MENU_GO_SLEEP,
     SETTINGS_MAIN_MENU_DFU,
     SETTINGS_MAIN_MENU_REBOOT,
@@ -29,10 +32,16 @@ enum settings_main_menu_t {
 };
 
 static void settings_scene_main_reload(void *user_data);
+
+static const char *settings_scene_main_get_orientation_mode_text(display_orientation_t mode) {
+    return mode == DISPLAY_ORIENTATION_LANDSCAPE_180 ? _T(APP_SET_LANDSCAPE_FLIPPED) : _T(APP_SET_LANDSCAPE);
+}
+
 static void settings_reset_default(void *user_data) {
     app_settings_t *app = user_data;
     settings_data_t *p_settings = settings_get_data();
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
+    mui_u8g2_set_display_orientation(p_settings->display_orientation);
 #ifdef LCD_SCREEN
     mui_u8g2_set_backlight_level(p_settings->lcd_backlight);
 #endif
@@ -115,6 +124,10 @@ static void settings_scene_main_list_view_on_selected(mui_list_view_event_t even
         settings_scene_main_reload(app);
         break;
 
+    case SETTINGS_MAIN_MENU_DISPLAY_ORIENTATION:
+        mui_scene_dispatcher_next_scene(app->p_scene_dispatcher, SETTINGS_SCENE_DISPLAY_ORIENTATION);
+        break;
+
     case SETTINGS_MAIN_MENU_APP_MANAGEMENT:
         mui_scene_dispatcher_next_scene(app->p_scene_dispatcher, SETTINGS_SCENE_APP_MANAGEMENT);
         break;
@@ -190,6 +203,10 @@ static void settings_scene_main_reload(void *user_data) {
     mui_list_view_add_item_ext(app->p_list_view, 0xe1dc, _T(APP_SET_ANIM),
                                p_settings->anim_enabled ? _T(ON_F) : _T(OFF_F),
                                (void *)SETTINGS_MAIN_MENU_ANIM_ENABLED);
+
+    snprintf(txt, sizeof(txt), "[%s]", settings_scene_main_get_orientation_mode_text(p_settings->display_orientation));
+    mui_list_view_add_item_ext(app->p_list_view, ICON_ARROW_DOWN_UP, _T(APP_SET_DISPLAY_ORIENTATION), txt,
+                               (void *)SETTINGS_MAIN_MENU_DISPLAY_ORIENTATION);
 
     mui_list_view_add_item_ext(app->p_list_view, 0xe08f, _T(APP_SET_LIPO_BAT),
                                p_settings->bat_mode ? _T(ON_F) : _T(OFF_F), (void *)SETTINGS_MAIN_MENU_LI_MODE);
