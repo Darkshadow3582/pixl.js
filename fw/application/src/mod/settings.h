@@ -28,10 +28,8 @@ typedef struct {
     bool qrcode_enabled;
     Language language;
     uint8_t amiidb_data_slot_num;
-    uint8_t chameleon_default_slot_index;
     uint16_t app_enable_bits; // bitmask for app enable status (1: enabled, 0: disabled)
     uint8_t amiidb_sort_column;
-    uint8_t chameleon_slot_num; // chameleon available slot count (8-50)
     ble_amiibolink_mode_t amiibolink_mode; // user's preferred AmiiboLink mode (0 = not set, use default)
 } settings_data_t;
 
