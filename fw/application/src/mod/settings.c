@@ -30,10 +30,8 @@ const settings_data_t def_settings_data = {.backlight = 0,
                                            .anim_enabled = false,
                                            .amiidb_data_slot_num = 20,
                                            .qrcode_enabled = true,
-                                           .chameleon_default_slot_index = INVALID_SLOT_INDEX,
                                             .app_enable_bits = 0xFFFF,
                                             .amiidb_sort_column = 0,
-                                            .chameleon_slot_num = 8,
                                             .amiibolink_mode = 0, // 0 = not set, use default (manual)
                                         };
 
@@ -72,8 +70,6 @@ static void validate_settings() {
     BOOL_VALIDATE(m_settings_data.qrcode_enabled, 0);
     INT8_VALIDATE(m_settings_data.language, 0, LANGUAGE_COUNT - 1, LANGUAGE_EN_US);
     INT8_VALIDATE(m_settings_data.amiidb_data_slot_num, 1, 100, 20);
-    INT8_VALIDATE(m_settings_data.chameleon_slot_num, 8, 50, 8);
-    INT8_VALIDATE(m_settings_data.chameleon_default_slot_index, 0, m_settings_data.chameleon_slot_num, INVALID_SLOT_INDEX);
     
     // Validate amiibolink_mode: 0 = not set, 1-4 are valid modes
     if (m_settings_data.amiibolink_mode != 0 && 
