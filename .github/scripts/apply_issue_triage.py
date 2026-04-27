@@ -194,7 +194,7 @@ def print_action(apply: bool, message: str) -> None:
 
 
 def ensure_labels(repo: str, apply: bool) -> None:
-    existing = {label["name"] for label in gh_get(f"repos/{repo}/labels?per_page=100")}
+    existing = {label["name"] for label in gh_get_paginated(f"repos/{repo}/labels?per_page=100")}
     for name, spec in LABELS.items():
         if name in existing:
             print_action(apply, f"label exists: {name}")
@@ -223,6 +223,7 @@ def apply_issue_action(repo: str, action: IssueAction, apply: bool, include_pend
         message = f"skip #{action.number}: requires merged PR #{action.requires_pr}"
         if include_pending_prs:
             message += " (override enabled)"
+            print_action(apply, message)
         else:
             print_action(apply, message)
             return
