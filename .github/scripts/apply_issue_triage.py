@@ -103,6 +103,7 @@ I am going to close this as answered/documented. If the issue is still reproduci
         number=369,
         labels=("bug", "area: firmware", "release-needed"),
         close=True,
+        requires_pr=436,
         comment="""This should be fixed by #436.
 
 The firmware now recovers an invalid `settings.bin` by resetting it and saving a valid default file again, so settings such as language should persist normally after that recovery path runs.
@@ -165,6 +166,20 @@ def gh_get(endpoint: str) -> Any:
     return run_gh([endpoint])
 
 
+def gh_get_paginated(endpoint: str) -> list[Any]:
+    items: list[Any] = []
+    separator = "&" if "?" in endpoint else "?"
+    page = 1
+    while True:
+        page_items = gh_get(f"{endpoint}{separator}page={page}")
+        if not isinstance(page_items, list):
+            raise RuntimeError(f"Expected a list response from paginated endpoint: {endpoint}")
+        items.extend(page_items)
+        if len(page_items) < 100:
+            return items
+        page += 1
+
+
 def gh_post(endpoint: str, payload: dict[str, Any]) -> Any:
     return run_gh(["-X", "POST", endpoint, "--input", "-"], payload)
 
@@ -199,7 +214,7 @@ def is_pr_merged(repo: str, pr_number: int) -> bool:
 
 
 def managed_comment_exists(repo: str, action: IssueAction) -> bool:
-    comments = gh_get(f"repos/{repo}/issues/{action.number}/comments?per_page=100")
+    comments = gh_get_paginated(f"repos/{repo}/issues/{action.number}/comments?per_page=100")
     return any(action.marker in comment.get("body", "") for comment in comments)
 
 

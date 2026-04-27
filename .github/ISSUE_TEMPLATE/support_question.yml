@@ -1,7 +1,7 @@
 name: Support question
 description: Ask for help with updates, recovery, BLE, hardware, or usage.
 title: "[Support] "
-labels: ["question"]
+labels: ["question", "support"]
 body:
   - type: dropdown
     id: topic
