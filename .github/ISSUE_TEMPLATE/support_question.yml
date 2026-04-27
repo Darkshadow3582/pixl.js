@@ -1,0 +1,60 @@
+name: Support question
+description: Ask for help with updates, recovery, BLE, hardware, or usage.
+title: "[Support] "
+labels: ["question"]
+body:
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - Firmware update / DFU
+        - Wrong LCD/OLED firmware
+        - Blank or garbled screen
+        - BLE File Transfer
+        - Amiibo Database
+        - Amiibo Emulator
+        - AmiiboLink
+        - Card Emulator
+        - Hardware build
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: firmware-version
+    attributes:
+      label: Firmware version
+      placeholder: "Example: 2.13.0, unknown, cannot see the screen"
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Hardware target
+      options:
+        - LCD
+        - OLED
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: hardware-source
+    attributes:
+      label: Hardware/vendor
+      placeholder: "Example: self-built, Taobao kit, AliExpress, Wuzplay, unknown"
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Describe what you are trying to do and where you are stuck.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you already tried?
+      description: Include apps, browsers, firmware files, docs, screenshots, or photos if available.
+    validations:
+      required: false

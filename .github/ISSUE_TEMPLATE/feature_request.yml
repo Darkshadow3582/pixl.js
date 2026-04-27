@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest a new feature or behavior change.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and why is the current behavior not enough?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Firmware
+        - Amiibo Emulator
+        - Amiibo Database
+        - AmiiboLink
+        - Card Emulator
+        - BLE File Transfer
+        - Web page
+        - Documentation
+        - Hardware
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional workarounds or other approaches you have considered.
+    validations:
+      required: false

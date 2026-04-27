@@ -1,0 +1,92 @@
+name: Bug report
+description: Report a reproducible firmware, web, NFC, or hardware issue.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please include enough detail for maintainers
+        to reproduce it on the same firmware and hardware target.
+  - type: input
+    id: firmware-version
+    attributes:
+      label: Firmware version
+      description: Include the version shown in Settings > Version, if available.
+      placeholder: "Example: 2.13.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Hardware target
+      options:
+        - LCD
+        - OLED
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: hardware-source
+    attributes:
+      label: Hardware/vendor
+      description: Where did the device or PCB come from?
+      placeholder: "Example: self-built, Taobao kit, AliExpress, Wuzplay, unknown"
+    validations:
+      required: true
+  - type: dropdown
+    id: affected-area
+    attributes:
+      label: Affected area
+      options:
+        - Firmware update / DFU
+        - Amiibo Emulator
+        - Amiibo Database
+        - AmiiboLink
+        - Card Emulator
+        - BLE File Transfer
+        - Settings
+        - Web page
+        - Hardware / display
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the exact steps needed to trigger the issue.
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots, logs, or photos
+      description: Attach anything that helps identify the issue.
+    validations:
+      required: false
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you tried?
+      description: Mention docs, recovery steps, apps, browsers, or firmware files already tested.
+    validations:
+      required: false

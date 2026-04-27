@@ -1,0 +1,27 @@
+name: Documentation
+description: Request a documentation fix, clarification, or new guide.
+title: "[Docs] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: page
+    attributes:
+      label: Page or topic
+      description: Which page, section, or workflow needs documentation?
+      placeholder: "Example: firmware update recovery, card emulator import/export"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is unclear or missing?
+      description: Describe the missing, outdated, or confusing part.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-change
+    attributes:
+      label: Suggested change
+      description: Optional wording, screenshots, links, or examples that would help.
+    validations:
+      required: false
