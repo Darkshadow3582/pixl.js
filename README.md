@@ -1,4 +1,6 @@
-# Pixl.js 游戏固件分支
+<a id="zh-cn"></a>
+
+# Pixl.js 游戏固件分支 ([中文](#zh-cn) | [English](#en))
 
 这个分支用于希望继续使用旧版内置游戏应用的用户自行构建固件。
 
@@ -75,7 +77,9 @@ make all BOARD=OLED RELEASE=1
 
 ----
 
-# Pixl.js Games Firmware Branch
+<a id="en"></a>
+
+# Pixl.js Games Firmware Branch ([中文](#zh-cn) | [English](#en))
 
 This branch is an unsupported build branch for users who still want the old built-in Games app.
 
