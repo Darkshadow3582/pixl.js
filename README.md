@@ -1,5 +1,9 @@
 # Pixl.js
 
+[中文](#zh-cn) | [English](#en)
+
+<a id="zh-cn"></a>
+
 这是一个基于原版 [Pixl.js](http://www.espruino.com/Pixl.js) 的复刻版本，主要功能是用来模拟 Amiibo。
 
 ## 图片
@@ -68,6 +72,8 @@ Amiibo 是任天堂的注册商标，NTAG21X 为 NXP 的注册商标。
 Amiibo 无限刷需要网上搜索 `key_retail.bin` 文件，然后上传到磁盘根目录后才能使用。
 
 ----
+
+<a id="en"></a>
 
 # Pixl.js
 
