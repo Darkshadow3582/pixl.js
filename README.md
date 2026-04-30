@@ -1,65 +1,74 @@
-# Pixl.js
+# Pixl.js Games Firmware Branch
 
-这是一个基于原版[Pixl.js](http://www.espruino.com/Pixl.js)的复刻版本，主要的功能是用来模拟Amiibo。
+This branch is an unsupported build branch for users who still want the old built-in Games app.
 
-## 图片
+The official firmware does not include built-in games anymore. The games were removed from the main firmware line because of firmware size and maintenance trade-offs, and there is no plan to add them back to regular releases. This branch keeps a buildable games variant for advanced users who are comfortable compiling firmware themselves.
 
-![image](https://github.com/solosky/pixl.js/blob/main/assets/pixljs-3.jpg)
-![image](https://github.com/solosky/pixl.js/blob/main/assets/pixljs-4.jpg)
+## Branch Status
 
-![image](https://github.com/solosky/pixl.js/blob/main/assets/pixljs-5.jpg)
+- Base release: `2.16.0`
+- Target users: advanced users building custom firmware
+- Maintenance: best-effort only, not continuously maintained with every main firmware change
+- Official releases: use the main release packages, not this branch
+- Games included: Tiny Invaders, Tiny Lander, Tiny Tris, Tiny Arkanoid
 
-## 文档
+Future firmware features may make the games build too large to fit without removing something else. If that happens, prefer the official main firmware unless you are comfortable resolving firmware-size trade-offs yourself.
 
-* [中文文档](docs/zh/README.md)
-* [English Documentation](docs/en/README.md)
-* [Italian Documentation](docs/it/README.md)
+## Build With Docker
 
-## Credits
+Install Docker first, then build from a clean checkout:
 
-* [FlipperZero Firmware](https://github.com/flipperdevices/flipperzero-firmware)
-* [mlib](https://github.com/P-p-H-d/mlib)
-* [TLSF](https://github.com/mattconte/tlsf)
-* [cwalk](https://github.com/likle/cwalk)
-* [SPIFFS](https://github.com/pellepl/spiffs)
-* [ChameleonUltra](https://github.com/RfidResearchGroup/ChameleonUltra)
-* [CH32V003-GameConsole](https://github.com/wagiminator/CH32V003-GameConsole)
+```sh
+git clone https://github.com/solosky/pixl.js
+cd pixl.js
+git checkout game
+git submodule update --init --recursive
+```
 
-## Contribution 
+Start the Nordic SDK build container with the repository mounted:
 
-* 特别感谢 @Caleeeeeeeeeeeee 完善的Bootloader。
-* 特别感谢 @白橙 制作的外壳。 
-* 特别感谢 @impeeza 提供的文档翻译 。
+```sh
+docker run -it --rm \
+  -v "$PWD:/builds/pixl.js" \
+  -w /builds/pixl.js \
+  solosky/nrf52-sdk:latest \
+  bash
+```
 
-## 讨论群
+Inside the container, build the firmware variant for your hardware:
 
-国内用户可以加入QQ群 109761876 进行交流。
+```sh
+# LCD hardware
+cd fw
+make all BOARD=LCD RELEASE=1
+```
 
-## Office Channel
+```sh
+# OLED hardware
+cd fw
+make all BOARD=OLED RELEASE=1
+```
 
-Where do you find the community?
-* [Pixl.js community discord server](https://discord.gg/4mqeQwcAB2)
+The generated files are written under `fw/_build/`, including:
 
-## 声明
+- `pixljs.hex`
+- `pixljs_all.hex`
+- `pixjs_ota_v*.zip`
 
-本项目为开源项目，仅为学习研究用途，请勿用于商业用途。 <br />
-Amiibo是任天堂的注册商标，NTAG21X为NXP的注册商标。
+Use the firmware package that matches your hardware variant. Flashing the wrong LCD/OLED firmware can make recovery harder.
 
-内置的Amiibo数据库来源分别如下：
+## Notes
 
-* [amiiloop](https://download.amiloop.app/)
-* [AmiiboAPI](https://www.amiiboapi.com/)
+- The Games app is enabled in both LCD and OLED board configs on this branch.
+- The games were originally ported from [wagiminator/CH32V003-GameConsole](https://github.com/wagiminator/CH32V003-GameConsole).
+- This branch exists for custom builds only; issues in the games branch may not be prioritized with the main firmware.
 
-源代码没有包含任何有任天堂版权的资源（比如相关密钥，Amiibo原始数据等）。
+## Main Documentation
 
-# License
+- [Chinese Documentation](docs/zh/README.md)
+- [English Documentation](docs/en/README.md)
+- [Italian Documentation](docs/it/README.md)
 
-本项目基于GPL 2.0 License发布，使用请遵循License的约定。
+## License
 
-* 如果对项目做了修改，需要把改后的源码发布出来
-* 发布出来的源码必须要使用相同的License发布
-
-
-## 提示 
-
-Amiibo无限刷需要网上搜索key_retail.bin文件然后上传到到磁盘根目录后才能使用。
+This project is released under GPL 2.0. If you modify and publish the firmware, publish your modified source under the same license.
