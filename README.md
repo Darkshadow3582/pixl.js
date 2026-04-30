@@ -1,3 +1,80 @@
+# Pixl.js 游戏固件分支
+
+这个分支用于希望继续使用旧版内置游戏应用的用户自行构建固件。
+
+官方主固件不再包含内置游戏。出于固件空间和维护成本考虑，内置游戏已从主线固件移除，并且没有计划在常规 release 中重新加入。本分支仅保留一个可构建的游戏版本，适合熟悉自定义固件构建的高级用户。
+
+## 分支状态
+
+- 基准版本：`2.16.0`
+- 目标用户：自行构建自定义固件的高级用户
+- 维护状态：尽力维护，不保证持续跟随主线固件
+- 官方发布：普通用户应使用主线 release 包，而不是本分支
+- 包含游戏：Tiny Invaders、Tiny Lander、Tiny Tris、Tiny Arkanoid
+
+未来主线固件新增功能可能导致游戏版本超出固件空间限制。如果发生这种情况，建议优先使用官方主固件，除非你愿意自行处理固件空间取舍。
+
+## 使用 Docker 构建
+
+请先安装 Docker，然后从干净的仓库开始：
+
+```sh
+git clone https://github.com/solosky/pixl.js
+cd pixl.js
+git checkout game
+git submodule update --init --recursive
+```
+
+启动 Nordic SDK 构建容器，并挂载当前仓库：
+
+```sh
+docker run -it --rm \
+  -v "$PWD:/builds/pixl.js" \
+  -w /builds/pixl.js \
+  solosky/nrf52-sdk:latest \
+  bash
+```
+
+在容器内按你的硬件版本构建固件：
+
+```sh
+# LCD 硬件
+cd fw
+make all BOARD=LCD RELEASE=1
+```
+
+```sh
+# OLED 硬件
+cd fw
+make all BOARD=OLED RELEASE=1
+```
+
+生成的文件位于 `fw/_build/`，包括：
+
+- `pixljs.hex`
+- `pixljs_all.hex`
+- `pixjs_ota_v*.zip`
+
+请使用与你硬件版本匹配的固件包。刷入错误的 LCD/OLED 固件可能会增加恢复难度。
+
+## 说明
+
+- 本分支已在 LCD 和 OLED 板级配置中启用 Games 应用。
+- 这些游戏最初移植自 [wagiminator/CH32V003-GameConsole](https://github.com/wagiminator/CH32V003-GameConsole)。
+- 本分支仅用于自定义构建；游戏分支中的问题不一定会按主线固件优先级处理。
+
+## 主文档
+
+- [中文文档](docs/zh/README.md)
+- [English Documentation](docs/en/README.md)
+- [Italian Documentation](docs/it/README.md)
+
+## License
+
+本项目基于 GPL 2.0 License 发布。如果你修改并发布固件，需要以相同许可证发布修改后的源码。
+
+----
+
 # Pixl.js Games Firmware Branch
 
 This branch is an unsupported build branch for users who still want the old built-in Games app.
