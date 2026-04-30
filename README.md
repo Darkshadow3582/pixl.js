@@ -15,6 +15,12 @@
 * [English Documentation](docs/en/README.md)
 * [Italian Documentation](docs/it/README.md)
 
+## Built-in Games / 内置游戏
+
+Built-in games are not part of the main firmware anymore because of firmware size and maintenance trade-offs. Advanced users who want to build an unsupported games firmware can use the [`game`](https://github.com/solosky/pixl.js/tree/game) branch.
+
+由于固件空间和维护成本，主固件不再包含内置游戏。需要自行构建实验性游戏固件的高级用户可以参考 [`game`](https://github.com/solosky/pixl.js/tree/game) 分支。
+
 ## Credits
 
 * [FlipperZero Firmware](https://github.com/flipperdevices/flipperzero-firmware)
@@ -23,7 +29,6 @@
 * [cwalk](https://github.com/likle/cwalk)
 * [SPIFFS](https://github.com/pellepl/spiffs)
 * [ChameleonUltra](https://github.com/RfidResearchGroup/ChameleonUltra)
-* [CH32V003-GameConsole](https://github.com/wagiminator/CH32V003-GameConsole)
 
 ## Contribution 
 

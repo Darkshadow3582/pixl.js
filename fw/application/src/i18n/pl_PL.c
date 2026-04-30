@@ -188,9 +188,4 @@ const char * const lang_pl_PL[_L_COUNT] = {
     [_L_APP_CHAMELEON_CARD_ADV_ID_EDIT_INVALID_INPUT] = "Nieprawidłowe dane wejściowe!",
     [_L_APP_CHAMELEON_CARD_TYPE_FACTORY_DATA_CONFRIM] = "Zmieniono typ karty.\nUstawić domyślne dane?",
     [_L_APP_CHAMELEON_CARD_DEFAULT_CARD] = "Domyślna Karta",
-    [_L_APP_GAME] = "Gry",
-    [_L_APP_GAME_TINY_ARKANOID] = "",
-    [_L_APP_GAME_TINY_INVADERS] = "",
-    [_L_APP_GAME_TINY_LANDER] = "",
-    [_L_APP_GAME_TINY_TRIS] = "",
 };

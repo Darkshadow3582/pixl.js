@@ -188,9 +188,4 @@ const char * const lang_ru_RU[_L_COUNT] = {
     [_L_APP_CHAMELEON_CARD_ADV_ID_EDIT_INVALID_INPUT] = "Недопустимый ввод",
     [_L_APP_CHAMELEON_CARD_TYPE_FACTORY_DATA_CONFRIM] = "Тип карты изменён.\nСбросить данные карты?",
     [_L_APP_CHAMELEON_CARD_DEFAULT_CARD] = "По умолчанию",
-    [_L_APP_GAME] = "Игры",
-    [_L_APP_GAME_TINY_ARKANOID] = "Арканоид",
-    [_L_APP_GAME_TINY_INVADERS] = "Космические захватчики",
-    [_L_APP_GAME_TINY_LANDER] = "Посадка на Луну",
-    [_L_APP_GAME_TINY_TRIS] = "Тетрис",
 };

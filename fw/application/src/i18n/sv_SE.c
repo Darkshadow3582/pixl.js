@@ -188,9 +188,4 @@ const char * const lang_sv_SE[_L_COUNT] = {
     [_L_APP_CHAMELEON_CARD_ADV_ID_EDIT_INVALID_INPUT] = "Ogiltig inmatning!",
     [_L_APP_CHAMELEON_CARD_TYPE_FACTORY_DATA_CONFRIM] = "Korttypen har ändrats. \nfabriksåterställ kortdata?",
     [_L_APP_CHAMELEON_CARD_DEFAULT_CARD] = "Standardkort",
-    [_L_APP_GAME] = "Spel",
-    [_L_APP_GAME_TINY_ARKANOID] = "",
-    [_L_APP_GAME_TINY_INVADERS] = "",
-    [_L_APP_GAME_TINY_LANDER] = "",
-    [_L_APP_GAME_TINY_TRIS] = "",
 };
