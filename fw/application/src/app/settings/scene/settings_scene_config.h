@@ -6,6 +6,7 @@ ADD_SCENE(settings, lcd_backlight, LCD_BACKLIGHT)
 #endif
 ADD_SCENE(settings, oled_contrast, OLED_CONTRAST)
 ADD_SCENE(settings, language, LANGUAGE)
+ADD_SCENE(settings, display_orientation, DISPLAY_ORIENTATION)
 ADD_SCENE(settings, storage, STORAGE)
 ADD_SCENE(settings, about, ABOUT)
 ADD_SCENE(settings, app_management, APP_MANAGEMENT)

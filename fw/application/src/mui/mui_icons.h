@@ -8,6 +8,11 @@
 #define ICON_SETTINGS       0xe02b
 #define ICON_VIEW           0xe1e1
 
+#define ICON_ARROW_DOWN_UP  0xe10f
+#define ICON_ARROW_UP       0xe13b
+#define ICON_ARROW_DOWN     0xe13c
+#define ICON_ARROW_RIGHT_LEFT 0xe11f
+
 #define ICON_FOLDER         0xe1d6
 #define ICON_FILE           0xe1ed
 #define ICON_BACK           0xe069
