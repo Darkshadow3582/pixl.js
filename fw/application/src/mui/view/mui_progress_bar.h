@@ -10,6 +10,7 @@ typedef enum {
     MUI_PROGRESS_BAR_EVENT_INCREMENT,
     MUI_PROGRESS_BAR_EVENT_DECREMENT,
     MUI_PROGRESS_BAR_EVENT_CONFIRMED,
+    MUI_PROGRESS_BAR_EVENT_CANCELLED,
 } mui_progress_bar_event_t;
 
 typedef void (*mui_progress_bar_event_cb_t)(mui_progress_bar_event_t event, mui_progress_bar_t *p_progress_bar);

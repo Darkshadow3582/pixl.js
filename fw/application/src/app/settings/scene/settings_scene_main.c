@@ -13,6 +13,8 @@ enum settings_main_menu_t {
     SETTINGS_MAIN_MENU_BACK_LIGHT,
     SETTINGS_MAIN_MENU_OLED_CONTRAST,
     SETTINGS_MAIN_MENU_DISPLAY_FLIP,
+    SETTINGS_MAIN_MENU_DETECT_RETURN_KEY,
+    SETTINGS_MAIN_MENU_RETURN_KEY_ENABLE,
     SETTINGS_MAIN_MENU_LI_MODE,
     SETTINGS_MAIN_MENU_ENABLE_HIBERNATE,
     SETTINGS_MAIN_MENU_STORAGE,
@@ -31,6 +33,35 @@ enum settings_main_menu_t {
 
 static void settings_scene_main_reload(void *user_data);
 static const char *SETTINGS_LABEL_DISPLAY_FLIP = "Flip Screen";
+static const char *SETTINGS_LABEL_DETECT_RETURN_KEY = "Detect Return Button";
+static const char *SETTINGS_LABEL_RETURN_KEY = "Return Button";
+
+static void settings_scene_main_get_return_key_status(char *status, size_t status_size) {
+    settings_data_t *p_settings = settings_get_data();
+    if (p_settings->return_key_pin == SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
+        snprintf(status, status_size, "Not configured");
+    } else {
+        snprintf(status, status_size, "GPIO %u", p_settings->return_key_pin);
+    }
+}
+
+static void settings_scene_main_return_key_detect_cb(bool detected, uint8_t pin, void *user_data) {
+    app_settings_t *app = user_data;
+    settings_data_t *p_settings = settings_get_data();
+    char toast[48];
+
+    if (detected) {
+        p_settings->return_key_pin = pin;
+        p_settings->return_key_enabled = true;
+        snprintf(toast, sizeof(toast), "Return button set: GPIO %u", pin);
+    } else {
+        p_settings->return_key_enabled = false;
+        snprintf(toast, sizeof(toast), "Return button not detected");
+    }
+
+    mui_toast_view_show(app->p_toast_view, toast);
+    settings_scene_main_reload(app);
+}
 
 static void settings_reset_default(void *user_data) {
     app_settings_t *app = user_data;
@@ -59,7 +90,7 @@ static void settings_scene_main_msg_box_reset_settings_cb(mui_msg_box_event_t ev
 static void settings_scene_main_list_view_on_selected(mui_list_view_event_t event, mui_list_view_t *p_list_view,
                                                       mui_list_item_t *p_item) {
     app_settings_t *app = p_list_view->user_data;
-    char txt[32];
+    (void)event;
 
     settings_data_t *p_settings = settings_get_data();
 
@@ -79,6 +110,25 @@ static void settings_scene_main_list_view_on_selected(mui_list_view_event_t even
         p_settings->display_flip = !p_settings->display_flip;
         mui_u8g2_set_display_flip(p_settings->display_flip);
         settings_scene_main_reload(app);
+        break;
+
+    case SETTINGS_MAIN_MENU_DETECT_RETURN_KEY:
+        p_settings->return_key_enabled = false;
+        if (mui_input_return_key_detect_is_active()) {
+            mui_toast_view_show(app->p_toast_view, "Detection already running");
+        } else if (mui_input_return_key_detect_start(settings_scene_main_return_key_detect_cb, app)) {
+            mui_toast_view_show(app->p_toast_view, "Press physical Return button");
+        } else {
+            mui_toast_view_show(app->p_toast_view, "Cannot start return detect");
+        }
+        settings_scene_main_reload(app);
+        break;
+
+    case SETTINGS_MAIN_MENU_RETURN_KEY_ENABLE:
+        if (p_settings->return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
+            p_settings->return_key_enabled = !p_settings->return_key_enabled;
+            settings_scene_main_reload(app);
+        }
         break;
 
     case SETTINGS_MAIN_MENU_VERSION:
@@ -190,6 +240,14 @@ static void settings_scene_main_reload(void *user_data) {
     mui_list_view_add_item_ext(app->p_list_view, 0xe16d, SETTINGS_LABEL_DISPLAY_FLIP,
                                p_settings->display_flip ? _T(ON_F) : _T(OFF_F),
                                (void *)SETTINGS_MAIN_MENU_DISPLAY_FLIP);
+    settings_scene_main_get_return_key_status(txt, sizeof(txt));
+    mui_list_view_add_item_ext(app->p_list_view, 0xe01b, SETTINGS_LABEL_DETECT_RETURN_KEY, txt,
+                               (void *)SETTINGS_MAIN_MENU_DETECT_RETURN_KEY);
+    if (p_settings->return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
+        mui_list_view_add_item_ext(app->p_list_view, 0xe01b, SETTINGS_LABEL_RETURN_KEY,
+                                   p_settings->return_key_enabled ? _T(ON_F) : _T(OFF_F),
+                                   (void *)SETTINGS_MAIN_MENU_RETURN_KEY_ENABLE);
+    }
 
 #ifdef LCD_SCREEN
     if (p_settings->lcd_backlight == 0) {
@@ -249,6 +307,7 @@ void settings_scene_main_on_enter(void *user_data) {
 
 void settings_scene_main_on_exit(void *user_data) {
     app_settings_t *app = user_data;
+    mui_input_return_key_detect_cancel();
     mui_list_view_clear_items(app->p_list_view);
     mui_list_view_set_selected_cb(app->p_list_view, NULL);
 }

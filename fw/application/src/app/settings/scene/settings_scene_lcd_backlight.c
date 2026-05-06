@@ -12,16 +12,22 @@
 
 #ifdef LCD_SCREEN
 
+static uint8_t g_lcd_backlight_original = 0;
+
 static void settings_scene_lcd_backlight_event_cb(mui_progress_bar_event_t event, mui_progress_bar_t *p_progress_bar) {
     app_settings_t *app = p_progress_bar->user_data;
     settings_data_t *p_settings = settings_get_data();
     if (event == MUI_PROGRESS_BAR_EVENT_DECREMENT || event == MUI_PROGRESS_BAR_EVENT_INCREMENT) {
         uint8_t value = mui_progress_bar_get_current_value(p_progress_bar);
         mui_u8g2_set_backlight_level(value);
-    } else {
+    } else if (event == MUI_PROGRESS_BAR_EVENT_CONFIRMED) {
         uint8_t value = mui_progress_bar_get_current_value(p_progress_bar);
         mui_u8g2_set_backlight_level(value);
         p_settings->lcd_backlight = value;
+        mui_scene_dispatcher_previous_scene(app->p_scene_dispatcher);
+    } else if (event == MUI_PROGRESS_BAR_EVENT_CANCELLED) {
+        mui_u8g2_set_backlight_level(g_lcd_backlight_original);
+        mui_progress_bar_set_current_value(p_progress_bar, g_lcd_backlight_original);
         mui_scene_dispatcher_previous_scene(app->p_scene_dispatcher);
     }
 }
@@ -29,6 +35,7 @@ static void settings_scene_lcd_backlight_event_cb(mui_progress_bar_event_t event
 void settings_scene_lcd_backlight_on_enter(void *user_data) {
     app_settings_t *app = user_data;
     settings_data_t *p_settings = settings_get_data();
+    g_lcd_backlight_original = p_settings->lcd_backlight;
     mui_progress_bar_set_header(app->p_progress_bar, getLangString(_L_APP_SET_LCD_BACKLIGHT_TITLE));
     mui_progress_bar_set_min_value(app->p_progress_bar, 0);
     mui_progress_bar_set_max_value(app->p_progress_bar, 100);

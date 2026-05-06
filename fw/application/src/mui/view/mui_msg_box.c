@@ -84,6 +84,23 @@ static void mui_msg_box_on_input(mui_view_t *p_view, mui_input_event_t *event) {
                 p_mui_msg_box->event_cb(p_mui_msg_box->focus, p_mui_msg_box);
             }
             break;
+        case INPUT_KEY_BACK: {
+            if (p_mui_msg_box->event_cb) {
+                uint8_t has_left = string_size(p_mui_msg_box->btn_left_text) > 0;
+                uint8_t has_center = string_size(p_mui_msg_box->btn_center_text) > 0;
+                uint8_t has_right = string_size(p_mui_msg_box->btn_right_text) > 0;
+                if (has_right) {
+                    p_mui_msg_box->focus = MUI_MSG_BOX_EVENT_SELECT_RIGHT;
+                } else if (has_center) {
+                    p_mui_msg_box->focus = MUI_MSG_BOX_EVENT_SELECT_CENTER;
+                } else if (has_left) {
+                    p_mui_msg_box->focus = MUI_MSG_BOX_EVENT_SELECT_LEFT;
+                } else {
+                    break;
+                }
+                p_mui_msg_box->event_cb((mui_msg_box_event_t)p_mui_msg_box->focus, p_mui_msg_box);
+            }
+        } break;
         }
     }
 }

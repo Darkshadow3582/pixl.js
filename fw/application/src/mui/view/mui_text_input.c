@@ -235,6 +235,11 @@ static void mui_text_input_on_input(mui_view_t *p_view, mui_input_event_t *event
                 string_push_back(p_mui_text_input->input_text, c);
             }
         } break;
+        case INPUT_KEY_BACK:
+            if (event->type == INPUT_TYPE_SHORT && p_mui_text_input->event_cb) {
+                p_mui_text_input->event_cb(MUI_TEXT_INPUT_EVENT_CANCELLED, p_mui_text_input);
+            }
+            break;
         }
     }
 }

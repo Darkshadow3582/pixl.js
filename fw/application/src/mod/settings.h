@@ -8,6 +8,8 @@
 #include "i18n/language.h"
 
 #define INVALID_SLOT_INDEX 0xFF
+#define SETTINGS_RETURN_KEY_PIN_UNCONFIGURED 0xFF
+#define SETTINGS_RETURN_KEY_MAX_PIN 31
 #define AMIIDB_SORT_COLUMN_DEFAULT 0
 #define AMIIDB_SORT_COLUMN_NAME 1
 
@@ -34,6 +36,8 @@ typedef struct {
     uint8_t chameleon_slot_num; // chameleon available slot count (8-50)
     ble_amiibolink_mode_t amiibolink_mode; // user's preferred AmiiboLink mode (0 = not set, use default)
     bool display_flip; // rotate screen by 180 degrees
+    bool return_key_enabled; // enable optional physical return button (if configured)
+    uint8_t return_key_pin; // GPIO pin for optional return button, 0xFF means not configured
 } settings_data_t;
 
 int32_t settings_init();
