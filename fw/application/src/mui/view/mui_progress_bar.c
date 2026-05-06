@@ -57,6 +57,11 @@ static void mui_progress_bar_on_input(mui_view_t *p_view, mui_input_event_t *eve
                 p_pb->event_cb(MUI_PROGRESS_BAR_EVENT_CONFIRMED, p_pb);
             }
             break;
+        case INPUT_KEY_BACK:
+            if (p_pb->event_cb) {
+                p_pb->event_cb(MUI_PROGRESS_BAR_EVENT_CANCELLED, p_pb);
+            }
+            break;
         }
     }
 }

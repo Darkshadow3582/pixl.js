@@ -169,8 +169,13 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event) {
 
         hal_spi_flash_sleep();
 
-        err_code = bsp_wakeup_button_enable(BTN_ID_SLEEP);
-        APP_ERROR_CHECK(err_code);
+        // Allow wake from any standard board button.
+        // Some clone boards have different physical mappings, and a single
+        // wake button can make the device appear "dead" after System OFF.
+        for (uint32_t button_idx = 0; button_idx < BUTTONS_NUMBER; button_idx++) {
+            err_code = bsp_wakeup_button_enable(button_idx);
+            APP_ERROR_CHECK(err_code);
+        }
 
         // Set up NFCT peripheral as the only wakeup source.
         err_code = bsp_nfc_sleep_mode_prepare();

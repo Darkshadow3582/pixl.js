@@ -10,6 +10,7 @@
 #include "mui_u8g2.h"
 #include "i18n/language.h"
 
+static uint8_t g_oled_contrast_original = 0;
 
 static void settings_scene_oled_contrast_event_cb(mui_progress_bar_event_t event, mui_progress_bar_t *p_progress_bar) {
     app_settings_t *app = p_progress_bar->user_data;
@@ -17,10 +18,14 @@ static void settings_scene_oled_contrast_event_cb(mui_progress_bar_event_t event
     if (event == MUI_PROGRESS_BAR_EVENT_DECREMENT || event == MUI_PROGRESS_BAR_EVENT_INCREMENT) {
         uint8_t value = mui_progress_bar_get_current_value(p_progress_bar);
         mui_u8g2_set_contrast_level(value);
-    } else {
+    } else if (event == MUI_PROGRESS_BAR_EVENT_CONFIRMED) {
         uint8_t value = mui_progress_bar_get_current_value(p_progress_bar);
         mui_u8g2_set_contrast_level(value);
         p_settings->oled_contrast = value;
+        mui_scene_dispatcher_previous_scene(app->p_scene_dispatcher);
+    } else if (event == MUI_PROGRESS_BAR_EVENT_CANCELLED) {
+        mui_u8g2_set_contrast_level(g_oled_contrast_original);
+        mui_progress_bar_set_current_value(p_progress_bar, g_oled_contrast_original);
         mui_scene_dispatcher_previous_scene(app->p_scene_dispatcher);
     }
 }
@@ -28,6 +33,7 @@ static void settings_scene_oled_contrast_event_cb(mui_progress_bar_event_t event
 void settings_scene_oled_contrast_on_enter(void *user_data) {
     app_settings_t *app = user_data;
     settings_data_t *p_settings = settings_get_data();
+    g_oled_contrast_original = p_settings->oled_contrast;
     mui_progress_bar_set_header(app->p_progress_bar, getLangString(_L_APP_SET_OLED_CONTRAST_TITLE));
     mui_progress_bar_set_min_value(app->p_progress_bar, 0);
     mui_progress_bar_set_max_value(app->p_progress_bar, 100);

@@ -1,4 +1,5 @@
 #include "mui_list_view.h"
+#include "mui_icons.h"
 #include "nrf_log.h"
 #include "settings.h"
 
@@ -10,6 +11,16 @@
 static bool mui_list_view_anim_enabled() { return settings_get_data()->anim_enabled; }
 
 static uint16_t mui_list_view_get_utf8_width(const char *str) { return u8g2_GetUTF8Width(&(mui()->u8g2), str); }
+
+static int32_t mui_list_view_find_back_item_index(mui_list_view_t *p_view) {
+    for (uint32_t i = 0; i < mui_list_item_array_size(p_view->items); i++) {
+        mui_list_item_t *p_item = mui_list_item_array_get(p_view->items, i);
+        if (p_item->icon == ICON_BACK || p_item->icon == ICON_EXIT) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 static void mui_list_view_start_text_anim(mui_list_view_t *p_view) {
     if (mui_list_view_anim_enabled()) {
@@ -242,6 +253,28 @@ static void mui_list_view_on_input(mui_view_t *p_view, mui_input_event_t *event)
                 } else if (event->type == INPUT_TYPE_LONG) {
                     p_mui_list_view->selected_cb(
                         MUI_LIST_VIEW_EVENT_LONG_SELECTED, p_mui_list_view,
+                        mui_list_item_array_get(p_mui_list_view->items, p_mui_list_view->focus_index));
+                }
+            }
+            break;
+
+        case INPUT_KEY_BACK:
+            if (event->type == INPUT_TYPE_SHORT && p_mui_list_view->selected_cb) {
+                int32_t back_item_index = mui_list_view_find_back_item_index(p_mui_list_view);
+                if (back_item_index >= 0) {
+                    p_mui_list_view->focus_index = back_item_index;
+                    uint16_t focus_offset = p_mui_list_view->focus_index * LIST_ITEM_HEIGHT;
+                    if (focus_offset < p_mui_list_view->scroll_offset) {
+                        p_mui_list_view->scroll_offset = focus_offset;
+                    } else if (focus_offset > p_mui_list_view->scroll_offset + p_mui_list_view->canvas_height) {
+                        uint16_t visible_window = p_mui_list_view->canvas_height > LIST_ITEM_HEIGHT
+                                                      ? p_mui_list_view->canvas_height - LIST_ITEM_HEIGHT
+                                                      : LIST_ITEM_HEIGHT;
+                        p_mui_list_view->scroll_offset = focus_offset - visible_window;
+                    }
+                    mui_list_view_start_text_anim(p_mui_list_view);
+                    p_mui_list_view->selected_cb(
+                        MUI_LIST_VIEW_EVENT_SELECTED, p_mui_list_view,
                         mui_list_item_array_get(p_mui_list_view->items, p_mui_list_view->focus_index));
                 }
             }

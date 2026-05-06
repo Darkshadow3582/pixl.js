@@ -34,9 +34,10 @@ const settings_data_t def_settings_data = {.backlight = 0,
                                            .chameleon_default_slot_index = INVALID_SLOT_INDEX,
                                             .app_enable_bits = 0xFFFF,
                                             .amiidb_sort_column = 0,
-                                            .chameleon_slot_num = 8,
-                                            .amiibolink_mode = 0, // 0 = not set, use default (manual)
-                                        };
+                                           .chameleon_slot_num = 8,
+                                           .amiibolink_mode = 0, // 0 = not set, use default (manual)
+                                           .return_key_enabled = false,
+                                           .return_key_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED};
 
 settings_data_t m_settings_data = {0};
 
@@ -71,6 +72,14 @@ static void validate_settings() {
     INT8_VALIDATE(m_settings_data.oled_contrast, 0, 100, 80);
     BOOL_VALIDATE(m_settings_data.anim_enabled, 0);
     BOOL_VALIDATE(m_settings_data.qrcode_enabled, 0);
+    BOOL_VALIDATE(m_settings_data.return_key_enabled, 0);
+    if (m_settings_data.return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED &&
+        m_settings_data.return_key_pin > SETTINGS_RETURN_KEY_MAX_PIN) {
+        m_settings_data.return_key_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED;
+    }
+    if (m_settings_data.return_key_pin == SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
+        m_settings_data.return_key_enabled = false;
+    }
     INT8_VALIDATE(m_settings_data.language, 0, LANGUAGE_COUNT - 1, LANGUAGE_EN_US);
     INT8_VALIDATE(m_settings_data.amiidb_data_slot_num, 1, 100, 20);
     INT8_VALIDATE(m_settings_data.chameleon_slot_num, 8, 50, 8);

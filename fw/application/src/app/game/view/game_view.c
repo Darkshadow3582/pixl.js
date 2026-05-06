@@ -4,10 +4,15 @@
 
 #include "mui_core.h"
 
-uint8_t key_state[3] = {0};
+uint8_t key_state[INPUT_KEY_MAX] = {0};
 uint8_t key_repeat_cnt = 0;
 
-uint8_t game_view_key_pressed(input_key_t key) { return key_state[key]; }
+uint8_t game_view_key_pressed(input_key_t key) {
+    if (key >= INPUT_KEY_MAX) {
+        return 0;
+    }
+    return key_state[key];
+}
 
 uint8_t game_view_center_key_repeat_cnt(){
     return key_repeat_cnt;
@@ -32,6 +37,11 @@ static void game_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) {
 
 static void game_view_on_input(mui_view_t *p_view, mui_input_event_t *event) {
     game_view_t *p_game_view = p_view->user_data;
+    (void)p_game_view;
+
+    if (event->key >= INPUT_KEY_MAX) {
+        return;
+    }
 
     if (event->type == INPUT_TYPE_PRESS) {
         key_state[event->key] = 1;
