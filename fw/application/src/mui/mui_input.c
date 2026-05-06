@@ -1,5 +1,6 @@
 #include "mui_input.h"
 
+#include "app_scheduler.h"
 #include "app_timer.h"
 #include "mui_core.h"
 #include "mui_event.h"
@@ -35,6 +36,13 @@ typedef struct {
 } mui_input_return_key_ctx_t;
 
 static mui_input_return_key_ctx_t m_return_key_ctx = {.runtime_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED};
+static struct {
+    bool pending;
+    bool detected;
+    uint8_t pin;
+    mui_input_return_key_detect_cb_t cb;
+    void *user_data;
+} m_return_key_detect_complete = {0};
 
 static void mui_input_post_event(mui_input_event_t *p_input_event) {
     uint32_t arg = p_input_event->type;
@@ -42,6 +50,28 @@ static void mui_input_post_event(mui_input_event_t *p_input_event) {
     arg += p_input_event->key;
     mui_event_t mui_event = {.id = MUI_EVENT_ID_INPUT, .arg_int = arg};
     mui_post(mui(), &mui_event);
+}
+
+static void mui_input_return_key_detect_complete_sched(void *p_event_data, uint16_t event_size) {
+    (void)p_event_data;
+    (void)event_size;
+
+    if (!m_return_key_detect_complete.pending) {
+        return;
+    }
+
+    mui_input_return_key_detect_cb_t cb = m_return_key_detect_complete.cb;
+    bool detected = m_return_key_detect_complete.detected;
+    uint8_t pin = m_return_key_detect_complete.pin;
+    void *user_data = m_return_key_detect_complete.user_data;
+
+    m_return_key_detect_complete.pending = false;
+    m_return_key_detect_complete.cb = NULL;
+    m_return_key_detect_complete.user_data = NULL;
+
+    if (cb) {
+        cb(detected, pin, user_data);
+    }
 }
 
 static bool mui_input_return_key_is_reserved_pin(uint8_t pin) {
@@ -133,8 +163,27 @@ static void mui_input_return_key_finish_detection(bool detected, uint8_t pin) {
     m_return_key_ctx.detect_pin_count = 0;
 
     if (cb) {
-        cb(detected, pin, user_data);
+        m_return_key_detect_complete.pending = true;
+        m_return_key_detect_complete.detected = detected;
+        m_return_key_detect_complete.pin = pin;
+        m_return_key_detect_complete.cb = cb;
+        m_return_key_detect_complete.user_data = user_data;
+
+        ret_code_t err_code = app_sched_event_put(NULL, 0, mui_input_return_key_detect_complete_sched);
+        if (err_code != NRF_SUCCESS) {
+            NRF_LOG_WARNING("Failed to schedule return-key detect callback: %d", err_code);
+            m_return_key_detect_complete.pending = false;
+            m_return_key_detect_complete.cb = NULL;
+            m_return_key_detect_complete.user_data = NULL;
+        }
     }
+}
+
+static void mui_input_return_key_abort_detection_start() {
+    m_return_key_ctx.detection_active = false;
+    m_return_key_ctx.detect_cb = NULL;
+    m_return_key_ctx.detect_user_data = NULL;
+    m_return_key_ctx.detect_pin_count = 0;
 }
 
 static bool mui_input_return_key_read_pressed(uint8_t pin) { return nrf_gpio_pin_read(pin) == 0; }
@@ -223,7 +272,7 @@ static void mui_input_return_key_poll_runtime() {
         nrf_gpio_cfg_input(return_key_pin, NRF_GPIO_PIN_PULLUP);
         m_return_key_ctx.runtime_stable_pressed = mui_input_return_key_read_pressed(return_key_pin) ? 1 : 0;
         m_return_key_ctx.runtime_debounce_cnt = 0;
-        m_return_key_ctx.runtime_was_pressed = m_return_key_ctx.runtime_stable_pressed != 0;
+        m_return_key_ctx.runtime_was_pressed = false;
         return;
     }
 
@@ -367,7 +416,7 @@ bool mui_input_return_key_detect_start(mui_input_return_key_detect_cb_t cb, void
     mui_input_return_key_prepare_detection_pins();
 
     if (m_return_key_ctx.detect_pin_count == 0) {
-        mui_input_return_key_finish_detection(false, SETTINGS_RETURN_KEY_PIN_UNCONFIGURED);
+        mui_input_return_key_abort_detection_start();
         return false;
     }
 
@@ -375,7 +424,7 @@ bool mui_input_return_key_detect_start(mui_input_return_key_detect_cb_t cb, void
                                           APP_TIMER_TICKS(RETURN_KEY_DETECT_TIMEOUT_MS), NULL);
     if (err_code != NRF_SUCCESS) {
         NRF_LOG_WARNING("Failed to start return-key detect timeout timer: %d", err_code);
-        mui_input_return_key_finish_detection(false, SETTINGS_RETURN_KEY_PIN_UNCONFIGURED);
+        mui_input_return_key_abort_detection_start();
         return false;
     }
 

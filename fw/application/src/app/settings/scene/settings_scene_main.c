@@ -31,13 +31,11 @@ enum settings_main_menu_t {
 };
 
 static void settings_scene_main_reload(void *user_data);
-static const char *SETTINGS_LABEL_DETECT_RETURN_KEY = "Detect Return Button";
-static const char *SETTINGS_LABEL_RETURN_KEY = "Return Button";
 
 static void settings_scene_main_get_return_key_status(char *status, size_t status_size) {
     settings_data_t *p_settings = settings_get_data();
     if (p_settings->return_key_pin == SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
-        snprintf(status, status_size, "Not configured");
+        snprintf(status, status_size, "%s", _T(APP_SET_RETURN_KEY_NOT_CONFIGURED));
     } else {
         snprintf(status, status_size, "GPIO %u", p_settings->return_key_pin);
     }
@@ -51,10 +49,11 @@ static void settings_scene_main_return_key_detect_cb(bool detected, uint8_t pin,
     if (detected) {
         p_settings->return_key_pin = pin;
         p_settings->return_key_enabled = true;
-        snprintf(toast, sizeof(toast), "Return button set: GPIO %u", pin);
+        snprintf(toast, sizeof(toast), _T(APP_SET_RETURN_KEY_SET), pin);
     } else {
+        p_settings->return_key_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED;
         p_settings->return_key_enabled = false;
-        snprintf(toast, sizeof(toast), "Return button not detected");
+        snprintf(toast, sizeof(toast), "%s", _T(APP_SET_RETURN_KEY_NOT_DETECTED));
     }
 
     mui_toast_view_show(app->p_toast_view, toast);
@@ -103,13 +102,13 @@ static void settings_scene_main_list_view_on_selected(mui_list_view_event_t even
         break;
 
     case SETTINGS_MAIN_MENU_DETECT_RETURN_KEY:
-        p_settings->return_key_enabled = false;
         if (mui_input_return_key_detect_is_active()) {
-            mui_toast_view_show(app->p_toast_view, "Detection already running");
+            mui_toast_view_show(app->p_toast_view, _T(APP_SET_RETURN_KEY_DETECT_RUNNING));
         } else if (mui_input_return_key_detect_start(settings_scene_main_return_key_detect_cb, app)) {
-            mui_toast_view_show(app->p_toast_view, "Press physical Return button");
+            p_settings->return_key_enabled = false;
+            mui_toast_view_show(app->p_toast_view, _T(APP_SET_RETURN_KEY_DETECT_PROMPT));
         } else {
-            mui_toast_view_show(app->p_toast_view, "Cannot start return detect");
+            mui_toast_view_show(app->p_toast_view, _T(APP_SET_RETURN_KEY_DETECT_FAILED));
         }
         settings_scene_main_reload(app);
         break;
@@ -227,10 +226,10 @@ static void settings_scene_main_reload(void *user_data) {
                                (void *)SETTINGS_MAIN_MENU_OLED_CONTRAST);
 
     settings_scene_main_get_return_key_status(txt, sizeof(txt));
-    mui_list_view_add_item_ext(app->p_list_view, 0xe01b, SETTINGS_LABEL_DETECT_RETURN_KEY, txt,
+    mui_list_view_add_item_ext(app->p_list_view, 0xe01b, _T(APP_SET_RETURN_KEY_DETECT), txt,
                                (void *)SETTINGS_MAIN_MENU_DETECT_RETURN_KEY);
     if (p_settings->return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
-        mui_list_view_add_item_ext(app->p_list_view, 0xe01b, SETTINGS_LABEL_RETURN_KEY,
+        mui_list_view_add_item_ext(app->p_list_view, 0xe01b, _T(APP_SET_RETURN_KEY),
                                    p_settings->return_key_enabled ? _T(ON_F) : _T(OFF_F),
                                    (void *)SETTINGS_MAIN_MENU_RETURN_KEY_ENABLE);
     }

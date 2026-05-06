@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "boards.h"
 #include "nrf_error.h"
 #include "nrf_log.h"
 #include "vfs.h"
@@ -50,6 +51,80 @@ settings_data_t m_settings_data = {0};
         (expr) = (default_val);                                                                                        \
     }
 
+static bool settings_is_reserved_gpio_pin(uint8_t pin) {
+#ifdef BUTTON_1
+    if (pin == BUTTON_1) {
+        return true;
+    }
+#endif
+#ifdef BUTTON_2
+    if (pin == BUTTON_2) {
+        return true;
+    }
+#endif
+#ifdef BUTTON_3
+    if (pin == BUTTON_3) {
+        return true;
+    }
+#endif
+#ifdef LED_1
+    if (pin == LED_1) {
+        return true;
+    }
+#endif
+#ifdef LCD_CS_PIN
+    if (pin == LCD_CS_PIN) {
+        return true;
+    }
+#endif
+#ifdef LCD_RESET_PIN
+    if (pin == LCD_RESET_PIN) {
+        return true;
+    }
+#endif
+#ifdef LCD_BL_PIN
+    if (pin == LCD_BL_PIN) {
+        return true;
+    }
+#endif
+#ifdef LCD_DC_PIN
+    if (pin == LCD_DC_PIN) {
+        return true;
+    }
+#endif
+#ifdef NRFX_SPIM_SCK_PIN
+    if (pin == NRFX_SPIM_SCK_PIN) {
+        return true;
+    }
+#endif
+#ifdef NRFX_SPIM_MOSI_PIN
+    if (pin == NRFX_SPIM_MOSI_PIN) {
+        return true;
+    }
+#endif
+#ifdef NRFX_SPIM_MISO_PIN
+    if (pin == NRFX_SPIM_MISO_PIN) {
+        return true;
+    }
+#endif
+#ifdef FLASH_CS_PIN
+    if (pin == FLASH_CS_PIN) {
+        return true;
+    }
+#endif
+#ifdef CHRG_PIN
+    if (pin == CHRG_PIN) {
+        return true;
+    }
+#endif
+#ifdef ADC_PIN
+    if (pin == ADC_PIN) {
+        return true;
+    }
+#endif
+    return false;
+}
+
 static void validate_settings() {
     if (m_settings_data.sleep_timeout_sec > 180) {
         m_settings_data.sleep_timeout_sec = 30;
@@ -75,6 +150,10 @@ static void validate_settings() {
     BOOL_VALIDATE(m_settings_data.return_key_enabled, 0);
     if (m_settings_data.return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED &&
         m_settings_data.return_key_pin > SETTINGS_RETURN_KEY_MAX_PIN) {
+        m_settings_data.return_key_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED;
+    }
+    if (m_settings_data.return_key_pin != SETTINGS_RETURN_KEY_PIN_UNCONFIGURED &&
+        settings_is_reserved_gpio_pin(m_settings_data.return_key_pin)) {
         m_settings_data.return_key_pin = SETTINGS_RETURN_KEY_PIN_UNCONFIGURED;
     }
     if (m_settings_data.return_key_pin == SETTINGS_RETURN_KEY_PIN_UNCONFIGURED) {
