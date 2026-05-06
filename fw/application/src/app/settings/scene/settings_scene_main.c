@@ -12,6 +12,7 @@ enum settings_main_menu_t {
     SETTINGS_MAIN_MENU_VERSION,
     SETTINGS_MAIN_MENU_BACK_LIGHT,
     SETTINGS_MAIN_MENU_OLED_CONTRAST,
+    SETTINGS_MAIN_MENU_DISPLAY_FLIP,
     SETTINGS_MAIN_MENU_LI_MODE,
     SETTINGS_MAIN_MENU_ENABLE_HIBERNATE,
     SETTINGS_MAIN_MENU_STORAGE,
@@ -29,9 +30,12 @@ enum settings_main_menu_t {
 };
 
 static void settings_scene_main_reload(void *user_data);
+static const char *SETTINGS_LABEL_DISPLAY_FLIP = "Flip Screen";
+
 static void settings_reset_default(void *user_data) {
     app_settings_t *app = user_data;
     settings_data_t *p_settings = settings_get_data();
+    mui_u8g2_set_display_flip(p_settings->display_flip);
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
 #ifdef LCD_SCREEN
     mui_u8g2_set_backlight_level(p_settings->lcd_backlight);
@@ -69,6 +73,12 @@ static void settings_scene_main_list_view_on_selected(mui_list_view_event_t even
 
     case SETTINGS_MAIN_MENU_OLED_CONTRAST:
         mui_scene_dispatcher_next_scene(app->p_scene_dispatcher, SETTINGS_SCENE_OLED_CONTRAST);
+        break;
+
+    case SETTINGS_MAIN_MENU_DISPLAY_FLIP:
+        p_settings->display_flip = !p_settings->display_flip;
+        mui_u8g2_set_display_flip(p_settings->display_flip);
+        settings_scene_main_reload(app);
         break;
 
     case SETTINGS_MAIN_MENU_VERSION:
@@ -176,6 +186,10 @@ static void settings_scene_main_reload(void *user_data) {
     snprintf(txt, sizeof(txt), "[%d%%]", p_settings->oled_contrast);
     mui_list_view_add_item_ext(app->p_list_view, 0xe1c8, _T(APP_SET_OLED_CONTRAST), txt,
                                (void *)SETTINGS_MAIN_MENU_OLED_CONTRAST);
+
+    mui_list_view_add_item_ext(app->p_list_view, 0xe16d, SETTINGS_LABEL_DISPLAY_FLIP,
+                               p_settings->display_flip ? _T(ON_F) : _T(OFF_F),
+                               (void *)SETTINGS_MAIN_MENU_DISPLAY_FLIP);
 
 #ifdef LCD_SCREEN
     if (p_settings->lcd_backlight == 0) {
