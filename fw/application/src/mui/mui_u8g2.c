@@ -84,6 +84,8 @@ u8g2_t u8g2;
 static spi_device_t m_dev;
 uint8_t m_u8g2_initialized = 0;
 
+static const u8g2_cb_t *mui_u8g2_get_rotation_cb(bool flipped) { return flipped ? U8G2_R2 : U8G2_R0; }
+
 #ifdef LCD_SCREEN
 APP_PWM_INSTANCE(pwm1, 1); // Create the instance "PWM1" using TIMER1.
 
@@ -182,6 +184,9 @@ uint8_t u8x8_HW_com_spi_nrf52832(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, voi
     return 1;
 }
 void mui_u8g2_init(u8g2_t *p_u8g2) {
+    settings_data_t *p_settings = settings_get_data();
+    const u8g2_cb_t *rotation = mui_u8g2_get_rotation_cb(p_settings->display_flip);
+
     m_dev.cs_pin = LCD_CS_PIN;
     hal_spi_bus_attach(&m_dev);
 
@@ -192,11 +197,10 @@ void mui_u8g2_init(u8g2_t *p_u8g2) {
     nrf_gpio_cfg_output(LCD_BL_PIN);
     nrf_gpio_pin_clear(LCD_BL_PIN);
 
-    u8g2_Setup_st7567_enh_dg128064_f(p_u8g2, U8G2_R0, u8x8_HW_com_spi_nrf52832, u8g2_nrf_gpio_and_delay_spi_cb);
+    u8g2_Setup_st7567_enh_dg128064_f(p_u8g2, rotation, u8x8_HW_com_spi_nrf52832, u8g2_nrf_gpio_and_delay_spi_cb);
 
     u8g2_InitDisplay(p_u8g2);
 
-    settings_data_t *p_settings = settings_get_data();
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
 
     u8g2_SetPowerSave(p_u8g2, 0);
@@ -205,10 +209,9 @@ void mui_u8g2_init(u8g2_t *p_u8g2) {
 #endif
 
 #ifdef OLED_SCREEN
-    u8g2_Setup_sh1106_128x64_noname_f(p_u8g2, U8G2_R0, u8x8_HW_com_spi_nrf52832, u8g2_nrf_gpio_and_delay_spi_cb);
+    u8g2_Setup_sh1106_128x64_noname_f(p_u8g2, rotation, u8x8_HW_com_spi_nrf52832, u8g2_nrf_gpio_and_delay_spi_cb);
     u8g2_InitDisplay(p_u8g2);
 
-    settings_data_t *p_settings = settings_get_data();
     mui_u8g2_set_contrast_level(p_settings->oled_contrast);
 
     u8g2_SetPowerSave(p_u8g2, 0);
@@ -256,6 +259,17 @@ void mui_u8g2_set_contrast_level(uint8_t value) {
     }
 #endif
     u8g2_SetContrast(&p_mui->u8g2, (value - 1) * (255.0 / 99.0));
+}
+
+void mui_u8g2_set_display_flip(bool enabled) {
+    mui_t *p_mui = mui();
+    if (!p_mui->initialized) {
+        return;
+    }
+
+    u8g2_SetDisplayRotation(&p_mui->u8g2, mui_u8g2_get_rotation_cb(enabled));
+    u8g2_ClearBuffer(&p_mui->u8g2);
+    u8g2_SendBuffer(&p_mui->u8g2);
 }
 
 const spi_device_t *mui_u8g2_get_spi_device() { return &m_dev; }
