@@ -44,8 +44,6 @@ The Pixl.js firmware Main Screen is divided on several Applications, each one ca
 | --- | --- |
 | Amiibo Emulator | Browsing `.BIN` amiibo files stored on the device and emulating one selected file. |
 | Amiibo Database | Selecting an amiibo from the built-in database and creating a virtual tag from its model data. This requires `key_retail.bin`. |
-| My Favorites | Organizing database entries into folders for quicker browsing. Favorites are shortcuts to database entries. |
-| My Amiibo | Keeping a fixed set of database amiibo slots for fast selection. This is different from Favorites, which are folder-based. |
 | AmiiboLink | Emulating an AmiiboLink, AmiLoop, or omllbolink-style Bluetooth device for compatible phone apps. |
 | Card Emulator | Emulating supported Mifare and NTAG cards from raw card dump data. This is the Chameleon-style card emulator feature, not the amiibo emulator. |
 | BLE File Transfer | Connecting to the pixl.js web page or iNFC app to manage files or enter firmware update mode. |
