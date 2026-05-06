@@ -102,6 +102,8 @@ This application allows the emulation of amiibo from the list of well know ones,
 
 _Each time one an amiibo is used the initial UUID is random generated._
 
+The database creates virtual tags from amiibo model data. Effects that depend on savedata or the encrypted application area, such as a 20-heart Wolf Link in Breath of the Wild, are not included in the database entry. To use that kind of savedata-dependent behavior, use Amiibo Emulator with your own legally acquired `.BIN` dump.
+
 Once you open the application the main menu have the options
 
 |   |

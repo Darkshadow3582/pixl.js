@@ -56,9 +56,29 @@ Open the [firmware update page](https://thegecko.github.io/web-bluetooth-dfu).  
 Then press the `SELECT DEVICE` button on the page you should see a device called `pixl dfu` connect to start the firmware upgrade process.
 
 
-# Repair wrong firmware version.
+# Recovery after a wrong or incompatible firmware update
 
-If you accidentally flash the wrong hardware version (LCD/OLED), the device can still boot, but the display driver will not match the screen. You may only see stripes, a garbled screen, or the LCD backlight. The display will stay this way until you flash the firmware that matches your hardware.
+If an update completes but the device appears unusable, it may still be recoverable. The most common cases are a display contrast setting that makes the screen unreadable, or a firmware package that does not match the hardware.
+
+## Blank or very faint LCD after update
+
+If the LCD backlight turns on but the text is invisible or extremely faint, the contrast setting may be too low. The device can still be running normally.
+
+Try this blind button sequence to reach the contrast setting and raise it:
+
+1. Make sure the device is awake. If the screen is asleep, press MIDDLE once.
+2. Press LEFT once.
+3. Press MIDDLE once.
+4. Press RIGHT 3 times.
+5. Press MIDDLE once.
+6. Press RIGHT repeatedly until the text becomes visible.
+7. Set the contrast to a visible value, commonly around 50 to 80.
+
+If this works, no firmware reflash is required.
+
+## Wrong LCD/OLED package or unsupported hardware variant
+
+If you accidentally flash the wrong hardware version (LCD/OLED), or flash this firmware onto an unsupported modified device, the device can still boot, but the display driver, screen orientation, or button map may not match the hardware. You may see stripes, a garbled screen, an upside-down screen, broken buttons, or only the LCD backlight. The display will stay this way until you flash firmware that matches your hardware.
 
 You can use either method below to recover.
 
