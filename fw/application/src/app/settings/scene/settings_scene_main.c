@@ -30,7 +30,6 @@ enum settings_main_menu_t {
 };
 
 static void settings_scene_main_reload(void *user_data);
-static const char *SETTINGS_LABEL_DISPLAY_FLIP = "Flip Screen";
 
 static void settings_reset_default(void *user_data) {
     app_settings_t *app = user_data;
@@ -187,7 +186,7 @@ static void settings_scene_main_reload(void *user_data) {
     mui_list_view_add_item_ext(app->p_list_view, 0xe1c8, _T(APP_SET_OLED_CONTRAST), txt,
                                (void *)SETTINGS_MAIN_MENU_OLED_CONTRAST);
 
-    mui_list_view_add_item_ext(app->p_list_view, 0xe16d, SETTINGS_LABEL_DISPLAY_FLIP,
+    mui_list_view_add_item_ext(app->p_list_view, 0xe16d, _T(APP_SET_DISPLAY_FLIP),
                                p_settings->display_flip ? _T(ON_F) : _T(OFF_F),
                                (void *)SETTINGS_MAIN_MENU_DISPLAY_FLIP);
 

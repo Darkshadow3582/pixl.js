@@ -39,6 +39,7 @@ typedef enum {
     _L_APP_SET_ABOUT_OPEN_SOURCE_PROJECT,
     _L_APP_SET_ABOUT_LGPL_LICENSE,
     _L_APP_SET_APP_MGMT,
+    _L_APP_SET_DISPLAY_FLIP,
     _L_15S,
     _L_30S,
     _L_45S,

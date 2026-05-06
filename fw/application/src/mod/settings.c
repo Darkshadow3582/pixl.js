@@ -8,6 +8,16 @@
 #include "ble_amiibolink.h"
 
 #define SETTINGS_FILE_NAME "/settings.bin"
+#define SETTINGS_FILE_MAGIC 0x31544753u // "STG1"
+#define SETTINGS_FILE_VERSION 1
+
+typedef struct {
+    uint32_t magic;
+    uint16_t version;
+    uint16_t payload_size;
+} settings_file_header_t;
+
+#define SETTINGS_SERIALIZED_MAX_SIZE (sizeof(settings_file_header_t) + sizeof(settings_data_t))
 
 #ifdef OLED_SCREEN
 // Though OLED doesn't necessarily imply rechargeable battery, it's usually the case.
@@ -87,6 +97,50 @@ static void validate_settings() {
     }
 }
 
+static size_t settings_serialize_current(uint8_t *buffer, size_t buffer_size) {
+    if (buffer_size < SETTINGS_SERIALIZED_MAX_SIZE) {
+        return 0;
+    }
+
+    settings_file_header_t header = {.magic = SETTINGS_FILE_MAGIC,
+                                     .version = SETTINGS_FILE_VERSION,
+                                     .payload_size = sizeof(settings_data_t)};
+    memcpy(buffer, &header, sizeof(header));
+    memcpy(buffer + sizeof(header), &m_settings_data, sizeof(settings_data_t));
+    return SETTINGS_SERIALIZED_MAX_SIZE;
+}
+
+static bool settings_try_deserialize_versioned(const uint8_t *buffer, size_t buffer_size, settings_data_t *out) {
+    if (buffer_size < sizeof(settings_file_header_t)) {
+        return false;
+    }
+
+    const settings_file_header_t *header = (const settings_file_header_t *)buffer;
+    if (header->magic != SETTINGS_FILE_MAGIC || header->version != SETTINGS_FILE_VERSION) {
+        return false;
+    }
+
+    if (header->payload_size != sizeof(settings_data_t)) {
+        return false;
+    }
+
+    size_t expected_size = sizeof(settings_file_header_t) + header->payload_size;
+    if (buffer_size < expected_size) {
+        return false;
+    }
+
+    memcpy(out, buffer + sizeof(settings_file_header_t), sizeof(settings_data_t));
+    return true;
+}
+
+static bool settings_deserialize_legacy(const uint8_t *buffer, size_t buffer_size, settings_data_t *out) {
+    if (buffer_size == 0 || buffer_size > sizeof(settings_data_t)) {
+        return false;
+    }
+    memcpy(out, buffer, buffer_size);
+    return true;
+}
+
 int32_t settings_init() {
     memcpy(&m_settings_data, &def_settings_data, sizeof(settings_data_t));
     vfs_driver_t *p_driver = vfs_get_default_driver();
@@ -102,9 +156,45 @@ int32_t settings_init() {
         return NRF_ERROR_INVALID_STATE;
     }
 
-    err = p_driver->read_file_data(SETTINGS_FILE_NAME, &m_settings_data, sizeof(settings_data_t));
+    vfs_obj_t settings_obj = {0};
+    err = p_driver->stat_file(SETTINGS_FILE_NAME, &settings_obj);
+    if (err == VFS_ERR_NOOBJ) {
+        validate_settings();
+        NRF_LOG_INFO("settings not found, using defaults");
+        return NRF_SUCCESS;
+    }
     if (err < 0) {
         return NRF_ERROR_INVALID_STATE;
+    }
+
+    if (settings_obj.size == 0) {
+        validate_settings();
+        NRF_LOG_INFO("settings empty, using defaults");
+        return NRF_SUCCESS;
+    }
+
+    uint8_t settings_raw[SETTINGS_SERIALIZED_MAX_SIZE];
+    size_t read_size_target = settings_obj.size;
+    if (read_size_target > sizeof(settings_raw)) {
+        read_size_target = sizeof(settings_raw);
+    }
+
+    err = p_driver->read_file_data(SETTINGS_FILE_NAME, settings_raw, read_size_target);
+    if (err < 0) {
+        return NRF_ERROR_INVALID_STATE;
+    }
+
+    size_t read_size = (size_t)err;
+    bool loaded = settings_try_deserialize_versioned(settings_raw, read_size, &m_settings_data);
+    if (!loaded) {
+        loaded = settings_deserialize_legacy(settings_raw, read_size, &m_settings_data);
+        if (loaded) {
+            NRF_LOG_INFO("settings migrated from legacy layout");
+        }
+    }
+
+    if (!loaded) {
+        NRF_LOG_WARNING("settings invalid, using defaults");
     }
 
     validate_settings();
@@ -121,19 +211,40 @@ int32_t settings_save() {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    settings_data_t old_settings_data;
-
-    err = p_driver->read_file_data(SETTINGS_FILE_NAME, &old_settings_data, sizeof(settings_data_t));
+    uint8_t old_settings_raw[SETTINGS_SERIALIZED_MAX_SIZE];
+    size_t old_settings_size = 0;
+    vfs_obj_t settings_obj = {0};
+    err = p_driver->stat_file(SETTINGS_FILE_NAME, &settings_obj);
     bool not_found = false;
     if (err == VFS_ERR_NOOBJ) {
         not_found = true;
     } else if (err < 0) {
         return NRF_ERROR_INVALID_STATE;
+    } else if (settings_obj.size > 0) {
+        old_settings_size = settings_obj.size;
+        if (old_settings_size > sizeof(old_settings_raw)) {
+            old_settings_size = sizeof(old_settings_raw);
+        }
+
+        err = p_driver->read_file_data(SETTINGS_FILE_NAME, old_settings_raw, old_settings_size);
+        if (err < 0) {
+            return NRF_ERROR_INVALID_STATE;
+        }
+        old_settings_size = (size_t)err;
     }
 
-    if (not_found || memcmp(&m_settings_data, &old_settings_data, sizeof(settings_data_t)) != 0) {
-        err = p_driver->write_file_data(SETTINGS_FILE_NAME, &m_settings_data, sizeof(settings_data_t));
-        if (err < 0) {
+    uint8_t new_settings_raw[SETTINGS_SERIALIZED_MAX_SIZE];
+    size_t new_settings_size = settings_serialize_current(new_settings_raw, sizeof(new_settings_raw));
+    if (new_settings_size == 0) {
+        return NRF_ERROR_INVALID_STATE;
+    }
+
+    bool needs_write = not_found || old_settings_size != new_settings_size ||
+                       memcmp(new_settings_raw, old_settings_raw, new_settings_size) != 0;
+
+    if (needs_write) {
+        err = p_driver->write_file_data(SETTINGS_FILE_NAME, new_settings_raw, new_settings_size);
+        if (err < 0 || (size_t)err != new_settings_size) {
             return NRF_ERROR_INVALID_STATE;
         }
 
