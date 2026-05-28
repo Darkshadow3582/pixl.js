@@ -23,4 +23,51 @@
 
 对于发布版本（RELEASE=1），固件使用 wenquanyi_9pt_u8g2.bdf 来显示Unicode字符。<br />
 请检查新语言字符的代码点是否包含在 wenquanyi_9pt_u8g2.bdf 中。<br />
-如果没有，由于MCU内部闪存的限制，我不建议添加新语言支持。
+如果没有，由于MCU内部闪存的限制，不建议添加新语言支持。
+
+## Web应用
+
+### 如何更新现有翻译
+
+语言文件位于 `web/src/i18n` 目录下。
+
+### 如何添加新的语言翻译
+
+以添加日语（ja_JP）翻译为例：
+
+1. 复制 `en_US.js` 文件并将其命名为 `ja_JP.js`
+2. 翻译 `ja_JP.js` 中的字符串，包括 `changeok` 消息。
+
+   不要翻译其他语言名称。
+
+   在 `lang {` 部分的底部添加您的语言：
+
+   `ja: '日本語',`
+
+3. 编辑 `web/src/i18n/index.js`，保持其当前结构，添加：
+
+   ```js
+   import elementJaLocale from 'element-ui/lib/locale/lang/ja'
+   import jaLocale from './ja_JP'
+   ```
+
+   并扩展 `messages`：
+
+   ```js
+     ja_JP: {
+       ...jaLocale,
+       ...elementJaLocale,
+     },
+   ```
+
+4. 将您的语言添加到其他 `.js` 文件（在 `lang: {` 部分）：
+
+   `vueja: '日本語',`
+
+5. 将您的语言添加到 `web/src/App.vue` 文件：
+
+```js
+<el-dropdown-item v-if="language==='ja'" command="ja" divided>
+  {{ $t('lang.ja') }}
+</el-dropdown-item>
+```

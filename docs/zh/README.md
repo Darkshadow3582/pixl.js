@@ -29,9 +29,15 @@
 - [蓝牙传输](04-Using-Firmware.md/#蓝牙传输)
 - [设置](04-Using-Firmware.md/#设置)
 
-# 外壳
+# 教程
 
-TODO
+## iNFC
+
+- [Pixl固件升级教程](https://www.youtube.com/watch?v=vldNVaoqJg0)
+
+## MTools Lite
+
+- [如何在Pixl.js OLED LCD上使用卡模拟器](https://www.youtube.com/watch?v=KiuyfBKalhI)
 
 # 技术文档
 
