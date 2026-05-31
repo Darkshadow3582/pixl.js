@@ -25,6 +25,7 @@ typedef struct {
     uint8_t lcd_backlight;
     uint8_t oled_contrast;
     bool anim_enabled;
+    uint16_t transition_duration_ms;  // view transition duration (ms), 0 = use default 200ms
     bool qrcode_enabled;
     Language language;
     uint8_t amiidb_data_slot_num;
