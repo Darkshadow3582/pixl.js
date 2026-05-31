@@ -172,12 +172,6 @@ export default function FileManager() {
         ) : viewMode === 'grid' ? (
           <FileGrid
             files={filteredFiles}
-            selected={selected}
-            onSelect={(name) => setSelected(prev => {
-              const next = new Set(prev)
-              next.has(name) ? next.delete(name) : next.add(name)
-              return next
-            })}
             onOpen={handleOpen}
             onContextMenu={(file, x, y) => setContextMenu({ file, x, y })}
           />
