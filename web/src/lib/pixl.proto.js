@@ -1,6 +1,6 @@
 import { sharedEventDispatcher } from "./event"
 import * as pixl from "./pixl.ble"
-import * as ByteBuffer from "bytebuffer"
+import ByteBuffer from "bytebuffer"
 
 import i18n from '../i18n'
 
