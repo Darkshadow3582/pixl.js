@@ -1,0 +1,114 @@
+{
+  "lang": {
+    "choose": "言語/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "言語の切り替えに成功しました"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "cont": "続行"
+  },
+  "menu": {
+    "upload": "アップロード",
+    "newfolder": "新しいフォルダ",
+    "del": "削除",
+    "up": "親フォルダ",
+    "refresh": "更新",
+    "dfu": "DFUモード"
+  },
+  "status": {
+    "connected": "接続済み ",
+    "loading": "読み込み中..."
+  },
+  "conn": {
+    "connect": "接続",
+    "connecting": "接続中...",
+    "disconnect": "切断",
+    "consuccess": "接続成功",
+    "disconnected": "切断済み",
+    "connfailed": "接続失敗"
+  },
+  "labels": {
+    "name": "名前",
+    "size": "サイズ",
+    "type": "種類",
+    "remark": "備考"
+  },
+  "contxmenu": {
+    "del": "削除",
+    "rename": "名前変更",
+    "prop": "プロパティ",
+    "format": "フォーマット"
+  },
+  "properties": {
+    "title": "プロパティ",
+    "remark": "備考",
+    "entermsg": "備考を入力してください",
+    "attrib": "属性",
+    "hide": "非表示",
+    "readonly": "読み取り専用",
+    "errupdate": "プロパティの更新に失敗しました",
+    "remarktoolong": "備考が長すぎます (",
+    "remarktoolongend": " バイト)"
+  },
+  "upload": {
+    "title": "アップロード",
+    "drag": "ここにファイルをドラッグ",
+    "click": "またはクリックしてアップロード",
+    "maxsize": "ファイルパスの合計長は63バイト以内",
+    "maxname": "ファイル名は47バイト以内",
+    "closetitle": "閉じてもよろしいですか？",
+    "closemessage": "ダイアログを閉じるとアップロードが中断されます。",
+    "errupload": "アップロード失敗: "
+  },
+  "format": {
+    "title": "フォーマット",
+    "messrow1a": "フォーマットしますか ",
+    "messrow1b": "？",
+    "messrow2": "フォーマットするとすべてのデータが削除されます！",
+    "messrow3": "フォーマットには約10秒かかります。",
+    "formatok": "フォーマット完了",
+    "formaterr": "フォーマット失敗: "
+  },
+  "del": {
+    "title": "削除",
+    "message": "ファイルを削除します: ",
+    "messageend": "？",
+    "error": "ファイルの削除に失敗: ",
+    "deleteok": "ファイルを削除しました"
+  },
+  "dfumode": {
+    "title": "DFUモード",
+    "startconfirm": "DFUモードに入りますか？",
+    "updateconfirm": "DFUモードに入りました。DFUアップグレードページを開きますか？",
+    "updatetitle": "ファームウェア更新"
+  },
+  "oldfirm": {
+    "title": "ファームウェアが古い",
+    "message": "現在のファームウェアバージョンは 2.0.0 です。一部機能が正常に動作しない可能性があります。最新版にアップデートしてください。"
+  },
+  "newfolder": {
+    "title": "新しいフォルダ",
+    "message": "フォルダ名を入力してください",
+    "newfoldererr": "フォルダの作成に失敗"
+  },
+  "rename": {
+    "title": "名前変更",
+    "message": "新しい名前を入力してください",
+    "errrename": "名前の変更に失敗: ",
+    "nametoolong": "名前が長すぎます (最大63バイト)",
+    "pathtoolong": "ファイル名が長すぎます (最大47バイト)"
+  },
+  "drive": {
+    "message": "ドライブが利用できません: ",
+    "messageend": ""
+  }
+}

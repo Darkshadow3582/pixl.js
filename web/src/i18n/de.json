@@ -1,0 +1,114 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Sprache erfolgreich geändert"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "cont": "Weiter"
+  },
+  "menu": {
+    "upload": "Hochladen",
+    "newfolder": "Neuer Ordner",
+    "del": "Löschen",
+    "up": "Übergeordneter Ordner",
+    "refresh": "Aktualisieren",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Verbunden ",
+    "loading": "Lade..."
+  },
+  "conn": {
+    "connect": "Verbinden",
+    "connecting": "Verbinde...",
+    "disconnect": "Trennen",
+    "consuccess": "Verbindung erfolgreich",
+    "disconnected": "Getrennt",
+    "connfailed": "Verbindung fehlgeschlagen"
+  },
+  "labels": {
+    "name": "Name",
+    "size": "Größe",
+    "type": "Typ",
+    "remark": "Notiz"
+  },
+  "contxmenu": {
+    "del": "Löschen",
+    "rename": "Umbenennen",
+    "prop": "Eigenschaften",
+    "format": "Formatieren"
+  },
+  "properties": {
+    "title": "Eigenschaften",
+    "remark": "Notiz",
+    "entermsg": "Bitte Notiz eingeben",
+    "attrib": "Attribute",
+    "hide": "Ausblenden",
+    "readonly": "Nur lesen",
+    "errupdate": "Eigenschaften aktualisieren fehlgeschlagen!",
+    "remarktoolong": "Notizen zu lang (",
+    "remarktoolongend": " Bytes)"
+  },
+  "upload": {
+    "title": "Hochladen",
+    "drag": "Dateien hier rein ziehen",
+    "click": "oder klicken zum Hochladen",
+    "maxsize": "Die Gesamtlänge des Dateipfads darf 63 Bytes nicht überschreiten.",
+    "maxname": "Der Dateiname darf 47 Bytes nicht überschreiten.",
+    "closetitle": "Schließen bestätigen?",
+    "closemessage": "Das Schließen bricht das Hochladen ab.",
+    "errupload": "Hochladen fehlgeschlagen: "
+  },
+  "format": {
+    "title": "Formatieren",
+    "messrow1a": "Möchten Sie ",
+    "messrow1b": " formatieren?",
+    "messrow2": "Formatieren löscht alle Daten!",
+    "messrow3": "Formatieren dauert ca. 10 Sekunden.",
+    "formatok": "Formatieren erfolgreich!",
+    "formaterr": "Formatieren fehlgeschlagen!: "
+  },
+  "del": {
+    "title": "Löschen",
+    "message": "Datei: ",
+    "messageend": " löschen?",
+    "error": "Löschen der Datei fehlgeschlagen!: ",
+    "deleteok": "Datei erfolgreich gelöscht!"
+  },
+  "dfumode": {
+    "title": "DFU Modus",
+    "startconfirm": "DFU Modus aktivieren?",
+    "updateconfirm": "DFU Modus aktiviert. DFU Aktualisierungsseite öffnen?",
+    "updatetitle": "Firmware Update"
+  },
+  "oldfirm": {
+    "title": "Firmware zu alt",
+    "message": "Aktuelle Firmware Version ist 2.0.0. Einige Funktionen könnten nicht funktionieren. Bitte aktualisieren Sie die Firmware."
+  },
+  "newfolder": {
+    "title": "Neuer Ordner",
+    "message": "Bitte geben Sie den Ordner Namen ein",
+    "newfoldererr": "Ordner erstellen fehlgeschlagen!"
+  },
+  "rename": {
+    "title": "Umbenennen",
+    "message": "Bitte geben Sie den neuen Namen ein",
+    "errrename": "Umbenennen fehlgeschlagen!: ",
+    "nametoolong": "Maximale Pfadlänge 63 Bytes",
+    "pathtoolong": "Maximale Dateinamenlänge 47 Bytes"
+  },
+  "drive": {
+    "message": "Speicher nicht verfügbar: ",
+    "messageend": ""
+  }
+}

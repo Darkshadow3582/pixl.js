@@ -1,0 +1,114 @@
+{
+  "lang": {
+    "choose": "选择语言",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "语言切换成功"
+  },
+  "btn": {
+    "ok": "确定",
+    "cancel": "取消",
+    "cont": "继续"
+  },
+  "menu": {
+    "upload": "上传",
+    "newfolder": "新建文件夹",
+    "del": "删除",
+    "up": "返回上级",
+    "refresh": "刷新",
+    "dfu": "DFU模式"
+  },
+  "status": {
+    "connected": "已连接 ",
+    "loading": "加载中..."
+  },
+  "conn": {
+    "connect": "连接",
+    "connecting": "连接中...",
+    "disconnect": "断开连接",
+    "consuccess": "连接成功",
+    "disconnected": "已断开连接",
+    "connfailed": "连接失败"
+  },
+  "labels": {
+    "name": "名称",
+    "size": "大小",
+    "type": "类型",
+    "remark": "备注"
+  },
+  "contxmenu": {
+    "del": "删除",
+    "rename": "重命名",
+    "prop": "属性",
+    "format": "格式化"
+  },
+  "properties": {
+    "title": "属性",
+    "remark": "备注",
+    "entermsg": "请输入备注信息",
+    "attrib": "属性",
+    "hide": "隐藏",
+    "readonly": "只读",
+    "errupdate": "更新失败",
+    "remarktoolong": "备注太长 (",
+    "remarktoolongend": " 字节)"
+  },
+  "upload": {
+    "title": "上传文件",
+    "drag": "拖拽文件到此处",
+    "click": "或点击选择文件",
+    "maxsize": "单个文件最大支持 4MB",
+    "maxname": "文件名最长支持 47 字节",
+    "closetitle": "确认关闭",
+    "closemessage": "上传正在进行，确定要关闭吗？",
+    "errupload": "上传失败: "
+  },
+  "format": {
+    "title": "格式化驱动器",
+    "messrow1a": "即将格式化驱动器 ",
+    "messrow1b": "",
+    "messrow2": "格式化将删除所有文件！",
+    "messrow3": "确认继续？",
+    "formatok": " 格式化成功",
+    "formaterr": " 格式化失败: "
+  },
+  "del": {
+    "title": "确认删除",
+    "message": "确定要删除 ",
+    "messageend": " 吗？",
+    "error": " 删除失败: ",
+    "deleteok": "删除成功"
+  },
+  "dfumode": {
+    "title": "DFU模式",
+    "startconfirm": "是否进入DFU模式？",
+    "updateconfirm": "设备已进入DFU模式，是否跳转到固件更新页面？",
+    "updatetitle": "固件更新"
+  },
+  "oldfirm": {
+    "title": "固件版本过低",
+    "message": "当前固件版本为 2.0.0，部分功能可能无法正常使用，请升级固件到最新版本。"
+  },
+  "newfolder": {
+    "title": "新建文件夹",
+    "message": "请输入文件夹名称",
+    "newfoldererr": "新建文件夹失败"
+  },
+  "rename": {
+    "title": "重命名",
+    "message": "请输入新的名称",
+    "errrename": "重命名失败",
+    "nametoolong": "名称太长 (最大63字节)",
+    "pathtoolong": "文件名太长 (最大47字节)"
+  },
+  "drive": {
+    "message": "驱动器不可用: ",
+    "messageend": ""
+  }
+}

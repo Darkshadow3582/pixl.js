@@ -1,0 +1,114 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Språkbyte lyckades"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "Avbryt",
+    "cont": "Fortsätt"
+  },
+  "menu": {
+    "upload": "Ladda upp",
+    "newfolder": "Ny mapp",
+    "del": "Radera",
+    "up": "Överordnad mapp",
+    "refresh": "Uppdatera",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Ansluten ",
+    "loading": "laddar..."
+  },
+  "conn": {
+    "connect": "Anslut",
+    "connecting": "Ansluter...",
+    "disconnect": "Koppla från",
+    "consuccess": "Anslutning lyckades",
+    "disconnected": "Frånkopplad",
+    "connfailed": "Anslutning misslyckades"
+  },
+  "labels": {
+    "name": "Namn",
+    "size": "Storlek",
+    "type": "Typ",
+    "remark": "Anteckning"
+  },
+  "contxmenu": {
+    "del": "Radera",
+    "rename": "Byt namn",
+    "prop": "Inställningar",
+    "format": "Formatera"
+  },
+  "properties": {
+    "title": "Inställningar",
+    "remark": "Anteckning",
+    "entermsg": "Vänligen ange anteckning",
+    "attrib": "Attribut",
+    "hide": "Göm",
+    "readonly": "Skrivskydd",
+    "errupdate": "Misslyckades att uppdatera detaljer!",
+    "remarktoolong": "Anteckningar för långa (",
+    "remarktoolongend": " bytes)"
+  },
+  "upload": {
+    "title": "Ladda upp",
+    "drag": "Dra filer hit",
+    "click": "eller klicka för att ladda upp",
+    "maxsize": "Sökvägens längd får inte överstiga 63 bytes.",
+    "maxname": "Filnamnet får inte överstiga 47 bytes.",
+    "closetitle": "Vill du verkligen stänga?",
+    "closemessage": "Stängning rensar uppladdningskön.",
+    "errupload": "Uppladdningen misslyckades: "
+  },
+  "format": {
+    "title": "Formatera",
+    "messrow1a": "Vill du formatera ",
+    "messrow1b": "?",
+    "messrow2": "Formatering raderar all data!",
+    "messrow3": "Formatering tar ungefär 10 sekunder.",
+    "formatok": "Formateringen färdig!",
+    "formaterr": "Formatering misslyckades!: "
+  },
+  "del": {
+    "title": "Radera",
+    "message": "Radera fil: ",
+    "messageend": "?",
+    "error": "Misslyckades att radera filen!: ",
+    "deleteok": "Filen raderad!"
+  },
+  "dfumode": {
+    "title": "DFU-läge",
+    "startconfirm": "Vill du aktivera DFU-läge?",
+    "updateconfirm": "DFU-läget aktiverat. Öppna DFU-uppgraderingssidan?",
+    "updatetitle": "Firmwareuppdatering"
+  },
+  "oldfirm": {
+    "title": "Firmware för gammal",
+    "message": "Nuvarande firmwareversion är 2.0.0. Vissa funktioner kanske inte fungerar. Uppgradera till senaste firmware."
+  },
+  "newfolder": {
+    "title": "Ny mapp",
+    "message": "Vänligen ange mappnamnet",
+    "newfoldererr": "Misslyckades att skapa mapp!"
+  },
+  "rename": {
+    "title": "Byt namn",
+    "message": "Vänligen ange ett nytt namn",
+    "errrename": "Namnbytet misslyckades!: ",
+    "nametoolong": "Sökvägen får inte överstiga 63 bytes",
+    "pathtoolong": "Filnamnet får inte överstiga 47 bytes"
+  },
+  "drive": {
+    "message": "Lagring inte tillgänglig: ",
+    "messageend": ""
+  }
+}
