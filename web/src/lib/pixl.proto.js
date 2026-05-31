@@ -4,6 +4,18 @@ import * as ByteBuffer from "bytebuffer"
 
 import i18n from '../i18n'
 
+function bbnew(capacity) {
+    var b = capacity != null ? new ByteBuffer(capacity) : new ByteBuffer();
+    b.LE();
+    return b;
+}
+
+function bbwrap(data, enc) {
+    var b = ByteBuffer.wrap(data, enc);
+    b.LE();
+    return b;
+}
+
 
 const MTU_SIZE = 250
 const MTU_MAX_DATA_SIZE = 247
@@ -39,7 +51,7 @@ function process_op_queue() {
 function proocess_op(op) {
     new_rx_promise().then(data => {
         try {
-            var bb = ByteBuffer.wrap(data);
+            var bb = bbwrap(data);
             var h = read_header(bb);
             h.data = op.rx_data_cb(bb);
             op_ongoing = false;
@@ -55,7 +67,7 @@ function proocess_op(op) {
         process_op_queue();
     });
 
-    var bb = new ByteBuffer();
+    var bb = bbnew();
     op.tx_data_cb(bb);
     op_ongoing = true;
     tx_data_frame(op.cmd, 0, 0, bb).catch(e => {
@@ -70,7 +82,6 @@ var m_api_reject;
 export function init() {
     sharedEventDispatcher().addListener("ble_rx_data", on_rx_data);
     sharedEventDispatcher().addListener("ble_disconnected", on_ble_disconnected);
-    ByteBuffer.DEFAULT_ENDIAN = ByteBuffer.LITTLE_ENDIAN;
 }
 
 export function get_version() {
@@ -391,7 +402,7 @@ function read_file_as_bytebuffer(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function () {
-            resolve(ByteBuffer.wrap(reader.result));
+            resolve(bbwrap(reader.result));
         }
         reader.onerror = function () {
             reject(reader.error);
@@ -425,7 +436,7 @@ function read_meta(bb) {
     if (size == 0) {
         return meta;
     }
-    var mb = ByteBuffer.wrap(read_bytes_array(bb, size));
+    var mb = bbwrap(read_bytes_array(bb, size));
     while (mb.remaining() > 0) {
         var type = mb.readUint8(); //1 notes
         if (type == 1) {
@@ -461,8 +472,7 @@ function write_meta(bb, meta) {
         throw new Error(i18n.t('properties.remarktoolong') + bytes.length + i18n.t('properties.remarktoolongend'))
     }
 
-    var tb = new ByteBuffer();
-    //notes
+    var tb = bbnew();
     if (notes.length > 0) {
         tb.writeUint8(1);//amiibo notes
         tb.writeUint8(bytes.length);
@@ -537,7 +547,7 @@ function read_bytes_array(bb, size) {
 }
 
 function tx_data_frame(cmd, status, chunk, data) {
-    var bb = new ByteBuffer();
+    var bb = bbnew();
     bb.writeUint8(cmd);
     bb.writeUint8(status);
     bb.writeUint16(chunk);
@@ -562,16 +572,16 @@ function new_rx_promise() {
 }
 
 
-var rx_bytebuffer = new ByteBuffer();
+var rx_bytebuffer = bbnew();
 var rx_chunk_state = "NONE"; //NONE CHUNK,
 
 
 function on_rx_data(data) {
-    var buff = ByteBuffer.wrap(data);
+    var buff = bbwrap(data);
     var h = read_header(buff);
     if (h.chunk & 0x8000) {
         if (rx_chunk_state == "NONE") {
-            write_bytes(rx_bytebuffer, ByteBuffer.wrap(data));
+            write_bytes(rx_bytebuffer, bbwrap(data));
             rx_chunk_state = "CHUNK";
         } else if (rx_chunk_state == "CHUNK") {
             write_bytes(rx_bytebuffer, buff); //next chunk, ignore header
