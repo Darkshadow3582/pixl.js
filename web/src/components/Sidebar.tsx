@@ -1,17 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, FolderOpen, Settings } from 'lucide-react'
-import { useConnectionStore } from '../stores/connection'
 
-const allNavItems = [
+const navItems = [
   { to: '/', icon: LayoutDashboard, label: '仪表盘' },
   { to: '/files', icon: FolderOpen, label: '文件管理' },
   { to: '/settings', icon: Settings, label: '设置' },
 ]
 
 export default function Sidebar() {
-  const { connected } = useConnectionStore()
-  const navItems = connected ? allNavItems : [allNavItems[0]]
-
   return (
     <aside className="w-56 h-screen border-r bg-card flex flex-col">
       <div className="p-4 border-b">
