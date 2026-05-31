@@ -1,18 +1,31 @@
+import { useState, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useConnectionStore } from '../stores/connection'
+import Dialog from '../components/Dialog'
 import * as proto from '../lib/pixl.proto'
 
 export default function Settings() {
+  const navigate = useNavigate()
   const { i18n } = useTranslation()
-  const { version } = useConnectionStore()
+  const { connected, version } = useConnectionStore()
+  const [confirmState, setConfirmState] = useState<{ msg: string; onOk: () => void } | null>(null)
+
+  useEffect(() => {
+    if (!connected) navigate('/')
+  }, [connected, navigate])
+
+  const confirm = useCallback((msg: string) => new Promise<boolean>(resolve => {
+    setConfirmState({ msg, onOk: () => { setConfirmState(null); resolve(true) } })
+  }), [])
 
   const handleEnterDFU = async () => {
-    if (confirm('是否进入DFU模式？')) {
-      await proto.enter_dfu()
-      if (confirm('设备已进入DFU模式，是否跳转到固件更新页面？')) {
-        window.location.href = 'https://thegecko.github.io/web-bluetooth-dfu/examples/web.html'
-      }
-    }
+    const ok = await confirm('是否进入DFU模式？')
+    if (!ok) return
+    await proto.enter_dfu()
+    const ok2 = await confirm('设备已进入DFU模式，是否跳转到固件更新页面？')
+    if (!ok2) return
+    window.location.href = 'https://thegecko.github.io/web-bluetooth-dfu/examples/web.html'
   }
 
   return (
@@ -63,6 +76,20 @@ export default function Settings() {
         </a>
         <p className="text-xs text-muted-foreground">基于 GPL 2.0 开源协议发布</p>
       </section>
+
+      <Dialog
+        open={!!confirmState}
+        title="确认"
+        onClose={() => setConfirmState(null)}
+        footer={
+          <>
+            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">取消</button>
+            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+          </>
+        }
+      >
+        <p className="text-sm whitespace-pre-wrap">{confirmState?.msg}</p>
+      </Dialog>
     </div>
   )
 }

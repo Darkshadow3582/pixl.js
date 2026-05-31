@@ -1,13 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useConnectionStore } from '../stores/connection'
 import { useDriveInfo } from '../hooks/useDriveInfo'
 import DeviceInfoCard from '../components/DeviceInfoCard'
 import StorageChart from '../components/StorageChart'
+import Dialog from '../components/Dialog'
 import * as proto from '../lib/pixl.proto'
 
 export default function Dashboard() {
   const { connected } = useConnectionStore()
   const { drives, fetchDrives } = useDriveInfo()
+  const [confirmState, setConfirmState] = useState<{ msg: string; onOk: () => void } | null>(null)
 
   useEffect(() => {
     if (connected) {
@@ -21,13 +23,17 @@ export default function Dashboard() {
     }
   }, [connected, fetchDrives])
 
+  const confirm = useCallback((msg: string) => new Promise<boolean>(resolve => {
+    setConfirmState({ msg, onOk: () => { setConfirmState(null); resolve(true) } })
+  }), [])
+
   const handleEnterDFU = async () => {
-    if (confirm('是否进入DFU模式？')) {
-      await proto.enter_dfu()
-      if (confirm('设备已进入DFU模式，是否跳转到固件更新页面？')) {
-        window.location.href = 'https://thegecko.github.io/web-bluetooth-dfu/examples/web.html'
-      }
-    }
+    const ok = await confirm('是否进入DFU模式？')
+    if (!ok) return
+    await proto.enter_dfu()
+    const ok2 = await confirm('设备已进入DFU模式，是否跳转到固件更新页面？')
+    if (!ok2) return
+    window.location.href = 'https://thegecko.github.io/web-bluetooth-dfu/examples/web.html'
   }
 
   if (!connected) {
@@ -79,6 +85,20 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
+
+      <Dialog
+        open={!!confirmState}
+        title="确认"
+        onClose={() => setConfirmState(null)}
+        footer={
+          <>
+            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">取消</button>
+            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+          </>
+        }
+      >
+        <p className="text-sm whitespace-pre-wrap">{confirmState?.msg}</p>
+      </Dialog>
     </div>
   )
 }
