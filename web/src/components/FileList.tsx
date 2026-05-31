@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { FileEntry } from '../hooks/useFiles'
 import { Folder, File } from 'lucide-react'
 
@@ -10,15 +11,16 @@ interface Props {
 }
 
 export default function FileList({ files, selected, onSelect, onOpen, onContextMenu }: Props) {
+  const { t } = useTranslation()
   return (
     <table className="w-full text-sm">
       <thead>
         <tr className="border-b text-muted-foreground">
           <th className="w-8 p-2"></th>
-          <th className="text-left p-2 font-medium">名称</th>
-          <th className="text-left p-2 font-medium w-24">大小</th>
-          <th className="text-left p-2 font-medium w-20">类型</th>
-          <th className="text-left p-2 font-medium">备注</th>
+          <th className="text-left p-2 font-medium">{t('labels.name')}</th>
+          <th className="text-left p-2 font-medium w-24">{t('labels.size')}</th>
+          <th className="text-left p-2 font-medium w-20">{t('labels.type')}</th>
+          <th className="text-left p-2 font-medium">{t('labels.remark')}</th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +52,7 @@ export default function FileList({ files, selected, onSelect, onOpen, onContextM
               {file.name}
             </td>
             <td className="p-2 text-muted-foreground">{formatDisplaySize(file)}</td>
-            <td className="p-2 text-muted-foreground">{file.type === 'DIR' ? '文件夹' : '文件'}</td>
+            <td className="p-2 text-muted-foreground">{file.type === 'DIR' ? t('labels.folder') : t('labels.file')}</td>
             <td className="p-2 text-muted-foreground truncate max-w-48">{file.notes}</td>
           </tr>
         ))}

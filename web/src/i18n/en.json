@@ -14,7 +14,9 @@
   "btn": {
     "ok": "OK",
     "cancel": "Cancel",
-    "cont": "Continue"
+    "cont": "Continue",
+    "save": "Save",
+    "confirm": "Confirm"
   },
   "menu": {
     "upload": "Upload",
@@ -40,7 +42,10 @@
     "name": "Name",
     "size": "Size",
     "type": "Type",
-    "remark": "Remark"
+    "remark": "Remark",
+    "folder": "Folder",
+    "file": "File",
+    "root": "Root Directory"
   },
   "contxmenu": {
     "del": "Delete",
@@ -110,5 +115,69 @@
   "drive": {
     "message": "Drive not available: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "files": "Files",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connect_title": "Connect a device to start managing files",
+    "connect_btn": "Connect Device",
+    "quick_actions": "Quick Actions",
+    "dfu_btn": "Enter DFU Mode",
+    "refresh_btn": "Refresh",
+    "device_info": "Device Info",
+    "status": "Status",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "firmware": "Firmware Version",
+    "ble_address": "BLE Address",
+    "storage": "Storage - {{label}}",
+    "used": "Used",
+    "free": "Free",
+    "total": "Total"
+  },
+  "files": {
+    "title": "Files",
+    "loading": "Loading...",
+    "search_placeholder": "Search files...",
+    "grid_view": "Grid View",
+    "list_view": "List View"
+  },
+  "settings": {
+    "title": "Settings",
+    "firmware": "Firmware",
+    "current_version": "Current Version: {{version}}",
+    "dfu_btn": "Enter DFU Mode",
+    "language": "Language",
+    "about": "About",
+    "about_desc": "Pixl.js - Amiibo Emulator",
+    "license": "Licensed under GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Confirm",
+    "alert": "Alert",
+    "input": "Input",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete_confirm": "Are you sure you want to delete {{count}} file(s)/folder(s)?",
+    "delete_failed": "Delete failed:\n{{errors}}",
+    "rename_title": "Rename",
+    "rename_message": "Please enter a new name",
+    "rename_failed": "Rename failed [{{code}}]",
+    "newfolder_title": "New Folder",
+    "newfolder_message": "Please enter the folder name",
+    "newfolder_failed": "Failed to create folder [{{code}}]",
+    "dfu_confirm": "Enter DFU mode?",
+    "dfu_update": "Device entered DFU mode. Open firmware update page?",
+    "uploading": "Uploading...",
+    "start_upload": "Start Upload",
+    "waiting": "Waiting"
+  },
+  "device": {
+    "version_prefix": "Connected v{{version}}"
   }
 }

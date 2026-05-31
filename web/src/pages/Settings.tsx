@@ -7,7 +7,7 @@ import * as proto from '../lib/pixl.proto'
 
 export default function Settings() {
   const navigate = useNavigate()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { connected, version } = useConnectionStore()
   const [confirmState, setConfirmState] = useState<{ msg: string; onOk: () => void } | null>(null)
 
@@ -20,33 +20,33 @@ export default function Settings() {
   }), [])
 
   const handleEnterDFU = async () => {
-    const ok = await confirm('是否进入DFU模式？')
+    const ok = await confirm(t('dialog.dfu_confirm'))
     if (!ok) return
     await proto.enter_dfu()
-    const ok2 = await confirm('设备已进入DFU模式，是否跳转到固件更新页面？')
+    const ok2 = await confirm(t('dialog.dfu_update'))
     if (!ok2) return
     window.location.href = 'https://thegecko.github.io/web-bluetooth-dfu/examples/web.html'
   }
 
   return (
     <div className="max-w-xl space-y-6">
-      <h2 className="text-2xl font-bold">设置</h2>
+      <h2 className="text-2xl font-bold">{t('settings.title')}</h2>
 
       <section className="rounded-lg border bg-card p-5 space-y-4">
-        <h3 className="font-medium">固件</h3>
+        <h3 className="font-medium">{t('settings.firmware')}</h3>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">当前版本: {version || '-'}</span>
+          <span className="text-sm text-muted-foreground">{t('settings.current_version', { version: version || '-' })}</span>
           <button
             onClick={handleEnterDFU}
             className="px-4 py-2 rounded-md bg-destructive text-destructive-foreground text-sm hover:bg-destructive/90"
           >
-            进入 DFU 模式
+            {t('settings.dfu_btn')}
           </button>
         </div>
       </section>
 
       <section className="rounded-lg border bg-card p-5 space-y-4">
-        <h3 className="font-medium">语言</h3>
+        <h3 className="font-medium">{t('settings.language')}</h3>
         <select
           value={i18n.language}
           onChange={(e) => i18n.changeLanguage(e.target.value)}
@@ -64,8 +64,8 @@ export default function Settings() {
       </section>
 
       <section className="rounded-lg border bg-card p-5 space-y-2">
-        <h3 className="font-medium">关于</h3>
-        <p className="text-sm text-muted-foreground">Pixl.js - Amiibo 模拟器</p>
+        <h3 className="font-medium">{t('settings.about')}</h3>
+        <p className="text-sm text-muted-foreground">{t('settings.about_desc')}</p>
         <a
           href="https://github.com/solosky/pixl.js"
           target="_blank"
@@ -74,17 +74,17 @@ export default function Settings() {
         >
           GitHub
         </a>
-        <p className="text-xs text-muted-foreground">基于 GPL 2.0 开源协议发布</p>
+        <p className="text-xs text-muted-foreground">{t('settings.license')}</p>
       </section>
 
       <Dialog
         open={!!confirmState}
-        title="确认"
+        title={t('dialog.confirm')}
         onClose={() => setConfirmState(null)}
         footer={
           <>
-            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">取消</button>
-            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">{t('dialog.cancel')}</button>
+            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">{t('dialog.ok')}</button>
           </>
         }
       >

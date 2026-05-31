@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import BLEConnectionBtn from './BLEConnectionBtn'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useConnectionStore } from '../stores/connection'
 
 export default function TopBar() {
+  const { t } = useTranslation()
   const { connected, version } = useConnectionStore()
 
   return (
@@ -11,7 +13,7 @@ export default function TopBar() {
         <span className="text-base font-bold">Pixl.js</span>
         {version && (
           <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
-            已连接 v{version}
+            {t('device.version_prefix', { version })}
           </span>
         )}
       </div>

@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+
 interface Props {
   path: string
   onNavigate: (path: string) => void
 }
 
 export default function FileBreadcrumb({ path, onNavigate }: Props) {
+  const { t } = useTranslation()
   if (!path) return null
 
   const segments = path.split('/').filter(Boolean)
@@ -15,7 +18,7 @@ export default function FileBreadcrumb({ path, onNavigate }: Props) {
         onClick={() => onNavigate('')}
         className="text-muted-foreground hover:text-foreground"
       >
-        根目录
+        {t('labels.root')}
       </button>
       {segments.map((seg, i) => (
         <span key={i} className="flex items-center gap-1">

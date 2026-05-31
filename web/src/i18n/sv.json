@@ -14,7 +14,9 @@
   "btn": {
     "ok": "OK",
     "cancel": "Avbryt",
-    "cont": "Fortsätt"
+    "cont": "Fortsätt",
+    "save": "Spara",
+    "confirm": "Bekräfta"
   },
   "menu": {
     "upload": "Ladda upp",
@@ -40,7 +42,10 @@
     "name": "Namn",
     "size": "Storlek",
     "type": "Typ",
-    "remark": "Anteckning"
+    "remark": "Anteckning",
+    "folder": "Mapp",
+    "file": "Fil",
+    "root": "Rotkatalog"
   },
   "contxmenu": {
     "del": "Radera",
@@ -110,5 +115,69 @@
   "drive": {
     "message": "Lagring inte tillgänglig: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Instrumentpanel",
+    "files": "Filer",
+    "settings": "Inställningar"
+  },
+  "dashboard": {
+    "title": "Instrumentpanel",
+    "connect_title": "Anslut en enhet för att hantera filer",
+    "connect_btn": "Anslut enhet",
+    "quick_actions": "Snabbåtgärder",
+    "dfu_btn": "Gå in i DFU-läge",
+    "refresh_btn": "Uppdatera",
+    "device_info": "Enhetsinformation",
+    "status": "Status",
+    "connected": "Ansluten",
+    "disconnected": "Frånkopplad",
+    "firmware": "Firmwareversion",
+    "ble_address": "BLE-adress",
+    "storage": "Lagring - {{label}}",
+    "used": "Använt",
+    "free": "Ledigt",
+    "total": "Totalt"
+  },
+  "files": {
+    "title": "Filer",
+    "loading": "Laddar...",
+    "search_placeholder": "Sök filer...",
+    "grid_view": "Rutnätsvy",
+    "list_view": "Listvy"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "firmware": "Firmware",
+    "current_version": "Nuvarande version: {{version}}",
+    "dfu_btn": "Gå in i DFU-läge",
+    "language": "Språk",
+    "about": "Om",
+    "about_desc": "Pixl.js - Amiibo-emulator",
+    "license": "Publicerad under GPL 2.0-licens"
+  },
+  "dialog": {
+    "confirm": "Bekräfta",
+    "alert": "Varning",
+    "input": "Inmatning",
+    "ok": "OK",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete_confirm": "Bekräfta borttagning av {{count}} fil(er)/mapp(ar)?",
+    "delete_failed": "Borttagning misslyckades:\n{{errors}}",
+    "rename_title": "Byt namn",
+    "rename_message": "Vänligen ange ett nytt namn",
+    "rename_failed": "Namnbyte misslyckades [{{code}}]",
+    "newfolder_title": "Ny mapp",
+    "newfolder_message": "Vänligen ange mappnamn",
+    "newfolder_failed": "Misslyckades att skapa mapp [{{code}}]",
+    "dfu_confirm": "Vill du aktivera DFU-läge?",
+    "dfu_update": "Enheten är i DFU-läge. Öppna uppdateringssidan?",
+    "uploading": "Laddar upp...",
+    "start_upload": "Starta uppladdning",
+    "waiting": "Väntar"
+  },
+  "device": {
+    "version_prefix": "Ansluten v{{version}}"
   }
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { FolderPlus, Upload, Trash2, ArrowUp, RefreshCw, Search, LayoutGrid, List } from 'lucide-react'
 
 interface Props {
@@ -16,34 +17,35 @@ export default function FileToolbar({
   viewMode, onToggleView, onUpload, onNewFolder, onDelete,
   onUp, onRefresh, onSearch, hasSelection,
 }: Props) {
+  const { t } = useTranslation()
   return (
     <div className="flex items-center gap-2 pb-4 border-b mb-4">
-      <button onClick={onUpload} className="btn-toolbar" title="上传">
-        <Upload className="w-4 h-4" /> 上传
+      <button onClick={onUpload} className="btn-toolbar" title={t('menu.upload')}>
+        <Upload className="w-4 h-4" /> {t('menu.upload')}
       </button>
-      <button onClick={onNewFolder} className="btn-toolbar" title="新建文件夹">
-        <FolderPlus className="w-4 h-4" /> 新建
+      <button onClick={onNewFolder} className="btn-toolbar" title={t('menu.newfolder')}>
+        <FolderPlus className="w-4 h-4" /> {t('menu.newfolder')}
       </button>
-      <button onClick={onDelete} className="btn-toolbar text-destructive" title="删除" disabled={!hasSelection}>
-        <Trash2 className="w-4 h-4" /> 删除
+      <button onClick={onDelete} className="btn-toolbar text-destructive" title={t('menu.del')} disabled={!hasSelection}>
+        <Trash2 className="w-4 h-4" /> {t('menu.del')}
       </button>
       <div className="w-px h-6 bg-border mx-1" />
-      <button onClick={onUp} className="btn-toolbar" title="返回上级">
+      <button onClick={onUp} className="btn-toolbar" title={t('menu.up')}>
         <ArrowUp className="w-4 h-4" />
       </button>
-      <button onClick={onRefresh} className="btn-toolbar" title="刷新">
+      <button onClick={onRefresh} className="btn-toolbar" title={t('menu.refresh')}>
         <RefreshCw className="w-4 h-4" />
       </button>
       <div className="flex-1" />
       <div className="relative">
         <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <input
-          placeholder="搜索文件..."
+          placeholder={t('files.search_placeholder')}
           onChange={(e) => onSearch(e.target.value)}
           className="h-9 w-48 rounded-md border border-input bg-background pl-9 pr-3 text-sm"
         />
       </div>
-      <button onClick={onToggleView} className="btn-toolbar" title={viewMode === 'grid' ? '列表视图' : '网格视图'}>
+      <button onClick={onToggleView} className="btn-toolbar" title={viewMode === 'grid' ? t('files.list_view') : t('files.grid_view')}>
         {viewMode === 'grid' ? <List className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
       </button>
       <style>{`

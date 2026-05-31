@@ -14,7 +14,9 @@
   "btn": {
     "ok": "OK",
     "cancel": "キャンセル",
-    "cont": "続行"
+    "cont": "続行",
+    "save": "保存",
+    "confirm": "確認"
   },
   "menu": {
     "upload": "アップロード",
@@ -40,7 +42,10 @@
     "name": "名前",
     "size": "サイズ",
     "type": "種類",
-    "remark": "備考"
+    "remark": "備考",
+    "folder": "フォルダ",
+    "file": "ファイル",
+    "root": "ルートディレクトリ"
   },
   "contxmenu": {
     "del": "削除",
@@ -110,5 +115,69 @@
   "drive": {
     "message": "ドライブが利用できません: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "ダッシュボード",
+    "files": "ファイル",
+    "settings": "設定"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "connect_title": "デバイスに接続してファイル管理を開始",
+    "connect_btn": "デバイスに接続",
+    "quick_actions": "クイックアクション",
+    "dfu_btn": "DFUモードに入る",
+    "refresh_btn": "更新",
+    "device_info": "デバイス情報",
+    "status": "ステータス",
+    "connected": "接続済み",
+    "disconnected": "未接続",
+    "firmware": "ファームウェアバージョン",
+    "ble_address": "BLEアドレス",
+    "storage": "ストレージ - {{label}}",
+    "used": "使用中",
+    "free": "空き",
+    "total": "合計"
+  },
+  "files": {
+    "title": "ファイル",
+    "loading": "読み込み中...",
+    "search_placeholder": "ファイルを検索...",
+    "grid_view": "グリッド表示",
+    "list_view": "リスト表示"
+  },
+  "settings": {
+    "title": "設定",
+    "firmware": "ファームウェア",
+    "current_version": "現在のバージョン: {{version}}",
+    "dfu_btn": "DFUモードに入る",
+    "language": "言語",
+    "about": "このアプリについて",
+    "about_desc": "Pixl.js - Amiibo エミュレータ",
+    "license": "GPL 2.0 ライセンスのもとで公開"
+  },
+  "dialog": {
+    "confirm": "確認",
+    "alert": "通知",
+    "input": "入力",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete_confirm": "{{count}} 個のファイル/フォルダを削除してもよろしいですか？",
+    "delete_failed": "削除失敗:\n{{errors}}",
+    "rename_title": "名前変更",
+    "rename_message": "新しい名前を入力してください",
+    "rename_failed": "名前変更失敗 [{{code}}]",
+    "newfolder_title": "新しいフォルダ",
+    "newfolder_message": "フォルダ名を入力してください",
+    "newfolder_failed": "フォルダ作成失敗 [{{code}}]",
+    "dfu_confirm": "DFUモードに入りますか？",
+    "dfu_update": "DFUモードに入りました。アップデートページを開きますか？",
+    "uploading": "アップロード中...",
+    "start_upload": "アップロード開始",
+    "waiting": "待機中"
+  },
+  "device": {
+    "version_prefix": "接続済み v{{version}}"
   }
 }

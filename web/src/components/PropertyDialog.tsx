@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FileEntry } from '../hooks/useFiles'
 import * as proto from '../lib/pixl.proto'
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function PropertyDialog({ file, currentDir, open, onClose }: Props) {
+  const { t } = useTranslation()
   const [notes, setNotes] = useState(file?.notes || '')
   const [hide, setHide] = useState(file?.flags.hide || false)
   const [readonly, setReadonly] = useState(file?.flags.readonly || false)
@@ -30,12 +32,12 @@ export default function PropertyDialog({ file, currentDir, open, onClose }: Prop
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg w-96 p-6">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-medium">属性 - {file.name}</h3>
+          <h3 className="font-medium">{t('properties.title')} - {file.name}</h3>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">✕</button>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="text-sm font-medium block mb-1">备注</label>
+            <label className="text-sm font-medium block mb-1">{t('properties.remark')}</label>
             <input
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -45,11 +47,11 @@ export default function PropertyDialog({ file, currentDir, open, onClose }: Prop
           <div className="flex gap-4">
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={hide} onChange={(e) => setHide(e.target.checked)} />
-              隐藏
+              {t('properties.hide')}
             </label>
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" checked={readonly} onChange={(e) => setReadonly(e.target.checked)} />
-              只读
+              {t('properties.readonly')}
             </label>
           </div>
           <div className="text-xs text-muted-foreground">
@@ -58,8 +60,8 @@ export default function PropertyDialog({ file, currentDir, open, onClose }: Prop
           </div>
         </div>
         <div className="flex justify-end gap-2 mt-4">
-          <button onClick={onClose} className="px-4 py-2 rounded-md border text-sm">取消</button>
-          <button onClick={handleSave} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">保存</button>
+          <button onClick={onClose} className="px-4 py-2 rounded-md border text-sm">{t('dialog.cancel')}</button>
+          <button onClick={handleSave} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">{t('dialog.save')}</button>
         </div>
       </div>
     </div>

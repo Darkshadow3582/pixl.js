@@ -1,13 +1,14 @@
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, FolderOpen, Settings } from 'lucide-react'
 
-const navItems = [
-  { to: '/', icon: LayoutDashboard, label: '仪表盘' },
-  { to: '/files', icon: FolderOpen, label: '文件管理' },
-  { to: '/settings', icon: Settings, label: '设置' },
-]
-
 export default function Sidebar() {
+  const { t } = useTranslation()
+  const navItems = [
+    { to: '/', icon: LayoutDashboard, label: t('sidebar.dashboard') },
+    { to: '/files', icon: FolderOpen, label: t('sidebar.files') },
+    { to: '/settings', icon: Settings, label: t('sidebar.settings') },
+  ]
   return (
     <aside className="w-56 h-screen border-r bg-card flex flex-col">
       <div className="p-4 border-b">

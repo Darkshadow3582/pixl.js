@@ -14,7 +14,9 @@
   "btn": {
     "ok": "确定",
     "cancel": "取消",
-    "cont": "继续"
+    "cont": "继续",
+    "save": "保存",
+    "confirm": "确认"
   },
   "menu": {
     "upload": "上传",
@@ -25,7 +27,7 @@
     "dfu": "DFU模式"
   },
   "status": {
-    "connected": "已连接 ",
+    "connected": "已连接",
     "loading": "加载中..."
   },
   "conn": {
@@ -40,18 +42,19 @@
     "name": "名称",
     "size": "大小",
     "type": "类型",
-    "remark": "备注"
+    "remark": "备注",
+    "folder": "文件夹",
+    "file": "文件",
+    "root": "根目录"
   },
   "contxmenu": {
     "del": "删除",
     "rename": "重命名",
-    "prop": "属性",
-    "format": "格式化"
+    "prop": "属性"
   },
   "properties": {
     "title": "属性",
     "remark": "备注",
-    "entermsg": "请输入备注信息",
     "attrib": "属性",
     "hide": "隐藏",
     "readonly": "只读",
@@ -110,5 +113,69 @@
   "drive": {
     "message": "驱动器不可用: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "仪表盘",
+    "files": "文件管理",
+    "settings": "设置"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "connect_title": "连接设备以开始管理文件",
+    "connect_btn": "连接设备",
+    "quick_actions": "快捷操作",
+    "dfu_btn": "进入 DFU 模式",
+    "refresh_btn": "刷新",
+    "device_info": "设备信息",
+    "status": "状态",
+    "connected": "已连接",
+    "disconnected": "未连接",
+    "firmware": "固件版本",
+    "ble_address": "BLE 地址",
+    "storage": "存储 - {{label}}",
+    "used": "已用",
+    "free": "剩余",
+    "total": "总计"
+  },
+  "files": {
+    "title": "文件管理",
+    "loading": "加载中...",
+    "search_placeholder": "搜索文件...",
+    "grid_view": "网格视图",
+    "list_view": "列表视图"
+  },
+  "settings": {
+    "title": "设置",
+    "firmware": "固件",
+    "current_version": "当前版本: {{version}}",
+    "dfu_btn": "进入 DFU 模式",
+    "language": "语言",
+    "about": "关于",
+    "about_desc": "Pixl.js - Amiibo 模拟器",
+    "license": "基于 GPL 2.0 开源协议发布"
+  },
+  "dialog": {
+    "confirm": "确认",
+    "alert": "提示",
+    "input": "输入",
+    "ok": "确定",
+    "cancel": "取消",
+    "save": "保存",
+    "delete_confirm": "确定删除 {{count}} 个文件/文件夹？",
+    "delete_failed": "删除失败:\n{{errors}}",
+    "rename_title": "重命名",
+    "rename_message": "请输入新的名称",
+    "rename_failed": "重命名失败 [{{code}}]",
+    "newfolder_title": "新建文件夹",
+    "newfolder_message": "请输入文件夹名称",
+    "newfolder_failed": "新建文件夹失败 [{{code}}]",
+    "dfu_confirm": "是否进入DFU模式？",
+    "dfu_update": "设备已进入DFU模式，是否跳转到固件更新页面？",
+    "uploading": "上传中...",
+    "start_upload": "开始上传",
+    "waiting": "等待中"
+  },
+  "device": {
+    "version_prefix": "已连接 v{{version}}"
   }
 }

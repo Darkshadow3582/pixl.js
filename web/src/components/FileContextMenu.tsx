@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pencil, Trash2, Info } from 'lucide-react'
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function FileContextMenu({ x, y, onRename, onDelete, onProperties, onClose }: Props) {
+  const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -24,9 +26,9 @@ export default function FileContextMenu({ x, y, onRename, onDelete, onProperties
   }, [onClose])
 
   const items = [
-    { icon: Pencil, label: '重命名', action: onRename },
-    { icon: Trash2, label: '删除', action: onDelete, danger: true as const },
-    { icon: Info, label: '属性', action: onProperties },
+    { icon: Pencil, label: t('contxmenu.rename'), action: onRename },
+    { icon: Trash2, label: t('contxmenu.del'), action: onDelete, danger: true as const },
+    { icon: Info, label: t('contxmenu.prop'), action: onProperties },
   ]
 
   return (

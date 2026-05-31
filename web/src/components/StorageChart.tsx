@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
 interface Props {
@@ -8,18 +9,19 @@ interface Props {
 }
 
 export default function StorageChart({ label, used, total }: Props) {
+  const { t } = useTranslation()
   const free = used
   const usedVal = Math.max(0, total - free)
   const usedPercent = total > 0 ? (usedVal / total) * 100 : 0
   const color = usedPercent < 60 ? '#22c55e' : usedPercent < 85 ? '#f97316' : '#ef4444'
   const data = [
-    { name: '已用', value: usedVal },
-    { name: '剩余', value: free },
+    { name: t('dashboard.used'), value: usedVal },
+    { name: t('dashboard.free'), value: free },
   ]
 
   return (
     <div className="rounded-lg border bg-card p-5">
-      <h3 className="font-medium text-sm mb-3">存储 - {label}</h3>
+      <h3 className="font-medium text-sm mb-3">{t('dashboard.storage', { label })}</h3>
       <div className="flex items-center gap-4">
         <div className="w-20 h-20">
           <ResponsiveContainer width="100%" height="100%">
@@ -41,8 +43,8 @@ export default function StorageChart({ label, used, total }: Props) {
           </ResponsiveContainer>
         </div>
         <div className="text-sm">
-          <p className="text-muted-foreground">已用 {formatSize(usedVal)}</p>
-          <p className="text-muted-foreground">总计 {formatSize(total)}</p>
+          <p className="text-muted-foreground">{t('dashboard.used')} {formatSize(usedVal)}</p>
+          <p className="text-muted-foreground">{t('dashboard.total')} {formatSize(total)}</p>
         </div>
       </div>
     </div>

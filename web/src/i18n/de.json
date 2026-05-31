@@ -14,7 +14,9 @@
   "btn": {
     "ok": "OK",
     "cancel": "Abbrechen",
-    "cont": "Weiter"
+    "cont": "Weiter",
+    "save": "Speichern",
+    "confirm": "Bestätigen"
   },
   "menu": {
     "upload": "Hochladen",
@@ -40,7 +42,10 @@
     "name": "Name",
     "size": "Größe",
     "type": "Typ",
-    "remark": "Notiz"
+    "remark": "Notiz",
+    "folder": "Ordner",
+    "file": "Datei",
+    "root": "Stammverzeichnis"
   },
   "contxmenu": {
     "del": "Löschen",
@@ -110,5 +115,69 @@
   "drive": {
     "message": "Speicher nicht verfügbar: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "files": "Dateien",
+    "settings": "Einstellungen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connect_title": "Verbinden Sie ein Gerät, um Dateien zu verwalten",
+    "connect_btn": "Gerät verbinden",
+    "quick_actions": "Schnellaktionen",
+    "dfu_btn": "DFU-Modus starten",
+    "refresh_btn": "Aktualisieren",
+    "device_info": "Geräteinformationen",
+    "status": "Status",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "firmware": "Firmware-Version",
+    "ble_address": "BLE-Adresse",
+    "storage": "Speicher - {{label}}",
+    "used": "Belegt",
+    "free": "Frei",
+    "total": "Gesamt"
+  },
+  "files": {
+    "title": "Dateien",
+    "loading": "Lade...",
+    "search_placeholder": "Dateien suchen...",
+    "grid_view": "Rasteransicht",
+    "list_view": "Listenansicht"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "firmware": "Firmware",
+    "current_version": "Aktuelle Version: {{version}}",
+    "dfu_btn": "DFU-Modus starten",
+    "language": "Sprache",
+    "about": "Über",
+    "about_desc": "Pixl.js - Amiibo-Emulator",
+    "license": "Veröffentlicht unter GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Bestätigen",
+    "alert": "Hinweis",
+    "input": "Eingabe",
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete_confirm": "Möchten Sie {{count}} Datei(en)/Ordner löschen?",
+    "delete_failed": "Löschen fehlgeschlagen:\n{{errors}}",
+    "rename_title": "Umbenennen",
+    "rename_message": "Bitte geben Sie den neuen Namen ein",
+    "rename_failed": "Umbenennen fehlgeschlagen [{{code}}]",
+    "newfolder_title": "Neuer Ordner",
+    "newfolder_message": "Bitte geben Sie den Ordnernamen ein",
+    "newfolder_failed": "Ordner erstellen fehlgeschlagen [{{code}}]",
+    "dfu_confirm": "DFU-Modus aktivieren?",
+    "dfu_update": "Gerät im DFU-Modus. Aktualisierungsseite öffnen?",
+    "uploading": "Lade hoch...",
+    "start_upload": "Hochladen starten",
+    "waiting": "Warte"
+  },
+  "device": {
+    "version_prefix": "Verbunden v{{version}}"
   }
 }

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useConnectionStore } from '../stores/connection'
 import { useFiles, FileEntry } from '../hooks/useFiles'
@@ -14,6 +15,7 @@ import PropertyDialog from '../components/PropertyDialog'
 import Dialog from '../components/Dialog'
 
 export default function FileManager() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { connected } = useConnectionStore()
   const { files, loading, currentDir, setCurrentDir, reloadDrive, reloadFolder, setFiles } = useFiles()
@@ -85,17 +87,17 @@ export default function FileManager() {
   }, [currentDir, setCurrentDir, reloadFolder])
 
   const handleNewFolder = useCallback(async () => {
-    const name = await prompt('请输入文件夹名称:')
+    const name = await prompt(t('dialog.newfolder_message'))
     if (!name) return
     const path = appendSegment(currentDir, name)
     try {
       const res = await proto.vfs_create_folder(path)
       if (res.status !== 0) {
-        await alert(`新建文件夹失败 [${res.status}]`)
+        await alert(t('dialog.newfolder_failed', { code: res.status }))
         return
       }
     } catch (e: any) {
-      await alert(`新建文件夹失败 [${e.message}]`)
+      await alert(t('dialog.newfolder_failed', { code: e.message }))
       return
     }
     reloadFolder(currentDir)
@@ -103,7 +105,7 @@ export default function FileManager() {
 
   const handleDelete = useCallback(async () => {
     if (selected.size === 0) return
-    const ok = await confirm(`确定删除 ${selected.size} 个文件/文件夹？`)
+    const ok = await confirm(t('dialog.delete_confirm', { count: selected.size }))
     if (!ok) return
     let failed: string[] = []
     for (const name of selected) {
@@ -118,25 +120,25 @@ export default function FileManager() {
       }
     }
     if (failed.length > 0) {
-      await alert('删除失败:\n' + failed.join('\n'))
+      await alert(t('dialog.delete_failed', { errors: failed.join('\n') }))
     }
     setSelected(new Set())
     reloadFolder(currentDir)
   }, [selected, currentDir, reloadFolder])
 
   const handleRename = useCallback(async (file: FileEntry) => {
-    const name = await prompt('请输入新名称:', file.name)
+    const name = await prompt(t('dialog.rename_message'), file.name)
     if (!name || name === file.name) return
     const oldPath = appendSegment(currentDir, file.name)
     const newPath = appendSegment(currentDir, name)
     try {
       const res = await proto.vfs_rename(oldPath, newPath)
       if (res.status !== 0) {
-        await alert(`重命名失败 [${res.status}]`)
+        await alert(t('dialog.rename_failed', { code: res.status }))
         return
       }
     } catch (e: any) {
-      await alert(`重命名失败 [${e.message}]`)
+      await alert(t('dialog.rename_failed', { code: e.message }))
       return
     }
     reloadFolder(currentDir)
@@ -148,7 +150,7 @@ export default function FileManager() {
 
   return (
     <div className="h-full flex flex-col">
-      <h2 className="text-2xl font-bold mb-4">文件管理</h2>
+      <h2 className="text-2xl font-bold mb-4">{t('files.title')}</h2>
 
       <FileToolbar
         viewMode={viewMode}
@@ -166,7 +168,7 @@ export default function FileManager() {
 
       <div className="flex-1 overflow-auto">
         {loading ? (
-          <div className="flex items-center justify-center h-32 text-muted-foreground">加载中...</div>
+          <div className="flex items-center justify-center h-32 text-muted-foreground">{t('files.loading')}</div>
         ) : viewMode === 'grid' ? (
           <FileGrid
             files={filteredFiles}
@@ -224,12 +226,12 @@ export default function FileManager() {
 
       <Dialog
         open={!!confirmState}
-        title="确认"
+        title={t('dialog.confirm')}
         onClose={() => setConfirmState(null)}
         footer={
           <>
-            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">取消</button>
-            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+            <button onClick={() => setConfirmState(null)} className="px-4 py-2 rounded-md border text-sm">{t('dialog.cancel')}</button>
+            <button onClick={() => confirmState?.onOk()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">{t('dialog.ok')}</button>
           </>
         }
       >
@@ -238,12 +240,12 @@ export default function FileManager() {
 
       <Dialog
         open={!!promptState}
-        title="输入"
+        title={t('dialog.input')}
         onClose={() => { setPromptState(null); promptState?.onSubmit('') }}
         footer={
           <>
-            <button onClick={() => { setPromptState(null); promptState?.onSubmit('') }} className="px-4 py-2 rounded-md border text-sm">取消</button>
-            <button onClick={() => { const input = document.getElementById('prompt-input') as HTMLInputElement; promptState?.onSubmit(input?.value || '') }} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+            <button onClick={() => { setPromptState(null); promptState?.onSubmit('') }} className="px-4 py-2 rounded-md border text-sm">{t('dialog.cancel')}</button>
+            <button onClick={() => { const input = document.getElementById('prompt-input') as HTMLInputElement; promptState?.onSubmit(input?.value || '') }} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">{t('dialog.ok')}</button>
           </>
         }
       >
@@ -253,10 +255,10 @@ export default function FileManager() {
 
       <Dialog
         open={!!alertState}
-        title="提示"
+        title={t('dialog.alert')}
         onClose={() => setAlertState(null)}
         footer={
-          <button onClick={() => setAlertState(null)} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">确定</button>
+          <button onClick={() => setAlertState(null)} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm">{t('dialog.ok')}</button>
         }
       >
         <p className="text-sm whitespace-pre-wrap">{alertState}</p>

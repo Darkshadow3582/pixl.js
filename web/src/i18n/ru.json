@@ -14,7 +14,9 @@
   "btn": {
     "ok": "ОК",
     "cancel": "Отмена",
-    "cont": "Продолжить"
+    "cont": "Продолжить",
+    "save": "Сохранить",
+    "confirm": "Подтвердить"
   },
   "menu": {
     "upload": "Загрузить",
@@ -40,7 +42,10 @@
     "name": "Имя",
     "size": "Размер",
     "type": "Тип",
-    "remark": "Заметка"
+    "remark": "Заметка",
+    "folder": "Папка",
+    "file": "Файл",
+    "root": "Корневой каталог"
   },
   "contxmenu": {
     "del": "Удалить",
@@ -110,5 +115,69 @@
   "drive": {
     "message": "Диск недоступен: ",
     "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Панель управления",
+    "files": "Файлы",
+    "settings": "Настройки"
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "connect_title": "Подключите устройство для управления файлами",
+    "connect_btn": "Подключить устройство",
+    "quick_actions": "Быстрые действия",
+    "dfu_btn": "Войти в режим DFU",
+    "refresh_btn": "Обновить",
+    "device_info": "Информация об устройстве",
+    "status": "Статус",
+    "connected": "Подключено",
+    "disconnected": "Отключено",
+    "firmware": "Версия прошивки",
+    "ble_address": "BLE адрес",
+    "storage": "Память - {{label}}",
+    "used": "Использовано",
+    "free": "Свободно",
+    "total": "Всего"
+  },
+  "files": {
+    "title": "Файлы",
+    "loading": "Загрузка...",
+    "search_placeholder": "Поиск файлов...",
+    "grid_view": "Сетка",
+    "list_view": "Список"
+  },
+  "settings": {
+    "title": "Настройки",
+    "firmware": "Прошивка",
+    "current_version": "Текущая версия: {{version}}",
+    "dfu_btn": "Войти в режим DFU",
+    "language": "Язык",
+    "about": "О программе",
+    "about_desc": "Pixl.js - Эмулятор Amiibo",
+    "license": "Под лицензией GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Подтверждение",
+    "alert": "Уведомление",
+    "input": "Ввод",
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete_confirm": "Подтвердите удаление {{count}} файла(ов)/папки(ок)?",
+    "delete_failed": "Ошибка удаления:\n{{errors}}",
+    "rename_title": "Переименование",
+    "rename_message": "Задайте новое имя",
+    "rename_failed": "Ошибка переименования [{{code}}]",
+    "newfolder_title": "Новая папка",
+    "newfolder_message": "Задайте название папки",
+    "newfolder_failed": "Ошибка создания папки [{{code}}]",
+    "dfu_confirm": "Войти в режим DFU?",
+    "dfu_update": "Устройство в режиме DFU. Открыть страницу обновления?",
+    "uploading": "Загрузка...",
+    "start_upload": "Начать загрузку",
+    "waiting": "Ожидание"
+  },
+  "device": {
+    "version_prefix": "Подключено v{{version}}"
   }
 }
