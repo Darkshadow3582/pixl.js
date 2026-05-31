@@ -8,11 +8,13 @@ interface Props {
 }
 
 export default function StorageChart({ label, used, total }: Props) {
-  const usedPercent = total > 0 ? (used / total) * 100 : 0
+  const free = used
+  const usedVal = Math.max(0, total - free)
+  const usedPercent = total > 0 ? (usedVal / total) * 100 : 0
   const color = usedPercent < 60 ? '#22c55e' : usedPercent < 85 ? '#f97316' : '#ef4444'
   const data = [
-    { name: '已用', value: used },
-    { name: '剩余', value: Math.max(0, total - used) },
+    { name: '已用', value: usedVal },
+    { name: '剩余', value: free },
   ]
 
   return (
@@ -39,7 +41,7 @@ export default function StorageChart({ label, used, total }: Props) {
           </ResponsiveContainer>
         </div>
         <div className="text-sm">
-          <p className="text-muted-foreground">已用 {formatSize(used)}</p>
+          <p className="text-muted-foreground">已用 {formatSize(usedVal)}</p>
           <p className="text-muted-foreground">总计 {formatSize(total)}</p>
         </div>
       </div>

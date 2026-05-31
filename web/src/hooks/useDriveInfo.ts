@@ -5,7 +5,7 @@ export interface DriveInfo {
   label: string
   name: string
   totalSize: number
-  usedSize: number
+  freeSize: number
   status: number
 }
 
@@ -21,7 +21,7 @@ export function useDriveInfo() {
         label: d.label,
         name: d.name,
         totalSize: d.total_size,
-        usedSize: d.used_size,
+        freeSize: d.used_size,
         status: d.status,
       })))
     } finally {

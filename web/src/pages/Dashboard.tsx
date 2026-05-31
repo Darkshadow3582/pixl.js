@@ -56,7 +56,7 @@ export default function Dashboard() {
           <StorageChart
             key={i}
             label={drive.label}
-            used={drive.usedSize}
+            used={drive.freeSize}
             total={drive.totalSize}
             status={drive.status}
           />
