@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import * as pixl from '../lib/pixl.ble'
+import * as proto from '../lib/pixl.proto'
 import { sharedEventDispatcher } from '../lib/event'
 
 interface ConnectionState {
@@ -13,6 +14,8 @@ interface ConnectionState {
 
 export const useConnectionStore = create<ConnectionState>((set, get) => {
   const dispatcher = sharedEventDispatcher()
+
+  proto.init()
 
   dispatcher.addListener('ble_connected', () => {
     set({ connected: true, connecting: false })
