@@ -58,6 +58,7 @@ void app_amiidb_on_run(mini_app_inst_t *p_app_inst) {
     amiidb_fav_array_init(p_app_handle->fav_array);
 
     p_app_handle->p_scene_dispatcher = mui_scene_dispatcher_create();
+    mui_scene_dispatcher_set_view_dispatcher(p_app_handle->p_scene_dispatcher, p_app_handle->p_view_dispatcher);
 
     mui_scene_dispatcher_set_user_data(p_app_handle->p_scene_dispatcher, p_app_handle);
     mui_scene_dispatcher_set_scene_defines(p_app_handle->p_scene_dispatcher, amiidb_scene_defines, AMIIDB_SCENE_MAX);
