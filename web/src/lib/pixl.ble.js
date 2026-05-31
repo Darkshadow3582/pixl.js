@@ -13,57 +13,57 @@ var nus_char_tx;
 var bluetoothDevice;
 
 export function connect() {
-    if (!navigator.bluetooth) {
-        sharedEventDispatcher().emit("ble_connect_error");
-        return Promise.reject(new Error("Web Bluetooth not supported"));
-    }
-    return navigator.bluetooth.requestDevice({
-        filters: [
-            { services: [NUS_SERVICE_UUID] }
-        ],
-        optionalServices: [NUS_SERVICE_UUID]
-    })
-        .then(device => {
-            bluetoothDevice = device;
-            console.log(device);
-            console.log('Connecting to GATT Server...');
-            device.addEventListener('gattserverdisconnected', onDeviceDisconnected);
-            return device.gatt.connect();
+    try {
+        return navigator.bluetooth.requestDevice({
+            filters: [
+                { services: [NUS_SERVICE_UUID] }
+            ],
+            optionalServices: [NUS_SERVICE_UUID]
         })
-        .then(server => {
-            console.log('Getting Services...');
-            return server.getPrimaryServices();
-        })
-        .then(services => {
-            console.log('Getting Characteristics...');
-            services.forEach(service => {
-                if (service.uuid == NUS_SERVICE_UUID) {
-                    nus_service = service;
-                    console.log('> found nus Service: ' + service.uuid);
-                }
-            });
-            return nus_service.getCharacteristics();
-        })
-        .then(characteristics => {
-            characteristics.forEach(characteristic => {
-                console.log('>> Characteristic: ' + characteristic.uuid + ' ' +
-                    getSupportedProperties(characteristic));
-                if (characteristic.uuid == NUS_CHAR_TX_UUID) {
-                    nus_char_tx = characteristic;
+            .then(device => {
+                bluetoothDevice = device;
+                console.log(device);
+                console.log('Connecting to GATT Server...');
+                device.addEventListener('gattserverdisconnected', onDeviceDisconnected);
+                return device.gatt.connect();
+            })
+            .then(server => {
+                console.log('Getting Services...');
+                return server.getPrimaryServices();
+            })
+            .then(services => {
+                console.log('Getting Characteristics...');
+                services.forEach(service => {
+                    if (service.uuid == NUS_SERVICE_UUID) {
+                        nus_service = service;
+                        console.log('> found nus Service: ' + service.uuid);
+                    }
+                });
+                return nus_service.getCharacteristics();
+            })
+            .then(characteristics => {
+                characteristics.forEach(characteristic => {
+                    console.log('>> Characteristic: ' + characteristic.uuid + ' ' +
+                        getSupportedProperties(characteristic));
+                    if (characteristic.uuid == NUS_CHAR_TX_UUID) {
+                        nus_char_tx = characteristic;
 
-                } else if (characteristic.uuid == NUS_CHAR_RX_UUID) {
-                    nus_char_rx = characteristic;
-                    characteristic.addEventListener('characteristicvaluechanged',
-                        onRxDataReceived);
-                    characteristic.startNotifications();
-                }
+                    } else if (characteristic.uuid == NUS_CHAR_RX_UUID) {
+                        nus_char_rx = characteristic;
+                        characteristic.addEventListener('characteristicvaluechanged',
+                            onRxDataReceived);
+                        characteristic.startNotifications();
+                    }
+                });
+                console.log("connected!");
+                sharedEventDispatcher().emit("ble_connected");
+            })
+            .catch(error => {
+                sharedEventDispatcher().emit("ble_connect_error");
             });
-            console.log("connected!");
-            sharedEventDispatcher().emit("ble_connected");
-        })
-        .catch(error => {
-            sharedEventDispatcher().emit("ble_connect_error");
-        });
+    } catch (e) {
+        sharedEventDispatcher().emit("ble_connect_error");
+    }
 }
 
 

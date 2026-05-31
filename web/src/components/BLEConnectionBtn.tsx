@@ -9,10 +9,6 @@ export default function BLEConnectionBtn() {
     if (connected) {
       disconnect()
     } else {
-      if (!navigator.bluetooth) {
-        alert('当前浏览器不支持 Web Bluetooth，请使用 Chrome/Edge 浏览器')
-        return
-      }
       connect()
     }
   }
