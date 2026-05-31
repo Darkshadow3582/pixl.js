@@ -67,16 +67,36 @@ export default function FileManager() {
     const name = prompt('请输入文件夹名称:')
     if (!name) return
     const path = appendSegment(currentDir, name)
-    await proto.vfs_create_folder(path)
+    try {
+      const res = await proto.vfs_create_folder(path)
+      if (res.status !== 0) {
+        alert(`新建文件夹失败 [${res.status}]`)
+        return
+      }
+    } catch (e: any) {
+      alert(`新建文件夹失败 [${e.message}]`)
+      return
+    }
     reloadFolder(currentDir)
   }, [currentDir, reloadFolder])
 
   const handleDelete = useCallback(async () => {
     if (selected.size === 0) return
     if (!confirm(`确定删除 ${selected.size} 个文件/文件夹？`)) return
+    let failed: string[] = []
     for (const name of selected) {
       const path = appendSegment(currentDir, name)
-      await proto.vfs_remove(path)
+      try {
+        const res = await proto.vfs_remove(path)
+        if (res.status !== 0) {
+          failed.push(name + ' [' + res.status + ']')
+        }
+      } catch (e: any) {
+        failed.push(name + ' [' + e.message + ']')
+      }
+    }
+    if (failed.length > 0) {
+      alert('删除失败:\n' + failed.join('\n'))
     }
     setSelected(new Set())
     reloadFolder(currentDir)
@@ -87,7 +107,16 @@ export default function FileManager() {
     if (!name || name === file.name) return
     const oldPath = appendSegment(currentDir, file.name)
     const newPath = appendSegment(currentDir, name)
-    await proto.vfs_rename(oldPath, newPath)
+    try {
+      const res = await proto.vfs_rename(oldPath, newPath)
+      if (res.status !== 0) {
+        alert(`重命名失败 [${res.status}]`)
+        return
+      }
+    } catch (e: any) {
+      alert(`重命名失败 [${e.message}]`)
+      return
+    }
     reloadFolder(currentDir)
   }, [currentDir, reloadFolder])
 
