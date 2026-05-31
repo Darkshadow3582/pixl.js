@@ -54,25 +54,30 @@ function proocess_op(op) {
             var bb = bbwrap(data);
             var h = read_header(bb);
             h.data = op.rx_data_cb(bb);
-            op_ongoing = false;
             op.p_resolve(h);
-            process_op_queue();
+            next_op();
             return h;
         } catch (e) {
+            next_op();
             op.p_reject(e);
         }
     }).catch(e => {
-        op_ongoing = false;
+        next_op();
         op.p_reject(e);
-        process_op_queue();
     });
 
     var bb = bbnew();
     op.tx_data_cb(bb);
     op_ongoing = true;
     tx_data_frame(op.cmd, 0, 0, bb).catch(e => {
+        next_op();
         op.p_reject(e);
     });
+}
+
+function next_op() {
+    op_ongoing = false;
+    process_op_queue();
 }
 
 
