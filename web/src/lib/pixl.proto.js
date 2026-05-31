@@ -82,12 +82,6 @@ function proocess_op(op) {
     });
 }
 
-function next_op() {
-    op_ongoing = false;
-    process_op_queue();
-}
-
-
 var m_api_resolve;
 var m_api_reject;
 
