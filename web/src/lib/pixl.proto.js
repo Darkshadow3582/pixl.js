@@ -42,10 +42,17 @@ export function op_queue_push(cmd, tx_data_cb, rx_data_cb) {
 
 
 function process_op_queue() {
+    console.log("process_op_queue: ongoing=" + op_ongoing + " queue=" + op_queue.length);
     if (!op_ongoing && op_queue.length > 0) {
         var op = op_queue.shift();
         proocess_op(op);
     }
+}
+
+function next_op() {
+    op_ongoing = false;
+    console.log("next_op: calling process_op_queue");
+    process_op_queue();
 }
 
 function proocess_op(op) {
