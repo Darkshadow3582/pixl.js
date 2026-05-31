@@ -1,6 +1,5 @@
 import { useConnectionStore } from '../stores/connection'
 import { useTranslation } from 'react-i18next'
-import * as proto from '../lib/pixl.proto'
 
 export default function BLEConnectionBtn() {
   const { t } = useTranslation()
@@ -10,13 +9,11 @@ export default function BLEConnectionBtn() {
     if (connected) {
       disconnect()
     } else {
+      if (!navigator.bluetooth) {
+        alert('当前浏览器不支持 Web Bluetooth，请使用 Chrome/Edge 浏览器')
+        return
+      }
       connect()
-      proto.get_version().then(res => {
-        useConnectionStore.setState({
-          version: res.data.ver,
-          bleAddress: res.data.ble_addr,
-        })
-      })
     }
   }
 

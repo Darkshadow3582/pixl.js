@@ -13,6 +13,10 @@ var nus_char_tx;
 var bluetoothDevice;
 
 export function connect() {
+    if (!navigator.bluetooth) {
+        sharedEventDispatcher().emit("ble_connect_error");
+        return Promise.reject(new Error("Web Bluetooth not supported"));
+    }
     return navigator.bluetooth.requestDevice({
         filters: [
             { services: [NUS_SERVICE_UUID] }
