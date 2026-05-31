@@ -33,11 +33,16 @@ export default function Dashboard() {
   if (!connected) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
-        <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-          <span className="text-2xl">🔗</span>
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold mb-2">Pixl.js</h1>
+          <p className="text-muted-foreground">连接设备以开始管理文件</p>
         </div>
-        <h2 className="text-xl font-medium mb-2">未连接设备</h2>
-        <p className="text-muted-foreground text-sm mb-4">点击顶栏的连接按钮开始使用</p>
+        <button
+          onClick={() => useConnectionStore.getState().connect()}
+          className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium"
+        >
+          连接设备
+        </button>
       </div>
     )
   }
