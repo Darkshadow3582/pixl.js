@@ -22,6 +22,7 @@
     "upload": "Upload",
     "newfolder": "New Folder",
     "del": "Delete",
+    "download": "Download",
     "up": "Parent Folder",
     "refresh": "Refresh",
     "dfu": "DFU"
@@ -51,7 +52,8 @@
     "del": "Delete",
     "rename": "Rename",
     "prop": "Properties",
-    "format": "Format"
+    "format": "Format",
+    "download": "Download"
   },
   "properties": {
     "title": "Properties",
@@ -144,7 +146,8 @@
     "loading": "Loading...",
     "search_placeholder": "Search files...",
     "grid_view": "Grid View",
-    "list_view": "List View"
+    "list_view": "List View",
+    "multi_select": "Multi-Select"
   },
   "settings": {
     "title": "Settings",

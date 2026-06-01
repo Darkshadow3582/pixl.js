@@ -22,6 +22,7 @@
     "upload": "Subir",
     "newfolder": "Crear Carpeta",
     "del": "Borrar",
+    "download": "Descargar",
     "up": "Subir Nivel",
     "refresh": "Actualizar",
     "dfu": "DFU"
@@ -51,7 +52,8 @@
     "del": "Borrar",
     "rename": "Renombrar",
     "prop": "Propiedades",
-    "format": "Formatear"
+    "format": "Formatear",
+    "download": "Descargar"
   },
   "properties": {
     "title": "Propiedades",
@@ -144,7 +146,8 @@
     "loading": "Cargando...",
     "search_placeholder": "Buscar archivos...",
     "grid_view": "Vista de cuadrícula",
-    "list_view": "Vista de lista"
+    "list_view": "Vista de lista",
+    "multi_select": "Selección Múltiple"
   },
   "settings": {
     "title": "Ajustes",

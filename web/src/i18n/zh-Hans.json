@@ -22,6 +22,7 @@
     "upload": "上传",
     "newfolder": "新建文件夹",
     "del": "删除",
+    "download": "下载",
     "up": "返回上级",
     "refresh": "刷新",
     "dfu": "DFU模式"
@@ -50,7 +51,9 @@
   "contxmenu": {
     "del": "删除",
     "rename": "重命名",
-    "prop": "属性"
+    "prop": "属性",
+    "format": "格式化",
+    "download": "下载"
   },
   "properties": {
     "title": "属性",
@@ -142,7 +145,8 @@
     "loading": "加载中...",
     "search_placeholder": "搜索文件...",
     "grid_view": "网格视图",
-    "list_view": "列表视图"
+    "list_view": "列表视图",
+    "multi_select": "多选模式"
   },
   "settings": {
     "title": "设置",

@@ -22,6 +22,7 @@
     "upload": "アップロード",
     "newfolder": "新しいフォルダ",
     "del": "削除",
+    "download": "ダウンロード",
     "up": "親フォルダ",
     "refresh": "更新",
     "dfu": "DFUモード"
@@ -51,7 +52,8 @@
     "del": "削除",
     "rename": "名前変更",
     "prop": "プロパティ",
-    "format": "フォーマット"
+    "format": "フォーマット",
+    "download": "ダウンロード"
   },
   "properties": {
     "title": "プロパティ",
@@ -144,7 +146,8 @@
     "loading": "読み込み中...",
     "search_placeholder": "ファイルを検索...",
     "grid_view": "グリッド表示",
-    "list_view": "リスト表示"
+    "list_view": "リスト表示",
+    "multi_select": "複数選択"
   },
   "settings": {
     "title": "設定",

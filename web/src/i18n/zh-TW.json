@@ -22,6 +22,7 @@
     "upload": "上傳",
     "newfolder": "新建文件夾",
     "del": "刪除",
+    "download": "下載",
     "up": "返回上一級",
     "refresh": "刷新",
     "dfu": "DFU模式"
@@ -51,7 +52,8 @@
     "del": "刪除",
     "rename": "重命名",
     "prop": "屬性",
-    "format": "格式化"
+    "format": "格式化",
+    "download": "下載"
   },
   "properties": {
     "title": "屬性",
@@ -144,7 +146,8 @@
     "loading": "加載中...",
     "search_placeholder": "搜索文件...",
     "grid_view": "網格視圖",
-    "list_view": "列表視圖"
+    "list_view": "列表視圖",
+    "multi_select": "多選模式"
   },
   "settings": {
     "title": "設定",

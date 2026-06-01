@@ -22,6 +22,7 @@
     "upload": "Hochladen",
     "newfolder": "Neuer Ordner",
     "del": "Löschen",
+    "download": "Download",
     "up": "Übergeordneter Ordner",
     "refresh": "Aktualisieren",
     "dfu": "DFU"
@@ -51,7 +52,8 @@
     "del": "Löschen",
     "rename": "Umbenennen",
     "prop": "Eigenschaften",
-    "format": "Formatieren"
+    "format": "Formatieren",
+    "download": "Download"
   },
   "properties": {
     "title": "Eigenschaften",
@@ -144,7 +146,8 @@
     "loading": "Lade...",
     "search_placeholder": "Dateien suchen...",
     "grid_view": "Rasteransicht",
-    "list_view": "Listenansicht"
+    "list_view": "Listenansicht",
+    "multi_select": "Mehrfachauswahl"
   },
   "settings": {
     "title": "Einstellungen",

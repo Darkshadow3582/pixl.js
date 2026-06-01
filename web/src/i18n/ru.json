@@ -22,6 +22,7 @@
     "upload": "Загрузить",
     "newfolder": "Новая папка",
     "del": "Удалить",
+    "download": "Скачать",
     "up": "Выше",
     "refresh": "Обновить",
     "dfu": "DFU"
@@ -51,7 +52,8 @@
     "del": "Удалить",
     "rename": "Переименовать",
     "prop": "Свойства",
-    "format": "Форматировать"
+    "format": "Форматировать",
+    "download": "Скачать"
   },
   "properties": {
     "title": "Свойства",
@@ -144,7 +146,8 @@
     "loading": "Загрузка...",
     "search_placeholder": "Поиск файлов...",
     "grid_view": "Сетка",
-    "list_view": "Список"
+    "list_view": "Список",
+    "multi_select": "Множественный выбор"
   },
   "settings": {
     "title": "Настройки",
