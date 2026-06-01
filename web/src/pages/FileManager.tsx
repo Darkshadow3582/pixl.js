@@ -22,6 +22,7 @@ export default function FileManager() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [searchQuery, setSearchQuery] = useState('')
+  const [multiSelect, setMultiSelect] = useState(false)
   const [contextMenu, setContextMenu] = useState<{ file: FileEntry; x: number; y: number } | null>(null)
   const [uploadOpen, setUploadOpen] = useState(false)
   const [propertyFile, setPropertyFile] = useState<FileEntry | null>(null)
@@ -126,6 +127,24 @@ export default function FileManager() {
     reloadFolder(currentDir)
   }, [selected, currentDir, reloadFolder])
 
+  const handleDownload = useCallback(() => {
+    for (const name of selected) {
+      const path = appendSegment(currentDir, name)
+      proto.vfs_helper_read_file(path,
+        (data: ArrayBuffer) => {
+          const url = URL.createObjectURL(new Blob([data]))
+          const a = document.createElement('a')
+          a.href = url
+          a.download = name
+          a.click()
+          URL.revokeObjectURL(url)
+        },
+        () => {},
+        () => {},
+      )
+    }
+  }, [selected, currentDir])
+
   const handleRename = useCallback(async (file: FileEntry) => {
     const name = await prompt(t('dialog.rename_message'), file.name)
     if (!name || name === file.name) return
@@ -158,10 +177,13 @@ export default function FileManager() {
         onUpload={() => setUploadOpen(true)}
         onNewFolder={handleNewFolder}
         onDelete={handleDelete}
+        onDownload={handleDownload}
         onUp={() => navigateTo('')}
         onRefresh={() => currentDir ? reloadFolder(currentDir) : reloadDrive()}
         onSearch={setSearchQuery}
         hasSelection={selected.size > 0}
+        multiSelect={multiSelect}
+        onToggleMultiSelect={() => setMultiSelect(v => !v)}
       />
 
       <FileBreadcrumb path={currentDir} onNavigate={navigateTo} />

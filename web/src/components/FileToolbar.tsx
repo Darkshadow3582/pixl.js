@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { FolderPlus, Upload, Trash2, ArrowUp, RefreshCw, Search, LayoutGrid, List } from 'lucide-react'
+import { FolderPlus, Upload, Trash2, Download, ArrowUp, RefreshCw, Search, LayoutGrid, List, CheckSquare } from 'lucide-react'
 
 interface Props {
   viewMode: 'grid' | 'list'
@@ -7,15 +7,18 @@ interface Props {
   onUpload: () => void
   onNewFolder: () => void
   onDelete: () => void
+  onDownload: () => void
   onUp: () => void
   onRefresh: () => void
   onSearch: (query: string) => void
   hasSelection: boolean
+  multiSelect: boolean
+  onToggleMultiSelect: () => void
 }
 
 export default function FileToolbar({
-  viewMode, onToggleView, onUpload, onNewFolder, onDelete,
-  onUp, onRefresh, onSearch, hasSelection,
+  viewMode, onToggleView, onUpload, onNewFolder, onDelete, onDownload,
+  onUp, onRefresh, onSearch, hasSelection, multiSelect, onToggleMultiSelect,
 }: Props) {
   const { t } = useTranslation()
   return (
@@ -28,6 +31,9 @@ export default function FileToolbar({
       </button>
       <button onClick={onDelete} className="btn-toolbar text-destructive" title={t('menu.del')} disabled={!hasSelection}>
         <Trash2 className="w-4 h-4" /> {t('menu.del')}
+      </button>
+      <button onClick={onDownload} className="btn-toolbar" title={t('menu.download')} disabled={!hasSelection}>
+        <Download className="w-4 h-4" /> {t('menu.download')}
       </button>
       <div className="w-px h-6 bg-border mx-1" />
       <button onClick={onUp} className="btn-toolbar" title={t('menu.up')}>
@@ -45,6 +51,9 @@ export default function FileToolbar({
           className="h-9 w-48 rounded-md border border-input bg-background pl-9 pr-3 text-sm"
         />
       </div>
+      <button onClick={onToggleMultiSelect} className={`btn-toolbar ${multiSelect ? 'bg-accent' : ''}`} title={t('files.multi_select')}>
+        <CheckSquare className="w-4 h-4" />
+      </button>
       <button onClick={onToggleView} className="btn-toolbar" title={viewMode === 'grid' ? t('files.list_view') : t('files.grid_view')}>
         {viewMode === 'grid' ? <List className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
       </button>
