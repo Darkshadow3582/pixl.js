@@ -43,7 +43,7 @@ export default function FileList({ files, selected, onSelect, multiSelect, onOpe
                 <input
                   type="checkbox"
                   checked={selected.has(file.name)}
-                  onChange={() => onSelect(file.name)}
+                  onClick={(e) => { e.stopPropagation(); onSelect(file.name) }}
                 />
               </td>
             )}

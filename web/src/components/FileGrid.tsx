@@ -31,7 +31,7 @@ export default function FileGrid({ files, selected, onSelect, multiSelect, onOpe
               <input
                 type="checkbox"
                 checked={selected.has(file.name)}
-                onChange={() => onSelect(file.name)}
+                onClick={(e) => { e.stopPropagation(); onSelect(file.name) }}
                 className="w-4 h-4"
               />
             </div>
