@@ -25,12 +25,17 @@ const DF_MAX_DATA_SIZE = MTU_MAX_DATA_SIZE - DF_HEADER_SIZE
 var op_queue = []
 var op_ongoing = false
 
-export function op_queue_push(cmd, tx_data_cb, rx_data_cb) {
+var _progress_cb = null
+var _total_size = 0
+
+export function op_queue_push(cmd, tx_data_cb, rx_data_cb, progress_cb, total_size) {
     return new Promise((resolve, reject) => {
         var op = {
             cmd: cmd,
             tx_data_cb: tx_data_cb,
             rx_data_cb: rx_data_cb,
+            progress_cb: progress_cb,
+            total_size: total_size,
             p_resolve: resolve,
             p_reject: reject
         }
@@ -50,10 +55,14 @@ function process_op_queue() {
 
 function next_op() {
     op_ongoing = false;
+    _progress_cb = null;
+    _total_size = 0;
     process_op_queue();
 }
 
 function proocess_op(op) {
+    _progress_cb = op.progress_cb;
+    _total_size = op.total_size || 0;
     new_rx_promise().then(data => {
         try {
             var bb = bbwrap(data);
@@ -208,11 +217,13 @@ export function vfs_close_file(file_id) {
         b => { });
 }
 
-export function vfs_read_file(file_id) {
+export function vfs_read_file(file_id, progress_cb, total_size) {
     console.log("vfs_read_file", file_id);
     return op_queue_push(0x14,
         b => { b.writeUint8(file_id) },
-        b => { return b.readBytes(b.remaining()).toArrayBuffer() });
+        b => { return b.readBytes(b.remaining()).toArrayBuffer() },
+        progress_cb,
+        total_size);
 }
 
 export function vfs_write_file(file_id, data) {
@@ -252,7 +263,7 @@ export function get_utf8_byte_size(str) {
     return encode_utf8(str).length;
 }
 
-export function vfs_helper_read_file(path, success_cb, error_cb, done_cb) {
+export function vfs_helper_read_file(path, success_cb, error_cb, done_cb, progress_cb, total_size) {
     vfs_open_file(path, "r").then(res => {
         console.log(res)
         if (res.status != 0) {
@@ -267,7 +278,7 @@ export function vfs_helper_read_file(path, success_cb, error_cb, done_cb) {
             file_id: res.data.file_id,
         }
 
-        vfs_read_file(state.file_id).then(data => {
+        vfs_read_file(state.file_id, progress_cb, total_size).then(data => {
             console.log(data)
             console.log("vfs read end");
             vfs_close_file(state.file_id).then(data1 => {
@@ -588,7 +599,11 @@ function on_rx_data(data) {
             write_bytes(rx_bytebuffer, bbwrap(data));
             rx_chunk_state = "CHUNK";
         } else if (rx_chunk_state == "CHUNK") {
-            write_bytes(rx_bytebuffer, buff); //next chunk, ignore header
+            write_bytes(rx_bytebuffer, buff); //ignore header
+        }
+        if (_progress_cb && _total_size > 0) {
+            var received = rx_bytebuffer.position();
+            _progress_cb(Math.min(received / _total_size, 0.99));
         }
     } else {
         var cb_data = data;
@@ -598,6 +613,10 @@ function on_rx_data(data) {
             cb_data = rx_bytebuffer.toArrayBuffer();
         } else if (rx_chunk_state == "NONE") { //single chunk
             cb_data = data;
+        }
+
+        if (_progress_cb && _total_size > 0) {
+            _progress_cb(1.0);
         }
 
         //call back 
@@ -617,6 +636,9 @@ function on_ble_disconnected() {
 
     m_api_resolve = null;
     m_api_reject = null;
+
+    _progress_cb = null;
+    _total_size = 0;
 
     file_write_queue = [];
     file_write_ongoing = false;
