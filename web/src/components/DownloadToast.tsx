@@ -29,7 +29,7 @@ export default function DownloadToast({ downloads }: Props) {
             <div
               className={`h-full rounded-full transition-all duration-300 ${
                 d.progress <= -1 ? 'bg-destructive' : 'bg-primary'
-              }`}
+              } ${d.progress === 0 ? 'animate-pulse' : ''}`}
               style={{ width: `${d.progress <= -1 ? 100 : Math.max(d.progress * 100, 4)}%` }}
             />
           </div>

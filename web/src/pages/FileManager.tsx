@@ -94,6 +94,7 @@ export default function FileManager() {
       },
       () => {},
       (progress: number) => {
+        console.log('download progress', file.name, Math.round(progress * 100) + '%', 'size:', file.size)
         setDownloads(prev => prev.map(d =>
           d.id === id ? { ...d, progress } : d
         ))
@@ -197,6 +198,7 @@ export default function FileManager() {
             },
             () => {},
             (progress: number) => {
+              console.log('batch download progress', name, Math.round(progress * 100) + '%', 'size:', file.size)
               setDownloads(prev => prev.map(d =>
                 d.id === id ? { ...d, progress } : d
               ))

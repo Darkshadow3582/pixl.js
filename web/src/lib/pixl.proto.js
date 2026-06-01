@@ -603,7 +603,9 @@ function on_rx_data(data) {
         }
         if (_progress_cb && _total_size > 0) {
             var received = rx_bytebuffer.position();
-            _progress_cb(Math.min(received / _total_size, 0.99));
+            // first chunk includes 4-byte header (cmd+status+chunk), subtract for accurate payload count
+            var payload = Math.max(0, received - 4);
+            _progress_cb(Math.min(payload / _total_size, 0.99));
         }
     } else {
         var cb_data = data;
