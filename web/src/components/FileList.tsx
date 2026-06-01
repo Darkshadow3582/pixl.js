@@ -6,17 +6,18 @@ interface Props {
   files: FileEntry[]
   selected: Set<string>
   onSelect: (name: string) => void
+  multiSelect: boolean
   onOpen: (file: FileEntry) => void
   onContextMenu: (file: FileEntry, x: number, y: number) => void
 }
 
-export default function FileList({ files, selected, onSelect, onOpen, onContextMenu }: Props) {
+export default function FileList({ files, selected, onSelect, multiSelect, onOpen, onContextMenu }: Props) {
   const { t } = useTranslation()
   return (
     <table className="w-full text-sm">
       <thead>
         <tr className="border-b text-muted-foreground">
-          <th className="w-8 p-2"></th>
+          {multiSelect && <th className="w-8 p-2"></th>}
           <th className="text-left p-2 font-medium">{t('labels.name')}</th>
           <th className="text-left p-2 font-medium w-24">{t('labels.size')}</th>
           <th className="text-left p-2 font-medium w-20">{t('labels.type')}</th>
@@ -30,19 +31,22 @@ export default function FileList({ files, selected, onSelect, onOpen, onContextM
             className={`border-b hover:bg-accent cursor-pointer ${
               selected.has(file.name) ? 'bg-primary/5' : ''
             }`}
-            onClick={() => onOpen(file)}
+            onClick={() => onSelect(file.name)}
+            onDoubleClick={() => onOpen(file)}
             onContextMenu={(e) => {
               e.preventDefault()
               onContextMenu(file, e.clientX, e.clientY)
             }}
           >
-            <td className="p-2" onClick={(e) => e.stopPropagation()}>
-              <input
-                type="checkbox"
-                checked={selected.has(file.name)}
-                onChange={() => onSelect(file.name)}
-              />
-            </td>
+            {multiSelect && (
+              <td className="p-2">
+                <input
+                  type="checkbox"
+                  checked={selected.has(file.name)}
+                  onChange={() => onSelect(file.name)}
+                />
+              </td>
+            )}
             <td className="p-2 flex items-center gap-2">
               {file.type === 'DIR' ? (
                 <Folder className="w-4 h-4 text-amber-500" />
