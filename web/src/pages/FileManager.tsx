@@ -13,6 +13,7 @@ import FileContextMenu from '../components/FileContextMenu'
 import UploadDialog from '../components/UploadDialog'
 import PropertyDialog from '../components/PropertyDialog'
 import Dialog from '../components/Dialog'
+import DownloadToast, { DownloadItem } from '../components/DownloadToast'
 
 export default function FileManager() {
   const { t } = useTranslation()
@@ -23,6 +24,7 @@ export default function FileManager() {
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [searchQuery, setSearchQuery] = useState('')
   const [multiSelect, setMultiSelect] = useState(false)
+  const [downloads, setDownloads] = useState<DownloadItem[]>([])
   const [contextMenu, setContextMenu] = useState<{ file: FileEntry; x: number; y: number } | null>(null)
   const [uploadOpen, setUploadOpen] = useState(false)
   const [propertyFile, setPropertyFile] = useState<FileEntry | null>(null)
@@ -61,6 +63,45 @@ export default function FileManager() {
     }
   }, [setCurrentDir, reloadDrive, reloadFolder])
 
+  const downloadFile = useCallback((file: FileEntry) => {
+    if (file.type !== 'REG') return
+    const path = appendSegment(currentDir, file.name)
+    const id = file.name + '-' + Date.now()
+    setDownloads(prev => [...prev, { id, name: file.name, progress: 0 }])
+
+    proto.vfs_helper_read_file(path,
+      (data: ArrayBuffer) => {
+        const url = URL.createObjectURL(new Blob([data]))
+        const a = document.createElement('a')
+        a.href = url
+        a.download = file.name
+        a.click()
+        URL.revokeObjectURL(url)
+        setDownloads(prev => prev.map(d =>
+          d.id === id ? { ...d, progress: 1 } : d
+        ))
+        setTimeout(() => {
+          setDownloads(prev => prev.filter(d => d.id !== id))
+        }, 2000)
+      },
+      () => {
+        setDownloads(prev => prev.map(d =>
+          d.id === id ? { ...d, progress: -1 } : d
+        ))
+        setTimeout(() => {
+          setDownloads(prev => prev.filter(d => d.id !== id))
+        }, 5000)
+      },
+      () => {},
+      (progress: number) => {
+        setDownloads(prev => prev.map(d =>
+          d.id === id ? { ...d, progress } : d
+        ))
+      },
+      file.size,
+    )
+  }, [currentDir])
+
   const handleOpen = useCallback((file: FileEntry) => {
     if (file.type === 'DRIVE') {
       const dir = file.name.substring(0, 3)
@@ -71,21 +112,9 @@ export default function FileManager() {
       setCurrentDir(dir)
       reloadFolder(dir)
     } else {
-      const path = appendSegment(currentDir, file.name)
-      proto.vfs_helper_read_file(path,
-        (data: ArrayBuffer) => {
-          const url = URL.createObjectURL(new Blob([data]))
-          const a = document.createElement('a')
-          a.href = url
-          a.download = file.name
-          a.click()
-          URL.revokeObjectURL(url)
-        },
-        () => {},
-        () => {},
-      )
+      downloadFile(file)
     }
-  }, [currentDir, setCurrentDir, reloadFolder])
+  }, [currentDir, setCurrentDir, reloadFolder, downloadFile])
 
   const handleNewFolder = useCallback(async () => {
     const name = await prompt(t('dialog.newfolder_message'))
@@ -127,23 +156,69 @@ export default function FileManager() {
     reloadFolder(currentDir)
   }, [selected, currentDir, reloadFolder])
 
-  const handleDownload = useCallback(() => {
-    for (const name of selected) {
-      const path = appendSegment(currentDir, name)
-      proto.vfs_helper_read_file(path,
-        (data: ArrayBuffer) => {
-          const url = URL.createObjectURL(new Blob([data]))
-          const a = document.createElement('a')
-          a.href = url
-          a.download = name
-          a.click()
-          URL.revokeObjectURL(url)
-        },
-        () => {},
-        () => {},
-      )
+  const handleDownload = useCallback(async () => {
+    const names = Array.from(selected).filter(name => {
+      const file = files.find(f => f.name === name)
+      return file && file.type === 'REG'
+    })
+    if (names.length === 0) return
+    for (const name of names) {
+      const file = files.find(f => f.name === name)
+      if (file) {
+        await new Promise<void>(resolve => {
+          const path = appendSegment(currentDir, name)
+          const id = name + '-' + Date.now()
+          setDownloads(prev => [...prev, { id, name, progress: 0 }])
+
+          proto.vfs_helper_read_file(path,
+            (data: ArrayBuffer) => {
+              const url = URL.createObjectURL(new Blob([data]))
+              const a = document.createElement('a')
+              a.href = url
+              a.download = name
+              a.click()
+              URL.revokeObjectURL(url)
+              setDownloads(prev => prev.map(d =>
+                d.id === id ? { ...d, progress: 1 } : d
+              ))
+              setTimeout(() => {
+                setDownloads(prev => prev.filter(d => d.id !== id))
+              }, 2000)
+              resolve()
+            },
+            () => {
+              setDownloads(prev => prev.map(d =>
+                d.id === id ? { ...d, progress: -1 } : d
+              ))
+              setTimeout(() => {
+                setDownloads(prev => prev.filter(d => d.id !== id))
+              }, 5000)
+              resolve()
+            },
+            () => {},
+            (progress: number) => {
+              setDownloads(prev => prev.map(d =>
+                d.id === id ? { ...d, progress } : d
+              ))
+            },
+            file.size,
+          )
+        })
+      }
     }
-  }, [selected, currentDir])
+  }, [selected, files, currentDir])
+
+  const handleClick = useCallback((name: string) => {
+    if (multiSelect) {
+      setSelected(prev => {
+        const next = new Set(prev)
+        next.has(name) ? next.delete(name) : next.add(name)
+        return next
+      })
+    } else {
+      setSelected(new Set([name]))
+    }
+  }, [multiSelect])
 
   const handleRename = useCallback(async (file: FileEntry) => {
     const name = await prompt(t('dialog.rename_message'), file.name)
@@ -194,6 +269,9 @@ export default function FileManager() {
         ) : viewMode === 'grid' ? (
           <FileGrid
             files={filteredFiles}
+            selected={selected}
+            onSelect={handleClick}
+            multiSelect={multiSelect}
             onOpen={handleOpen}
             onContextMenu={(file, x, y) => setContextMenu({ file, x, y })}
           />
@@ -201,11 +279,8 @@ export default function FileManager() {
           <FileList
             files={filteredFiles}
             selected={selected}
-            onSelect={(name) => setSelected(prev => {
-              const next = new Set(prev)
-              next.has(name) ? next.delete(name) : next.add(name)
-              return next
-            })}
+            onSelect={handleClick}
+            multiSelect={multiSelect}
             onOpen={handleOpen}
             onContextMenu={(file, x, y) => setContextMenu({ file, x, y })}
           />
@@ -217,6 +292,7 @@ export default function FileManager() {
           x={contextMenu.x}
           y={contextMenu.y}
           onRename={() => handleRename(contextMenu.file)}
+          onDownload={contextMenu.file.type === 'REG' ? () => downloadFile(contextMenu.file) : undefined}
           onDelete={() => {
             setSelected(new Set([contextMenu.file.name]))
             handleDelete()
@@ -279,6 +355,8 @@ export default function FileManager() {
       >
         <p className="text-sm whitespace-pre-wrap">{alertState}</p>
       </Dialog>
+
+      <DownloadToast downloads={downloads} />
     </div>
   )
 }
