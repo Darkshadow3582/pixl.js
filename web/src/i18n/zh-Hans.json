@@ -179,6 +179,14 @@
     "start_upload": "开始上传",
     "waiting": "等待中"
   },
+  "control": {
+    "btn": "控制",
+    "left": "左键",
+    "center": "中键",
+    "right": "右键",
+    "refresh": "刷新屏幕",
+    "title": "设备控制"
+  },
   "device": {
     "version_prefix": "已连接 v{{version}}"
   }

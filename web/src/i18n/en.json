@@ -180,6 +180,14 @@
     "start_upload": "Start Upload",
     "waiting": "Waiting"
   },
+  "control": {
+    "btn": "Control",
+    "left": "Left",
+    "center": "Center",
+    "right": "Right",
+    "refresh": "Refresh Screen",
+    "title": "Device Control"
+  },
   "device": {
     "version_prefix": "Connected v{{version}}"
   }

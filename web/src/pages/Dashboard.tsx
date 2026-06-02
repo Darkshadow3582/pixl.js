@@ -5,6 +5,7 @@ import { useDriveInfo } from '../hooks/useDriveInfo'
 import DeviceInfoCard from '../components/DeviceInfoCard'
 import StorageChart from '../components/StorageChart'
 import Dialog from '../components/Dialog'
+import ControlDialog from '../components/ControlDialog'
 import * as proto from '../lib/pixl.proto'
 
 export default function Dashboard() {
@@ -12,6 +13,7 @@ export default function Dashboard() {
   const { connected } = useConnectionStore()
   const { drives, fetchDrives } = useDriveInfo()
   const [confirmState, setConfirmState] = useState<{ msg: string; onOk: () => void } | null>(null)
+  const [controlOpen, setControlOpen] = useState(false)
 
   useEffect(() => {
     if (connected) {
@@ -85,6 +87,12 @@ export default function Dashboard() {
           >
             {t('dashboard.refresh_btn')}
           </button>
+          <button
+            onClick={() => setControlOpen(true)}
+            className="px-4 py-2 rounded-md bg-secondary text-secondary-foreground text-sm hover:bg-secondary/80"
+          >
+            {t('control.btn')}
+          </button>
         </div>
       </div>
 
@@ -101,6 +109,8 @@ export default function Dashboard() {
       >
         <p className="text-sm whitespace-pre-wrap">{confirmState?.msg}</p>
       </Dialog>
+
+      <ControlDialog open={controlOpen} onClose={() => setControlOpen(false)} />
     </div>
   )
 }
