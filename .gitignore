@@ -50,6 +50,7 @@ dist
 fw/scripts/.venv
 
 fw/temp
+fw/example
 
 .DS_Store
 *.un~

@@ -73,6 +73,14 @@ void mini_app_launcher_exit(mini_app_launcher_t* p_launcher){
     mini_app_launcher_kill(p_launcher, p_launcher->p_main_app_inst->p_app->id);
 }
 
+void mini_app_launcher_scene_back(mui_scene_dispatcher_t *p_scene_dispatcher) {
+    if (mui_scene_dispatcher_stack_size(p_scene_dispatcher) <= 1) {
+        mini_app_launcher_exit(mini_app_launcher());
+    } else {
+        mui_scene_dispatcher_previous_scene(p_scene_dispatcher);
+    }
+}
+
 void mini_app_launcher_init(mini_app_launcher_t *p_launcher, uint32_t wakeup_reason) {
 
     mui_app_inst_dict_init(p_launcher->app_inst_dict);

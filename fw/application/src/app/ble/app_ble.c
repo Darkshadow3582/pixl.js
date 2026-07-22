@@ -1,5 +1,6 @@
 #include "app_ble.h"
 #include "mini_app_registry.h"
+#include "mini_app_launcher.h"
 
 #include "mui_include.h"
 
@@ -25,6 +26,9 @@ void app_ble_on_run(mini_app_inst_t *p_app_inst) {
     mui_view_dispatcher_add_view(p_app_handle->p_view_dispatcher, BLE_VIEW_ID_MAIN,
                                  ble_status_view_get_view(p_app_handle->p_ble_view));
     mui_view_dispatcher_attach(p_app_handle->p_view_dispatcher, MUI_LAYER_WINDOW);
+    mui_view_dispatcher_set_back_event_cb(p_app_handle->p_view_dispatcher,
+                                         (mui_view_dispatcher_back_event_cb_t)mini_app_launcher_scene_back,
+                                         p_app_handle->p_scene_dispatcher);
 
     mui_scene_dispatcher_set_user_data(p_app_handle->p_scene_dispatcher, p_app_handle);
     mui_scene_dispatcher_set_scene_defines(p_app_handle->p_scene_dispatcher, ble_scene_defines, BLE_SCENE_MAX);
