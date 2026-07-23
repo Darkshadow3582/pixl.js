@@ -30,9 +30,12 @@
 
 #define BUTTONS_LIST { BUTTON_1, BUTTON_2, BUTTON_3, BUTTON_4 }
 
-#define BSP_BUTTON_0   BUTTON_1
+// LEFT/RIGHT swapped vs BUTTON_1/BUTTON_3 pin order: the OLED is mounted
+// upside down on this board (see OLED_ROTATION_180), which also flips
+// which physical button reads as up/down
+#define BSP_BUTTON_0   BUTTON_3
 #define BSP_BUTTON_1   BUTTON_2
-#define BSP_BUTTON_2   BUTTON_3
+#define BSP_BUTTON_2   BUTTON_1
 #define BSP_BUTTON_3   BUTTON_4
 
 
@@ -41,6 +44,7 @@
 #define OLED_SH1106
 #define OLED_TYPE_SH1106
 #define OLED_TYPE sh1106
+#define OLED_ROTATION_180 // this board's OLED is mounted upside down
 
 //#define LCD
 //#define LCD_ST7567
