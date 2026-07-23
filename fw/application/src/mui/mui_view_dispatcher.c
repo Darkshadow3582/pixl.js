@@ -26,8 +26,8 @@ static void mui_view_dispatcher_on_draw(mui_view_port_t *p_vp, mui_canvas_t *p_c
 static void mui_view_dispatcher_on_input(mui_view_port_t *p_vp,
                                          mui_input_event_t *p_event) {
     mui_view_dispatcher_t *p_dispatcher = p_vp->user_data;
-    if (p_event->key == INPUT_KEY_BACK && p_event->type == INPUT_TYPE_SHORT) {
-        if (p_dispatcher->back_event_cb) {
+    if (p_event->key == INPUT_KEY_BACK) {
+        if (p_event->type == INPUT_TYPE_SHORT && p_dispatcher->back_event_cb) {
             p_dispatcher->back_event_cb(p_dispatcher->back_event_user_data);
         }
         return;

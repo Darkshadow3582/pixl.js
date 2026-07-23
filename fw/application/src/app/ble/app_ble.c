@@ -39,6 +39,8 @@ void app_ble_on_run(mini_app_inst_t *p_app_inst) {
 void app_ble_on_kill(mini_app_inst_t *p_app_inst) {
     app_ble_t *p_app_handle = p_app_inst->p_handle;
 
+    mui_scene_dispatcher_exit(p_app_handle->p_scene_dispatcher);
+
     mui_view_dispatcher_detach(p_app_handle->p_view_dispatcher, MUI_LAYER_WINDOW);
     mui_view_dispatcher_free(p_app_handle->p_view_dispatcher);
     ble_status_view_free(p_app_handle->p_ble_view);
