@@ -34,5 +34,8 @@ void ble_scene_connect_start_on_enter(void *user_data) {
 }
 
 void ble_scene_connect_start_on_exit(void *user_data) {
+    // must run on every exit path (back button included), or advertising/
+    // connection stays alive after the app is killed and its callbacks
+    // fire into freed memory
     ble_disable();
 }

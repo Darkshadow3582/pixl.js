@@ -74,6 +74,9 @@ void mini_app_launcher_exit(mini_app_launcher_t* p_launcher){
 }
 
 void mini_app_launcher_scene_back(mui_scene_dispatcher_t *p_scene_dispatcher) {
+    // at the app's outermost scene there's nothing left to pop to.
+    // mui_scene_dispatcher_previous_scene would just re-enter the same
+    // scene (default_scene_id), so leave the app instead
     if (mui_scene_dispatcher_stack_size(p_scene_dispatcher) <= 1) {
         mini_app_launcher_exit(mini_app_launcher());
     } else {
