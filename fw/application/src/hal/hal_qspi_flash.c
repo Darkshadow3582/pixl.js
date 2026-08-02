@@ -217,6 +217,7 @@ ret_code_t hal_spi_flash_erase(uint32_t address) {
         return err_code;
     }
     WAIT_FOR_PERIPH();
+    return err_code;
 }
 void hal_spi_flash_sleep(void) {}
 void hal_spi_flash_wakeup(void) {
