@@ -1,0 +1,186 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Cambio Idioma Satisfactorio"
+  },
+  "btn": {
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "cont": "Continuar",
+    "save": "Guardar",
+    "confirm": "Confirmar"
+  },
+  "menu": {
+    "upload": "Subir",
+    "newfolder": "Crear Carpeta",
+    "del": "Borrar",
+    "download": "Descargar",
+    "up": "Subir Nivel",
+    "refresh": "Actualizar",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Conectado ",
+    "loading": "Cargando..."
+  },
+  "conn": {
+    "connect": "Conectar",
+    "connecting": "Conectando...",
+    "disconnect": "Desconectar",
+    "consuccess": "Conexión exitosa",
+    "disconnected": "Desconectado",
+    "connfailed": "Conexión fallida"
+  },
+  "labels": {
+    "name": "Nombre",
+    "size": "Tamaño",
+    "type": "Tipo",
+    "remark": "Anotación",
+    "folder": "Carpeta",
+    "file": "Archivo",
+    "root": "Directorio raíz"
+  },
+  "contxmenu": {
+    "del": "Borrar",
+    "rename": "Renombrar",
+    "prop": "Propiedades",
+    "format": "Formatear",
+    "download": "Descargar"
+  },
+  "properties": {
+    "title": "Propiedades",
+    "remark": "Anotación",
+    "entermsg": "Por favor ingrese una anotación",
+    "attrib": "Atributos",
+    "hide": "Oculto",
+    "readonly": "Solo lectura",
+    "errupdate": "¡Error al actualizar propiedades!",
+    "remarktoolong": "Anotaciones demasiado largas (",
+    "remarktoolongend": " Bytes)"
+  },
+  "upload": {
+    "title": "Subir Archivos",
+    "drag": "Arrastre archivos aquí",
+    "click": "o haga clic para subirlos",
+    "maxsize": "El tamaño máximo de la ruta es 63 bytes.",
+    "maxname": "El nombre puede ser máximo 47 bytes.",
+    "closetitle": "¿Cerrar el diálogo?",
+    "closemessage": "Cerrando el diálogo se eliminará el registro de subida.",
+    "errupload": "Fallo al subir: "
+  },
+  "format": {
+    "title": "Formatear",
+    "messrow1a": "¿Formatear ",
+    "messrow1b": "?",
+    "messrow2": "¡Al formatear se perderán todos los datos!",
+    "messrow3": "El formateo tarda aproximadamente 10 segundos.",
+    "formatok": "¡Formateo Completo!",
+    "formaterr": "¡Formateo Fallido!"
+  },
+  "del": {
+    "title": "Borrar",
+    "message": "¿Borrar el elemento: ",
+    "messageend": "?",
+    "error": "¡Error al borrar!: ",
+    "deleteok": "¡Archivo borrado satisfactoriamente!"
+  },
+  "dfumode": {
+    "title": "Modo DFU",
+    "startconfirm": "¿Iniciar el modo DFU?",
+    "updateconfirm": "Inicio del modo DFU satisfactorio. ¿Abrir la página de actualización DFU?",
+    "updatetitle": "Actualización de Firmware"
+  },
+  "oldfirm": {
+    "title": "Firmware desactualizado",
+    "message": "La versión del firmware es 2.0.0. Algunas funciones pueden no funcionar. Actualice al firmware más reciente."
+  },
+  "newfolder": {
+    "title": "Nueva Carpeta",
+    "message": "Ingrese el nombre de la nueva carpeta",
+    "newfoldererr": "¡Error al crear carpeta!"
+  },
+  "rename": {
+    "title": "Renombrar",
+    "message": "Por favor ingrese el nuevo nombre",
+    "errrename": "¡Error al cambiar el nombre!:",
+    "nametoolong": "El tamaño máximo de la ruta es 63 bytes",
+    "pathtoolong": "El nombre de archivo máximo es 47 bytes"
+  },
+  "drive": {
+    "message": "Disco no disponible: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Panel",
+    "files": "Archivos",
+    "settings": "Ajustes"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "connect_title": "Conecte un dispositivo para gestionar archivos",
+    "connect_btn": "Conectar dispositivo",
+    "quick_actions": "Acciones rápidas",
+    "dfu_btn": "Entrar en modo DFU",
+    "refresh_btn": "Actualizar",
+    "device_info": "Información del dispositivo",
+    "status": "Estado",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "firmware": "Versión del firmware",
+    "ble_address": "Dirección BLE",
+    "storage": "Almacenamiento - {{label}}",
+    "used": "Usado",
+    "free": "Libre",
+    "total": "Total"
+  },
+  "files": {
+    "title": "Archivos",
+    "loading": "Cargando...",
+    "search_placeholder": "Buscar archivos...",
+    "grid_view": "Vista de cuadrícula",
+    "list_view": "Vista de lista",
+    "multi_select": "Selección Múltiple"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "firmware": "Firmware",
+    "current_version": "Versión actual: {{version}}",
+    "dfu_btn": "Entrar en modo DFU",
+    "language": "Idioma",
+    "about": "Acerca de",
+    "about_desc": "Pixl.js - Emulador de Amiibo",
+    "license": "Publicado bajo licencia GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Confirmar",
+    "alert": "Alerta",
+    "input": "Entrada",
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete_confirm": "¿Confirmar eliminación de {{count}} archivo(s)/carpeta(s)?",
+    "delete_failed": "Eliminación fallida:\n{{errors}}",
+    "rename_title": "Renombrar",
+    "rename_message": "Por favor ingrese el nuevo nombre",
+    "rename_failed": "Renombrar falló [{{code}}]",
+    "newfolder_title": "Nueva carpeta",
+    "newfolder_message": "Por favor ingrese el nombre de la carpeta",
+    "newfolder_failed": "Error al crear carpeta [{{code}}]",
+    "dfu_confirm": "¿Entrar en modo DFU?",
+    "dfu_update": "El dispositivo entró en modo DFU. ¿Abrir página de actualización?",
+    "uploading": "Subiendo...",
+    "start_upload": "Iniciar subida",
+    "waiting": "Esperando"
+  },
+  "device": {
+    "version_prefix": "Conectado v{{version}}"
+  }
+}

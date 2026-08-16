@@ -35,6 +35,7 @@ void app_amiibolink_on_run(mini_app_inst_t *p_app_inst) {
     p_app_handle->p_view_dispatcher = mui_view_dispatcher_create();
     p_app_handle->p_amiibolink_view = amiibolink_view_create();
     p_app_handle->p_scene_dispatcher = mui_scene_dispatcher_create();
+    mui_scene_dispatcher_set_view_dispatcher(p_app_handle->p_scene_dispatcher, p_app_handle->p_view_dispatcher);
     p_app_handle->p_list_view = mui_list_view_create();
     p_app_handle->p_msg_box = mui_msg_box_create();
 

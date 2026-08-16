@@ -1,8 +1,20 @@
 import { sharedEventDispatcher } from "./event"
 import * as pixl from "./pixl.ble"
-import * as ByteBuffer from "bytebuffer"
+import ByteBuffer from "bytebuffer"
 
 import i18n from '../i18n'
+
+function bbnew(capacity) {
+    var b = capacity != null ? new ByteBuffer(capacity) : new ByteBuffer();
+    b.LE();
+    return b;
+}
+
+function bbwrap(data, enc) {
+    var b = ByteBuffer.wrap(data, enc);
+    b.LE();
+    return b;
+}
 
 
 const MTU_SIZE = 250
@@ -13,12 +25,17 @@ const DF_MAX_DATA_SIZE = MTU_MAX_DATA_SIZE - DF_HEADER_SIZE
 var op_queue = []
 var op_ongoing = false
 
-export function op_queue_push(cmd, tx_data_cb, rx_data_cb) {
+var _progress_cb = null
+var _total_size = 0
+
+export function op_queue_push(cmd, tx_data_cb, rx_data_cb, progress_cb, total_size) {
     return new Promise((resolve, reject) => {
         var op = {
             cmd: cmd,
             tx_data_cb: tx_data_cb,
             rx_data_cb: rx_data_cb,
+            progress_cb: progress_cb,
+            total_size: total_size,
             p_resolve: resolve,
             p_reject: reject
         }
@@ -36,33 +53,41 @@ function process_op_queue() {
     }
 }
 
+function next_op() {
+    op_ongoing = false;
+    _progress_cb = null;
+    _total_size = 0;
+    process_op_queue();
+}
+
 function proocess_op(op) {
+    _progress_cb = op.progress_cb;
+    _total_size = op.total_size || 0;
     new_rx_promise().then(data => {
         try {
-            var bb = ByteBuffer.wrap(data);
+            var bb = bbwrap(data);
             var h = read_header(bb);
             h.data = op.rx_data_cb(bb);
-            op_ongoing = false;
             op.p_resolve(h);
-            process_op_queue();
+            next_op();
             return h;
         } catch (e) {
+            next_op();
             op.p_reject(e);
         }
     }).catch(e => {
-        op_ongoing = false;
+        next_op();
         op.p_reject(e);
-        process_op_queue();
     });
 
-    var bb = new ByteBuffer();
+    var bb = bbnew();
     op.tx_data_cb(bb);
     op_ongoing = true;
     tx_data_frame(op.cmd, 0, 0, bb).catch(e => {
+        next_op();
         op.p_reject(e);
     });
 }
-
 
 var m_api_resolve;
 var m_api_reject;
@@ -70,7 +95,6 @@ var m_api_reject;
 export function init() {
     sharedEventDispatcher().addListener("ble_rx_data", on_rx_data);
     sharedEventDispatcher().addListener("ble_disconnected", on_ble_disconnected);
-    ByteBuffer.DEFAULT_ENDIAN = ByteBuffer.LITTLE_ENDIAN;
 }
 
 export function get_version() {
@@ -94,6 +118,26 @@ export function enter_dfu() {
     console.log("enter_dfu");
     return op_queue_push(0x02,
         b => { },
+        b => { });
+}
+
+export function get_scrren_buffer() {
+    console.log("get_scrren_buffer");
+    return op_queue_push(0x03,
+        b => { },
+        b => {
+          return b;
+        });
+}
+
+
+export function send_key_event(key, type) {
+    console.log("send_key_event");
+    return op_queue_push(0x04,
+        b => {
+            b.writeUint8(key);
+            b.writeUint8(type);
+        },
         b => { });
 }
 
@@ -193,11 +237,13 @@ export function vfs_close_file(file_id) {
         b => { });
 }
 
-export function vfs_read_file(file_id) {
+export function vfs_read_file(file_id, progress_cb, total_size) {
     console.log("vfs_read_file", file_id);
     return op_queue_push(0x14,
         b => { b.writeUint8(file_id) },
-        b => { return b.readBytes(b.remaining()).toArrayBuffer() });
+        b => { return b.readBytes(b.remaining()).toArrayBuffer() },
+        progress_cb,
+        total_size);
 }
 
 export function vfs_write_file(file_id, data) {
@@ -237,7 +283,7 @@ export function get_utf8_byte_size(str) {
     return encode_utf8(str).length;
 }
 
-export function vfs_helper_read_file(path, success_cb, error_cb, done_cb) {
+export function vfs_helper_read_file(path, success_cb, error_cb, done_cb, progress_cb, total_size) {
     vfs_open_file(path, "r").then(res => {
         console.log(res)
         if (res.status != 0) {
@@ -252,7 +298,7 @@ export function vfs_helper_read_file(path, success_cb, error_cb, done_cb) {
             file_id: res.data.file_id,
         }
 
-        vfs_read_file(state.file_id).then(data => {
+        vfs_read_file(state.file_id, progress_cb, total_size).then(data => {
             console.log(data)
             console.log("vfs read end");
             vfs_close_file(state.file_id).then(data1 => {
@@ -391,7 +437,7 @@ function read_file_as_bytebuffer(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function () {
-            resolve(ByteBuffer.wrap(reader.result));
+            resolve(bbwrap(reader.result));
         }
         reader.onerror = function () {
             reject(reader.error);
@@ -425,7 +471,7 @@ function read_meta(bb) {
     if (size == 0) {
         return meta;
     }
-    var mb = ByteBuffer.wrap(read_bytes_array(bb, size));
+    var mb = bbwrap(read_bytes_array(bb, size));
     while (mb.remaining() > 0) {
         var type = mb.readUint8(); //1 notes
         if (type == 1) {
@@ -461,8 +507,7 @@ function write_meta(bb, meta) {
         throw new Error(i18n.t('properties.remarktoolong') + bytes.length + i18n.t('properties.remarktoolongend'))
     }
 
-    var tb = new ByteBuffer();
-    //notes
+    var tb = bbnew();
     if (notes.length > 0) {
         tb.writeUint8(1);//amiibo notes
         tb.writeUint8(bytes.length);
@@ -537,7 +582,7 @@ function read_bytes_array(bb, size) {
 }
 
 function tx_data_frame(cmd, status, chunk, data) {
-    var bb = new ByteBuffer();
+    var bb = bbnew();
     bb.writeUint8(cmd);
     bb.writeUint8(status);
     bb.writeUint16(chunk);
@@ -562,19 +607,25 @@ function new_rx_promise() {
 }
 
 
-var rx_bytebuffer = new ByteBuffer();
+var rx_bytebuffer = bbnew();
 var rx_chunk_state = "NONE"; //NONE CHUNK,
 
 
 function on_rx_data(data) {
-    var buff = ByteBuffer.wrap(data);
+    var buff = bbwrap(data);
     var h = read_header(buff);
     if (h.chunk & 0x8000) {
         if (rx_chunk_state == "NONE") {
-            write_bytes(rx_bytebuffer, ByteBuffer.wrap(data));
+            write_bytes(rx_bytebuffer, bbwrap(data));
             rx_chunk_state = "CHUNK";
         } else if (rx_chunk_state == "CHUNK") {
-            write_bytes(rx_bytebuffer, buff); //next chunk, ignore header
+            write_bytes(rx_bytebuffer, buff); //ignore header
+        }
+        if (_progress_cb && _total_size > 0) {
+            var received = rx_bytebuffer.offset;
+            // first chunk includes 4-byte header (cmd+status+chunk), subtract for accurate payload count
+            var payload = Math.max(0, received - 4);
+            _progress_cb(Math.min(payload / _total_size, 0.99));
         }
     } else {
         var cb_data = data;
@@ -584,6 +635,10 @@ function on_rx_data(data) {
             cb_data = rx_bytebuffer.toArrayBuffer();
         } else if (rx_chunk_state == "NONE") { //single chunk
             cb_data = data;
+        }
+
+        if (_progress_cb && _total_size > 0) {
+            _progress_cb(1.0);
         }
 
         //call back 
@@ -603,6 +658,9 @@ function on_ble_disconnected() {
 
     m_api_resolve = null;
     m_api_reject = null;
+
+    _progress_cb = null;
+    _total_size = 0;
 
     file_write_queue = [];
     file_write_ongoing = false;

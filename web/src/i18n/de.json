@@ -1,0 +1,186 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Sprache erfolgreich geändert"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "cont": "Weiter",
+    "save": "Speichern",
+    "confirm": "Bestätigen"
+  },
+  "menu": {
+    "upload": "Hochladen",
+    "newfolder": "Neuer Ordner",
+    "del": "Löschen",
+    "download": "Download",
+    "up": "Übergeordneter Ordner",
+    "refresh": "Aktualisieren",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Verbunden ",
+    "loading": "Lade..."
+  },
+  "conn": {
+    "connect": "Verbinden",
+    "connecting": "Verbinde...",
+    "disconnect": "Trennen",
+    "consuccess": "Verbindung erfolgreich",
+    "disconnected": "Getrennt",
+    "connfailed": "Verbindung fehlgeschlagen"
+  },
+  "labels": {
+    "name": "Name",
+    "size": "Größe",
+    "type": "Typ",
+    "remark": "Notiz",
+    "folder": "Ordner",
+    "file": "Datei",
+    "root": "Stammverzeichnis"
+  },
+  "contxmenu": {
+    "del": "Löschen",
+    "rename": "Umbenennen",
+    "prop": "Eigenschaften",
+    "format": "Formatieren",
+    "download": "Download"
+  },
+  "properties": {
+    "title": "Eigenschaften",
+    "remark": "Notiz",
+    "entermsg": "Bitte Notiz eingeben",
+    "attrib": "Attribute",
+    "hide": "Ausblenden",
+    "readonly": "Nur lesen",
+    "errupdate": "Eigenschaften aktualisieren fehlgeschlagen!",
+    "remarktoolong": "Notizen zu lang (",
+    "remarktoolongend": " Bytes)"
+  },
+  "upload": {
+    "title": "Hochladen",
+    "drag": "Dateien hier rein ziehen",
+    "click": "oder klicken zum Hochladen",
+    "maxsize": "Die Gesamtlänge des Dateipfads darf 63 Bytes nicht überschreiten.",
+    "maxname": "Der Dateiname darf 47 Bytes nicht überschreiten.",
+    "closetitle": "Schließen bestätigen?",
+    "closemessage": "Das Schließen bricht das Hochladen ab.",
+    "errupload": "Hochladen fehlgeschlagen: "
+  },
+  "format": {
+    "title": "Formatieren",
+    "messrow1a": "Möchten Sie ",
+    "messrow1b": " formatieren?",
+    "messrow2": "Formatieren löscht alle Daten!",
+    "messrow3": "Formatieren dauert ca. 10 Sekunden.",
+    "formatok": "Formatieren erfolgreich!",
+    "formaterr": "Formatieren fehlgeschlagen!: "
+  },
+  "del": {
+    "title": "Löschen",
+    "message": "Datei: ",
+    "messageend": " löschen?",
+    "error": "Löschen der Datei fehlgeschlagen!: ",
+    "deleteok": "Datei erfolgreich gelöscht!"
+  },
+  "dfumode": {
+    "title": "DFU Modus",
+    "startconfirm": "DFU Modus aktivieren?",
+    "updateconfirm": "DFU Modus aktiviert. DFU Aktualisierungsseite öffnen?",
+    "updatetitle": "Firmware Update"
+  },
+  "oldfirm": {
+    "title": "Firmware zu alt",
+    "message": "Aktuelle Firmware Version ist 2.0.0. Einige Funktionen könnten nicht funktionieren. Bitte aktualisieren Sie die Firmware."
+  },
+  "newfolder": {
+    "title": "Neuer Ordner",
+    "message": "Bitte geben Sie den Ordner Namen ein",
+    "newfoldererr": "Ordner erstellen fehlgeschlagen!"
+  },
+  "rename": {
+    "title": "Umbenennen",
+    "message": "Bitte geben Sie den neuen Namen ein",
+    "errrename": "Umbenennen fehlgeschlagen!: ",
+    "nametoolong": "Maximale Pfadlänge 63 Bytes",
+    "pathtoolong": "Maximale Dateinamenlänge 47 Bytes"
+  },
+  "drive": {
+    "message": "Speicher nicht verfügbar: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "files": "Dateien",
+    "settings": "Einstellungen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connect_title": "Verbinden Sie ein Gerät, um Dateien zu verwalten",
+    "connect_btn": "Gerät verbinden",
+    "quick_actions": "Schnellaktionen",
+    "dfu_btn": "DFU-Modus starten",
+    "refresh_btn": "Aktualisieren",
+    "device_info": "Geräteinformationen",
+    "status": "Status",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "firmware": "Firmware-Version",
+    "ble_address": "BLE-Adresse",
+    "storage": "Speicher - {{label}}",
+    "used": "Belegt",
+    "free": "Frei",
+    "total": "Gesamt"
+  },
+  "files": {
+    "title": "Dateien",
+    "loading": "Lade...",
+    "search_placeholder": "Dateien suchen...",
+    "grid_view": "Rasteransicht",
+    "list_view": "Listenansicht",
+    "multi_select": "Mehrfachauswahl"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "firmware": "Firmware",
+    "current_version": "Aktuelle Version: {{version}}",
+    "dfu_btn": "DFU-Modus starten",
+    "language": "Sprache",
+    "about": "Über",
+    "about_desc": "Pixl.js - Amiibo-Emulator",
+    "license": "Veröffentlicht unter GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Bestätigen",
+    "alert": "Hinweis",
+    "input": "Eingabe",
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete_confirm": "Möchten Sie {{count}} Datei(en)/Ordner löschen?",
+    "delete_failed": "Löschen fehlgeschlagen:\n{{errors}}",
+    "rename_title": "Umbenennen",
+    "rename_message": "Bitte geben Sie den neuen Namen ein",
+    "rename_failed": "Umbenennen fehlgeschlagen [{{code}}]",
+    "newfolder_title": "Neuer Ordner",
+    "newfolder_message": "Bitte geben Sie den Ordnernamen ein",
+    "newfolder_failed": "Ordner erstellen fehlgeschlagen [{{code}}]",
+    "dfu_confirm": "DFU-Modus aktivieren?",
+    "dfu_update": "Gerät im DFU-Modus. Aktualisierungsseite öffnen?",
+    "uploading": "Lade hoch...",
+    "start_upload": "Hochladen starten",
+    "waiting": "Warte"
+  },
+  "device": {
+    "version_prefix": "Verbunden v{{version}}"
+  }
+}

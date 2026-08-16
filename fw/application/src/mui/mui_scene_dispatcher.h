@@ -2,6 +2,7 @@
 #define MUI_SCENE_DISPATCHER_H
 
 #include "mui_common.h"
+#include "mui_view_dispatcher.h"
 typedef void (*mui_scene_enter_cb_t)(void *user_data);
 typedef void (*mui_scene_exit_cb_t)(void *user_data);
 
@@ -19,6 +20,7 @@ typedef struct {
     uint32_t scene_num;
     uint32_t default_scene_id;
     scene_id_stack_t scene_id_stack;
+    mui_view_dispatcher_t *p_view_dispatcher;
 } mui_scene_dispatcher_t;
 
 mui_scene_dispatcher_t* mui_scene_dispatcher_create();
@@ -31,6 +33,9 @@ void mui_scene_dispatcher_set_user_data(mui_scene_dispatcher_t *p_dispatcher, vo
 void mui_scene_dispatcher_next_scene(mui_scene_dispatcher_t *p_dispatcher, uint32_t scene_id);
 void mui_scene_dispatcher_previous_scene(mui_scene_dispatcher_t *p_dispatcher);
 void mui_scene_dispatcher_back_scene(mui_scene_dispatcher_t *p_dispatcher, uint32_t step);
+
+void mui_scene_dispatcher_set_view_dispatcher(mui_scene_dispatcher_t *p_dispatcher,
+                                              mui_view_dispatcher_t *p_view_dispatcher);
 
 uint32_t mui_scene_dispatcher_current_scene(mui_scene_dispatcher_t *p_dispatcher);
 

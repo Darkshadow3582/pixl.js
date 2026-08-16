@@ -1,0 +1,38 @@
+import { useTranslation } from 'react-i18next'
+import { NavLink } from 'react-router-dom'
+import { LayoutDashboard, FolderOpen, Settings } from 'lucide-react'
+
+export default function Sidebar() {
+  const { t } = useTranslation()
+  const navItems = [
+    { to: '/', icon: LayoutDashboard, label: t('sidebar.dashboard') },
+    { to: '/files', icon: FolderOpen, label: t('sidebar.files') },
+    { to: '/settings', icon: Settings, label: t('sidebar.settings') },
+  ]
+  return (
+    <aside className="w-56 h-screen border-r bg-card flex flex-col">
+      <div className="p-4 border-b">
+        <h1 className="text-lg font-bold">Pixl.js</h1>
+      </div>
+      <nav className="flex-1 p-2 space-y-1">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/'}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md text-sm ${
+                isActive
+                  ? 'bg-primary/10 text-primary font-medium'
+                  : 'text-muted-foreground hover:bg-accent'
+              }`
+            }
+          >
+            <item.icon className="w-4 h-4" />
+            {item.label}
+          </NavLink>
+        ))}
+      </nav>
+    </aside>
+  )
+}

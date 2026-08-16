@@ -1,4 +1,5 @@
 #include "mui_scene_dispatcher.h"
+#include "mui_view_dispatcher.h"
 
 mui_scene_dispatcher_t *mui_scene_dispatcher_create() {
     mui_scene_dispatcher_t *p_dispatcher = mui_mem_malloc(sizeof(mui_scene_dispatcher_t));
@@ -7,6 +8,7 @@ mui_scene_dispatcher_t *mui_scene_dispatcher_create() {
     p_dispatcher->scene_num = 0;
     p_dispatcher->user_data = NULL;
     p_dispatcher->default_scene_id = 0;
+    p_dispatcher->p_view_dispatcher = NULL;
     return p_dispatcher;
 }
 
@@ -38,7 +40,15 @@ void mui_scene_dispatcher_set_user_data(mui_scene_dispatcher_t *p_dispatcher, vo
     p_dispatcher->user_data = user_data;
 }
 
+void mui_scene_dispatcher_set_view_dispatcher(mui_scene_dispatcher_t *p_dispatcher,
+                                              mui_view_dispatcher_t *p_view_dispatcher) {
+    p_dispatcher->p_view_dispatcher = p_view_dispatcher;
+}
+
 void mui_scene_dispatcher_next_scene(mui_scene_dispatcher_t *p_dispatcher, uint32_t scene_id) {
+    if (p_dispatcher->p_view_dispatcher) {
+        mui_view_dispatcher_set_transition_dir(p_dispatcher->p_view_dispatcher, MUI_TRANSITION_DIR_RIGHT);
+    }
     if (scene_id_stack_size(p_dispatcher->scene_id_stack) > 0) {
         uint32_t cur_scene_id = *scene_id_stack_back(p_dispatcher->scene_id_stack);
         p_dispatcher->p_scene_defines[cur_scene_id].exit_cb(p_dispatcher->user_data);
@@ -48,7 +58,9 @@ void mui_scene_dispatcher_next_scene(mui_scene_dispatcher_t *p_dispatcher, uint3
 }
 
 void mui_scene_dispatcher_back_scene(mui_scene_dispatcher_t *p_dispatcher, uint32_t step) {
-
+    if (p_dispatcher->p_view_dispatcher) {
+        mui_view_dispatcher_set_transition_dir(p_dispatcher->p_view_dispatcher, MUI_TRANSITION_DIR_LEFT);
+    }
     uint32_t cur_scene_id = *scene_id_stack_back(p_dispatcher->scene_id_stack);
     uint32_t pre_scene_id;
     while (scene_id_stack_size(p_dispatcher->scene_id_stack) > 0 && step > 0) {
@@ -68,6 +80,9 @@ void mui_scene_dispatcher_back_scene(mui_scene_dispatcher_t *p_dispatcher, uint3
 }
 
 void mui_scene_dispatcher_previous_scene(mui_scene_dispatcher_t *p_dispatcher) {
+    if (p_dispatcher->p_view_dispatcher) {
+        mui_view_dispatcher_set_transition_dir(p_dispatcher->p_view_dispatcher, MUI_TRANSITION_DIR_LEFT);
+    }
     if (scene_id_stack_size(p_dispatcher->scene_id_stack) > 0) {
         uint32_t cur_scene_id;
         scene_id_stack_pop_back(&cur_scene_id, p_dispatcher->scene_id_stack);

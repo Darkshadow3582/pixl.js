@@ -1,0 +1,193 @@
+{
+  "lang": {
+    "choose": "选择语言",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "语言切换成功"
+  },
+  "btn": {
+    "ok": "确定",
+    "cancel": "取消",
+    "cont": "继续",
+    "save": "保存",
+    "confirm": "确认"
+  },
+  "menu": {
+    "upload": "上传",
+    "newfolder": "新建文件夹",
+    "del": "删除",
+    "download": "下载",
+    "up": "返回上级",
+    "refresh": "刷新",
+    "dfu": "DFU模式"
+  },
+  "status": {
+    "connected": "已连接",
+    "loading": "加载中..."
+  },
+  "conn": {
+    "connect": "连接",
+    "connecting": "连接中...",
+    "disconnect": "断开连接",
+    "consuccess": "连接成功",
+    "disconnected": "已断开连接",
+    "connfailed": "连接失败"
+  },
+  "labels": {
+    "name": "名称",
+    "size": "大小",
+    "type": "类型",
+    "remark": "备注",
+    "folder": "文件夹",
+    "file": "文件",
+    "root": "根目录"
+  },
+  "contxmenu": {
+    "del": "删除",
+    "rename": "重命名",
+    "prop": "属性",
+    "format": "格式化",
+    "download": "下载"
+  },
+  "properties": {
+    "title": "属性",
+    "remark": "备注",
+    "attrib": "属性",
+    "hide": "隐藏",
+    "readonly": "只读",
+    "errupdate": "更新失败",
+    "remarktoolong": "备注太长 (",
+    "remarktoolongend": " 字节)"
+  },
+  "upload": {
+    "title": "上传文件",
+    "drag": "拖拽文件到此处",
+    "click": "或点击选择文件",
+    "maxsize": "单个文件最大支持 4MB",
+    "maxname": "文件名最长支持 47 字节",
+    "closetitle": "确认关闭",
+    "closemessage": "上传正在进行，确定要关闭吗？",
+    "errupload": "上传失败: "
+  },
+  "format": {
+    "title": "格式化驱动器",
+    "messrow1a": "即将格式化驱动器 ",
+    "messrow1b": "",
+    "messrow2": "格式化将删除所有文件！",
+    "messrow3": "确认继续？",
+    "formatok": " 格式化成功",
+    "formaterr": " 格式化失败: "
+  },
+  "del": {
+    "title": "确认删除",
+    "message": "确定要删除 ",
+    "messageend": " 吗？",
+    "error": " 删除失败: ",
+    "deleteok": "删除成功"
+  },
+  "dfumode": {
+    "title": "DFU模式",
+    "startconfirm": "是否进入DFU模式？",
+    "updateconfirm": "设备已进入DFU模式，是否跳转到固件更新页面？",
+    "updatetitle": "固件更新"
+  },
+  "oldfirm": {
+    "title": "固件版本过低",
+    "message": "当前固件版本为 2.0.0，部分功能可能无法正常使用，请升级固件到最新版本。"
+  },
+  "newfolder": {
+    "title": "新建文件夹",
+    "message": "请输入文件夹名称",
+    "newfoldererr": "新建文件夹失败"
+  },
+  "rename": {
+    "title": "重命名",
+    "message": "请输入新的名称",
+    "errrename": "重命名失败",
+    "nametoolong": "名称太长 (最大63字节)",
+    "pathtoolong": "文件名太长 (最大47字节)"
+  },
+  "drive": {
+    "message": "驱动器不可用: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "仪表盘",
+    "files": "文件管理",
+    "settings": "设置"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "connect_title": "连接设备以开始管理文件",
+    "connect_btn": "连接设备",
+    "quick_actions": "快捷操作",
+    "dfu_btn": "进入 DFU 模式",
+    "refresh_btn": "刷新",
+    "device_info": "设备信息",
+    "status": "状态",
+    "connected": "已连接",
+    "disconnected": "未连接",
+    "firmware": "固件版本",
+    "ble_address": "BLE 地址",
+    "storage": "存储 - {{label}}",
+    "used": "已用",
+    "free": "剩余",
+    "total": "总计"
+  },
+  "files": {
+    "title": "文件管理",
+    "loading": "加载中...",
+    "search_placeholder": "搜索文件...",
+    "grid_view": "网格视图",
+    "list_view": "列表视图",
+    "multi_select": "多选模式"
+  },
+  "settings": {
+    "title": "设置",
+    "firmware": "固件",
+    "current_version": "当前版本: {{version}}",
+    "dfu_btn": "进入 DFU 模式",
+    "language": "语言",
+    "about": "关于",
+    "about_desc": "Pixl.js - Amiibo 模拟器",
+    "license": "基于 GPL 2.0 开源协议发布"
+  },
+  "dialog": {
+    "confirm": "确认",
+    "alert": "提示",
+    "input": "输入",
+    "ok": "确定",
+    "cancel": "取消",
+    "save": "保存",
+    "delete_confirm": "确定删除 {{count}} 个文件/文件夹？",
+    "delete_failed": "删除失败:\n{{errors}}",
+    "rename_title": "重命名",
+    "rename_message": "请输入新的名称",
+    "rename_failed": "重命名失败 [{{code}}]",
+    "newfolder_title": "新建文件夹",
+    "newfolder_message": "请输入文件夹名称",
+    "newfolder_failed": "新建文件夹失败 [{{code}}]",
+    "dfu_confirm": "是否进入DFU模式？",
+    "dfu_update": "设备已进入DFU模式，是否跳转到固件更新页面？",
+    "uploading": "上传中...",
+    "start_upload": "开始上传",
+    "waiting": "等待中"
+  },
+  "control": {
+    "btn": "控制",
+    "left": "左键",
+    "center": "中键",
+    "right": "右键",
+    "refresh": "刷新屏幕",
+    "title": "设备控制"
+  },
+  "device": {
+    "version_prefix": "已连接 v{{version}}"
+  }
+}

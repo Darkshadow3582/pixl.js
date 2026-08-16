@@ -28,7 +28,8 @@ const settings_data_t def_settings_data = {.backlight = 0,
                                            .show_mem_usage = false,
                                            .lcd_backlight = 0,
                                            .oled_contrast = 80,
-                                           .anim_enabled = false,
+                                           .anim_enabled = true,
+                                           .transition_duration_ms = 200,
                                            .amiidb_data_slot_num = 20,
                                            .qrcode_enabled = true,
                                            .chameleon_default_slot_index = INVALID_SLOT_INDEX,
@@ -70,6 +71,7 @@ static void validate_settings() {
     INT8_VALIDATE(m_settings_data.lcd_backlight, 0, 100, 0);
     INT8_VALIDATE(m_settings_data.oled_contrast, 0, 100, 80);
     BOOL_VALIDATE(m_settings_data.anim_enabled, 0);
+    INT8_VALIDATE(m_settings_data.transition_duration_ms, 0, 5000, 200);
     BOOL_VALIDATE(m_settings_data.qrcode_enabled, 0);
     INT8_VALIDATE(m_settings_data.language, 0, LANGUAGE_COUNT - 1, LANGUAGE_EN_US);
     INT8_VALIDATE(m_settings_data.amiidb_data_slot_num, 1, 100, 20);

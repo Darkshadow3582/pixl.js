@@ -21,6 +21,7 @@ void app_game_on_run(mini_app_inst_t *p_app_inst) {
     p_app_handle->p_view_dispatcher = mui_view_dispatcher_create();
     p_app_handle->p_game_view = game_view_create();
     p_app_handle->p_scene_dispatcher = mui_scene_dispatcher_create();
+    mui_scene_dispatcher_set_view_dispatcher(p_app_handle->p_scene_dispatcher, p_app_handle->p_view_dispatcher);
     p_app_handle->p_list_view = mui_list_view_create();
     mui_list_view_set_user_data(p_app_handle->p_list_view, p_app_handle);
     game_view_set_user_data(p_app_handle->p_game_view, p_app_handle);

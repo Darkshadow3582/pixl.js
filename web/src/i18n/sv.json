@@ -1,0 +1,186 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Språkbyte lyckades"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "Avbryt",
+    "cont": "Fortsätt",
+    "save": "Spara",
+    "confirm": "Bekräfta"
+  },
+  "menu": {
+    "upload": "Ladda upp",
+    "newfolder": "Ny mapp",
+    "del": "Radera",
+    "download": "Ladda ner",
+    "up": "Överordnad mapp",
+    "refresh": "Uppdatera",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Ansluten ",
+    "loading": "laddar..."
+  },
+  "conn": {
+    "connect": "Anslut",
+    "connecting": "Ansluter...",
+    "disconnect": "Koppla från",
+    "consuccess": "Anslutning lyckades",
+    "disconnected": "Frånkopplad",
+    "connfailed": "Anslutning misslyckades"
+  },
+  "labels": {
+    "name": "Namn",
+    "size": "Storlek",
+    "type": "Typ",
+    "remark": "Anteckning",
+    "folder": "Mapp",
+    "file": "Fil",
+    "root": "Rotkatalog"
+  },
+  "contxmenu": {
+    "del": "Radera",
+    "rename": "Byt namn",
+    "prop": "Inställningar",
+    "format": "Formatera",
+    "download": "Ladda ner"
+  },
+  "properties": {
+    "title": "Inställningar",
+    "remark": "Anteckning",
+    "entermsg": "Vänligen ange anteckning",
+    "attrib": "Attribut",
+    "hide": "Göm",
+    "readonly": "Skrivskydd",
+    "errupdate": "Misslyckades att uppdatera detaljer!",
+    "remarktoolong": "Anteckningar för långa (",
+    "remarktoolongend": " bytes)"
+  },
+  "upload": {
+    "title": "Ladda upp",
+    "drag": "Dra filer hit",
+    "click": "eller klicka för att ladda upp",
+    "maxsize": "Sökvägens längd får inte överstiga 63 bytes.",
+    "maxname": "Filnamnet får inte överstiga 47 bytes.",
+    "closetitle": "Vill du verkligen stänga?",
+    "closemessage": "Stängning rensar uppladdningskön.",
+    "errupload": "Uppladdningen misslyckades: "
+  },
+  "format": {
+    "title": "Formatera",
+    "messrow1a": "Vill du formatera ",
+    "messrow1b": "?",
+    "messrow2": "Formatering raderar all data!",
+    "messrow3": "Formatering tar ungefär 10 sekunder.",
+    "formatok": "Formateringen färdig!",
+    "formaterr": "Formatering misslyckades!: "
+  },
+  "del": {
+    "title": "Radera",
+    "message": "Radera fil: ",
+    "messageend": "?",
+    "error": "Misslyckades att radera filen!: ",
+    "deleteok": "Filen raderad!"
+  },
+  "dfumode": {
+    "title": "DFU-läge",
+    "startconfirm": "Vill du aktivera DFU-läge?",
+    "updateconfirm": "DFU-läget aktiverat. Öppna DFU-uppgraderingssidan?",
+    "updatetitle": "Firmwareuppdatering"
+  },
+  "oldfirm": {
+    "title": "Firmware för gammal",
+    "message": "Nuvarande firmwareversion är 2.0.0. Vissa funktioner kanske inte fungerar. Uppgradera till senaste firmware."
+  },
+  "newfolder": {
+    "title": "Ny mapp",
+    "message": "Vänligen ange mappnamnet",
+    "newfoldererr": "Misslyckades att skapa mapp!"
+  },
+  "rename": {
+    "title": "Byt namn",
+    "message": "Vänligen ange ett nytt namn",
+    "errrename": "Namnbytet misslyckades!: ",
+    "nametoolong": "Sökvägen får inte överstiga 63 bytes",
+    "pathtoolong": "Filnamnet får inte överstiga 47 bytes"
+  },
+  "drive": {
+    "message": "Lagring inte tillgänglig: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Instrumentpanel",
+    "files": "Filer",
+    "settings": "Inställningar"
+  },
+  "dashboard": {
+    "title": "Instrumentpanel",
+    "connect_title": "Anslut en enhet för att hantera filer",
+    "connect_btn": "Anslut enhet",
+    "quick_actions": "Snabbåtgärder",
+    "dfu_btn": "Gå in i DFU-läge",
+    "refresh_btn": "Uppdatera",
+    "device_info": "Enhetsinformation",
+    "status": "Status",
+    "connected": "Ansluten",
+    "disconnected": "Frånkopplad",
+    "firmware": "Firmwareversion",
+    "ble_address": "BLE-adress",
+    "storage": "Lagring - {{label}}",
+    "used": "Använt",
+    "free": "Ledigt",
+    "total": "Totalt"
+  },
+  "files": {
+    "title": "Filer",
+    "loading": "Laddar...",
+    "search_placeholder": "Sök filer...",
+    "grid_view": "Rutnätsvy",
+    "list_view": "Listvy",
+    "multi_select": "Flerval"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "firmware": "Firmware",
+    "current_version": "Nuvarande version: {{version}}",
+    "dfu_btn": "Gå in i DFU-läge",
+    "language": "Språk",
+    "about": "Om",
+    "about_desc": "Pixl.js - Amiibo-emulator",
+    "license": "Publicerad under GPL 2.0-licens"
+  },
+  "dialog": {
+    "confirm": "Bekräfta",
+    "alert": "Varning",
+    "input": "Inmatning",
+    "ok": "OK",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete_confirm": "Bekräfta borttagning av {{count}} fil(er)/mapp(ar)?",
+    "delete_failed": "Borttagning misslyckades:\n{{errors}}",
+    "rename_title": "Byt namn",
+    "rename_message": "Vänligen ange ett nytt namn",
+    "rename_failed": "Namnbyte misslyckades [{{code}}]",
+    "newfolder_title": "Ny mapp",
+    "newfolder_message": "Vänligen ange mappnamn",
+    "newfolder_failed": "Misslyckades att skapa mapp [{{code}}]",
+    "dfu_confirm": "Vill du aktivera DFU-läge?",
+    "dfu_update": "Enheten är i DFU-läge. Öppna uppdateringssidan?",
+    "uploading": "Laddar upp...",
+    "start_upload": "Starta uppladdning",
+    "waiting": "Väntar"
+  },
+  "device": {
+    "version_prefix": "Ansluten v{{version}}"
+  }
+}

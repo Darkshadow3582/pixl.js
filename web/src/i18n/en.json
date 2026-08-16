@@ -1,0 +1,194 @@
+{
+  "lang": {
+    "choose": "语言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Switch Language Success"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "cont": "Continue",
+    "save": "Save",
+    "confirm": "Confirm"
+  },
+  "menu": {
+    "upload": "Upload",
+    "newfolder": "New Folder",
+    "del": "Delete",
+    "download": "Download",
+    "up": "Parent Folder",
+    "refresh": "Refresh",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Connected ",
+    "loading": "loading..."
+  },
+  "conn": {
+    "connect": "Connect",
+    "connecting": "Connecting...",
+    "disconnect": "Disconnect",
+    "consuccess": "Connected successfully",
+    "disconnected": "Disconnected",
+    "connfailed": "Connection failed"
+  },
+  "labels": {
+    "name": "Name",
+    "size": "Size",
+    "type": "Type",
+    "remark": "Remark",
+    "folder": "Folder",
+    "file": "File",
+    "root": "Root Directory"
+  },
+  "contxmenu": {
+    "del": "Delete",
+    "rename": "Rename",
+    "prop": "Properties",
+    "format": "Format",
+    "download": "Download"
+  },
+  "properties": {
+    "title": "Properties",
+    "remark": "Remark",
+    "entermsg": "Please enter remarks",
+    "attrib": "Attributes",
+    "hide": "Hide",
+    "readonly": "Read only",
+    "errupdate": "Failed to update properties!",
+    "remarktoolong": "Remarks too long (",
+    "remarktoolongend": " Bytes)"
+  },
+  "upload": {
+    "title": "Upload",
+    "drag": "Drag files here",
+    "click": "or click to upload.",
+    "maxsize": "The file name cannot exceed 63 bytes.",
+    "maxname": "The file name cannot exceed 47 bytes.",
+    "closetitle": "Confirm to close?",
+    "closemessage": "Closing dialog will abort the upload queue.",
+    "errupload": "Upload failed: "
+  },
+  "format": {
+    "title": "Format",
+    "messrow1a": "Do you want to format ",
+    "messrow1b": "?",
+    "messrow2": "Formatting will delete all data!",
+    "messrow3": "Formatting may take about 10 seconds, please be patient.",
+    "formatok": "Format completed!",
+    "formaterr": "Format failed!: "
+  },
+  "del": {
+    "title": "Delete",
+    "message": "Delete file: ",
+    "messageend": "?",
+    "error": "Failed to delete file!: ",
+    "deleteok": "File deleted successfully!"
+  },
+  "dfumode": {
+    "title": "DFU Mode",
+    "startconfirm": "Enter DFU mode?",
+    "updateconfirm": "Device entered DFU mode. Open the DFU upgrade page?",
+    "updatetitle": "Firmware Update"
+  },
+  "oldfirm": {
+    "title": "Firmware Too Old",
+    "message": "Current firmware version is 2.0.0, some features may not work. Please upgrade to the latest firmware."
+  },
+  "newfolder": {
+    "title": "New Folder",
+    "message": "Please enter the folder name",
+    "newfoldererr": "Failed to create folder!"
+  },
+  "rename": {
+    "title": "Rename",
+    "message": "Please enter a new name",
+    "errrename": "Rename failed!: ",
+    "nametoolong": "Name too long (max 63 bytes)",
+    "pathtoolong": "Name too long (max 47 bytes)"
+  },
+  "drive": {
+    "message": "Drive not available: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "files": "Files",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "connect_title": "Connect a device to start managing files",
+    "connect_btn": "Connect Device",
+    "quick_actions": "Quick Actions",
+    "dfu_btn": "Enter DFU Mode",
+    "refresh_btn": "Refresh",
+    "device_info": "Device Info",
+    "status": "Status",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "firmware": "Firmware Version",
+    "ble_address": "BLE Address",
+    "storage": "Storage - {{label}}",
+    "used": "Used",
+    "free": "Free",
+    "total": "Total"
+  },
+  "files": {
+    "title": "Files",
+    "loading": "Loading...",
+    "search_placeholder": "Search files...",
+    "grid_view": "Grid View",
+    "list_view": "List View",
+    "multi_select": "Multi-Select"
+  },
+  "settings": {
+    "title": "Settings",
+    "firmware": "Firmware",
+    "current_version": "Current Version: {{version}}",
+    "dfu_btn": "Enter DFU Mode",
+    "language": "Language",
+    "about": "About",
+    "about_desc": "Pixl.js - Amiibo Emulator",
+    "license": "Licensed under GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Confirm",
+    "alert": "Alert",
+    "input": "Input",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete_confirm": "Are you sure you want to delete {{count}} file(s)/folder(s)?",
+    "delete_failed": "Delete failed:\n{{errors}}",
+    "rename_title": "Rename",
+    "rename_message": "Please enter a new name",
+    "rename_failed": "Rename failed [{{code}}]",
+    "newfolder_title": "New Folder",
+    "newfolder_message": "Please enter the folder name",
+    "newfolder_failed": "Failed to create folder [{{code}}]",
+    "dfu_confirm": "Enter DFU mode?",
+    "dfu_update": "Device entered DFU mode. Open firmware update page?",
+    "uploading": "Uploading...",
+    "start_upload": "Start Upload",
+    "waiting": "Waiting"
+  },
+  "control": {
+    "btn": "Control",
+    "left": "Left",
+    "center": "Center",
+    "right": "Right",
+    "refresh": "Refresh Screen",
+    "title": "Device Control"
+  },
+  "device": {
+    "version_prefix": "Connected v{{version}}"
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "lang": {
+    "choose": "言語/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "言語の切り替えに成功しました"
+  },
+  "btn": {
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "cont": "続行",
+    "save": "保存",
+    "confirm": "確認"
+  },
+  "menu": {
+    "upload": "アップロード",
+    "newfolder": "新しいフォルダ",
+    "del": "削除",
+    "download": "ダウンロード",
+    "up": "親フォルダ",
+    "refresh": "更新",
+    "dfu": "DFUモード"
+  },
+  "status": {
+    "connected": "接続済み ",
+    "loading": "読み込み中..."
+  },
+  "conn": {
+    "connect": "接続",
+    "connecting": "接続中...",
+    "disconnect": "切断",
+    "consuccess": "接続成功",
+    "disconnected": "切断済み",
+    "connfailed": "接続失敗"
+  },
+  "labels": {
+    "name": "名前",
+    "size": "サイズ",
+    "type": "種類",
+    "remark": "備考",
+    "folder": "フォルダ",
+    "file": "ファイル",
+    "root": "ルートディレクトリ"
+  },
+  "contxmenu": {
+    "del": "削除",
+    "rename": "名前変更",
+    "prop": "プロパティ",
+    "format": "フォーマット",
+    "download": "ダウンロード"
+  },
+  "properties": {
+    "title": "プロパティ",
+    "remark": "備考",
+    "entermsg": "備考を入力してください",
+    "attrib": "属性",
+    "hide": "非表示",
+    "readonly": "読み取り専用",
+    "errupdate": "プロパティの更新に失敗しました",
+    "remarktoolong": "備考が長すぎます (",
+    "remarktoolongend": " バイト)"
+  },
+  "upload": {
+    "title": "アップロード",
+    "drag": "ここにファイルをドラッグ",
+    "click": "またはクリックしてアップロード",
+    "maxsize": "ファイルパスの合計長は63バイト以内",
+    "maxname": "ファイル名は47バイト以内",
+    "closetitle": "閉じてもよろしいですか？",
+    "closemessage": "ダイアログを閉じるとアップロードが中断されます。",
+    "errupload": "アップロード失敗: "
+  },
+  "format": {
+    "title": "フォーマット",
+    "messrow1a": "フォーマットしますか ",
+    "messrow1b": "？",
+    "messrow2": "フォーマットするとすべてのデータが削除されます！",
+    "messrow3": "フォーマットには約10秒かかります。",
+    "formatok": "フォーマット完了",
+    "formaterr": "フォーマット失敗: "
+  },
+  "del": {
+    "title": "削除",
+    "message": "ファイルを削除します: ",
+    "messageend": "？",
+    "error": "ファイルの削除に失敗: ",
+    "deleteok": "ファイルを削除しました"
+  },
+  "dfumode": {
+    "title": "DFUモード",
+    "startconfirm": "DFUモードに入りますか？",
+    "updateconfirm": "DFUモードに入りました。DFUアップグレードページを開きますか？",
+    "updatetitle": "ファームウェア更新"
+  },
+  "oldfirm": {
+    "title": "ファームウェアが古い",
+    "message": "現在のファームウェアバージョンは 2.0.0 です。一部機能が正常に動作しない可能性があります。最新版にアップデートしてください。"
+  },
+  "newfolder": {
+    "title": "新しいフォルダ",
+    "message": "フォルダ名を入力してください",
+    "newfoldererr": "フォルダの作成に失敗"
+  },
+  "rename": {
+    "title": "名前変更",
+    "message": "新しい名前を入力してください",
+    "errrename": "名前の変更に失敗: ",
+    "nametoolong": "名前が長すぎます (最大63バイト)",
+    "pathtoolong": "ファイル名が長すぎます (最大47バイト)"
+  },
+  "drive": {
+    "message": "ドライブが利用できません: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "ダッシュボード",
+    "files": "ファイル",
+    "settings": "設定"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "connect_title": "デバイスに接続してファイル管理を開始",
+    "connect_btn": "デバイスに接続",
+    "quick_actions": "クイックアクション",
+    "dfu_btn": "DFUモードに入る",
+    "refresh_btn": "更新",
+    "device_info": "デバイス情報",
+    "status": "ステータス",
+    "connected": "接続済み",
+    "disconnected": "未接続",
+    "firmware": "ファームウェアバージョン",
+    "ble_address": "BLEアドレス",
+    "storage": "ストレージ - {{label}}",
+    "used": "使用中",
+    "free": "空き",
+    "total": "合計"
+  },
+  "files": {
+    "title": "ファイル",
+    "loading": "読み込み中...",
+    "search_placeholder": "ファイルを検索...",
+    "grid_view": "グリッド表示",
+    "list_view": "リスト表示",
+    "multi_select": "複数選択"
+  },
+  "settings": {
+    "title": "設定",
+    "firmware": "ファームウェア",
+    "current_version": "現在のバージョン: {{version}}",
+    "dfu_btn": "DFUモードに入る",
+    "language": "言語",
+    "about": "このアプリについて",
+    "about_desc": "Pixl.js - Amiibo エミュレータ",
+    "license": "GPL 2.0 ライセンスのもとで公開"
+  },
+  "dialog": {
+    "confirm": "確認",
+    "alert": "通知",
+    "input": "入力",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete_confirm": "{{count}} 個のファイル/フォルダを削除してもよろしいですか？",
+    "delete_failed": "削除失敗:\n{{errors}}",
+    "rename_title": "名前変更",
+    "rename_message": "新しい名前を入力してください",
+    "rename_failed": "名前変更失敗 [{{code}}]",
+    "newfolder_title": "新しいフォルダ",
+    "newfolder_message": "フォルダ名を入力してください",
+    "newfolder_failed": "フォルダ作成失敗 [{{code}}]",
+    "dfu_confirm": "DFUモードに入りますか？",
+    "dfu_update": "DFUモードに入りました。アップデートページを開きますか？",
+    "uploading": "アップロード中...",
+    "start_upload": "アップロード開始",
+    "waiting": "待機中"
+  },
+  "device": {
+    "version_prefix": "接続済み v{{version}}"
+  }
+}

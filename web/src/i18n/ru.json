@@ -1,0 +1,186 @@
+{
+  "lang": {
+    "choose": "語言/Language",
+    "zhcn": "简体中文",
+    "zhtw": "繁體中文(臺灣)",
+    "en": "English",
+    "es": "Español",
+    "ru": "Русский",
+    "de": "Deutsch",
+    "sv": "Svenska",
+    "ja": "日本語",
+    "changeok": "Язык интерфейса успешно изменён!"
+  },
+  "btn": {
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "cont": "Продолжить",
+    "save": "Сохранить",
+    "confirm": "Подтвердить"
+  },
+  "menu": {
+    "upload": "Загрузить",
+    "newfolder": "Новая папка",
+    "del": "Удалить",
+    "download": "Скачать",
+    "up": "Выше",
+    "refresh": "Обновить",
+    "dfu": "DFU"
+  },
+  "status": {
+    "connected": "Подключено ",
+    "loading": "загрузка..."
+  },
+  "conn": {
+    "connect": "Подключиться",
+    "connecting": "Подключение...",
+    "disconnect": "Отключиться",
+    "consuccess": "Подключение успешно",
+    "disconnected": "Отключено",
+    "connfailed": "Ошибка подключения"
+  },
+  "labels": {
+    "name": "Имя",
+    "size": "Размер",
+    "type": "Тип",
+    "remark": "Заметка",
+    "folder": "Папка",
+    "file": "Файл",
+    "root": "Корневой каталог"
+  },
+  "contxmenu": {
+    "del": "Удалить",
+    "rename": "Переименовать",
+    "prop": "Свойства",
+    "format": "Форматировать",
+    "download": "Скачать"
+  },
+  "properties": {
+    "title": "Свойства",
+    "remark": "Заметка",
+    "entermsg": "Задайте заметку",
+    "attrib": "Атрибуты",
+    "hide": "Скрытый",
+    "readonly": "Только чтение",
+    "errupdate": "Ошибка обновления свойств",
+    "remarktoolong": "Заметки слишком длинные (",
+    "remarktoolongend": " байт)"
+  },
+  "upload": {
+    "title": "Загрузка",
+    "drag": "Перетащите файлы сюда",
+    "click": "или выберите файлы",
+    "maxsize": "Общая длина пути к файлу не должна превышать 63 байта.",
+    "maxname": "Имя файла не должно превышать 47 байт.",
+    "closetitle": "Закрыть окно загрузчика?",
+    "closemessage": "Закрытие окна прервёт текущую загрузку.",
+    "errupload": "Ошибка загрузки: "
+  },
+  "format": {
+    "title": "Форматирование",
+    "messrow1a": "Отформатировать ",
+    "messrow1b": "?",
+    "messrow2": "Форматирование удалит все данные!",
+    "messrow3": "Процесс может занять до 10 секунд.",
+    "formatok": "Форматирование завершено",
+    "formaterr": "Ошибка форматирования: "
+  },
+  "del": {
+    "title": "Удаление",
+    "message": "Удалить ",
+    "messageend": "?",
+    "error": "Ошибка удаления: ",
+    "deleteok": "Удаление успешно завершено"
+  },
+  "dfumode": {
+    "title": "Режим DFU",
+    "startconfirm": "Войти в режим DFU?",
+    "updateconfirm": "Устройство в режиме DFU. Открыть страницу обновления DFU?",
+    "updatetitle": "Обновление прошивки"
+  },
+  "oldfirm": {
+    "title": "Устаревшая прошивка",
+    "message": "Текущая версия прошивки 2.0.0. Некоторые функции могут не работать. Обновите прошивку."
+  },
+  "newfolder": {
+    "title": "Новая папка",
+    "message": "Задайте название папки",
+    "newfoldererr": "Ошибка создания папки"
+  },
+  "rename": {
+    "title": "Переименование",
+    "message": "Задайте новое имя",
+    "errrename": "Ошибка переименования: ",
+    "nametoolong": "Максимальная длина пути 63 байта",
+    "pathtoolong": "Максимальная длина имени 47 байт"
+  },
+  "drive": {
+    "message": "Диск недоступен: ",
+    "messageend": ""
+  },
+  "sidebar": {
+    "dashboard": "Панель управления",
+    "files": "Файлы",
+    "settings": "Настройки"
+  },
+  "dashboard": {
+    "title": "Панель управления",
+    "connect_title": "Подключите устройство для управления файлами",
+    "connect_btn": "Подключить устройство",
+    "quick_actions": "Быстрые действия",
+    "dfu_btn": "Войти в режим DFU",
+    "refresh_btn": "Обновить",
+    "device_info": "Информация об устройстве",
+    "status": "Статус",
+    "connected": "Подключено",
+    "disconnected": "Отключено",
+    "firmware": "Версия прошивки",
+    "ble_address": "BLE адрес",
+    "storage": "Память - {{label}}",
+    "used": "Использовано",
+    "free": "Свободно",
+    "total": "Всего"
+  },
+  "files": {
+    "title": "Файлы",
+    "loading": "Загрузка...",
+    "search_placeholder": "Поиск файлов...",
+    "grid_view": "Сетка",
+    "list_view": "Список",
+    "multi_select": "Множественный выбор"
+  },
+  "settings": {
+    "title": "Настройки",
+    "firmware": "Прошивка",
+    "current_version": "Текущая версия: {{version}}",
+    "dfu_btn": "Войти в режим DFU",
+    "language": "Язык",
+    "about": "О программе",
+    "about_desc": "Pixl.js - Эмулятор Amiibo",
+    "license": "Под лицензией GPL 2.0"
+  },
+  "dialog": {
+    "confirm": "Подтверждение",
+    "alert": "Уведомление",
+    "input": "Ввод",
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete_confirm": "Подтвердите удаление {{count}} файла(ов)/папки(ок)?",
+    "delete_failed": "Ошибка удаления:\n{{errors}}",
+    "rename_title": "Переименование",
+    "rename_message": "Задайте новое имя",
+    "rename_failed": "Ошибка переименования [{{code}}]",
+    "newfolder_title": "Новая папка",
+    "newfolder_message": "Задайте название папки",
+    "newfolder_failed": "Ошибка создания папки [{{code}}]",
+    "dfu_confirm": "Войти в режим DFU?",
+    "dfu_update": "Устройство в режиме DFU. Открыть страницу обновления?",
+    "uploading": "Загрузка...",
+    "start_upload": "Начать загрузку",
+    "waiting": "Ожидание"
+  },
+  "device": {
+    "version_prefix": "Подключено v{{version}}"
+  }
+}
