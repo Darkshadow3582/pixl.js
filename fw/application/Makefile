@@ -617,8 +617,11 @@ OPT = -O2 -g3
 else
 OPT = -Os -ffunction-sections -fdata-sections
 endif
-# Uncomment the line below to enable link time optimization
-# OPT += -flto
+# Enable link time optimization for release builds: cross-TU inlining,
+# dead code elimination and string constant merging save a lot of flash.
+ifeq ($(RELEASE), 1)
+OPT += -flto
+endif
 
 # C flags common to all targets
 CFLAGS += $(OPT)
@@ -643,6 +646,9 @@ CFLAGS += -DEBUG_NRF
 else
 CFLAGS += -DNDEBUG
 CFLAGS += -DU8G2_USE_LARGE_FONTS
+# Release builds ship without the RTT logger: keeps all log strings and the
+# logging machinery out of flash. Debug builds keep full logging.
+CFLAGS += -DNRF_LOG_ENABLED=0
 endif
 CFLAGS += -DMBEDTLS_CONFIG_FILE=\"nrf_crypto_mbedtls_config.h\"
 CFLAGS += -DM_USE_THREAD_BACKEND=0
@@ -653,7 +659,11 @@ CFLAGS += -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-implicit-func
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums
+CFLAGS += -fshort-enums
+# Vendored (chameleon) sources call APP_ERROR_CHECK without including
+# app_error.h; they previously got it transitively through the nrf_log
+# header chain. Force-include so it stays available when logging is off.
+CFLAGS += -include app_error.h
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -685,7 +695,9 @@ LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
 LDFLAGS += --specs=nano.specs
-LDFLAGS += -u _printf_float
+# _printf_float pulls in ~4-8KB of float printf support; the firmware never
+# formats floats with printf, so do not force it in.
+# LDFLAGS += -u _printf_float
 
 pixljs: CFLAGS += -D__HEAP_SIZE=4096
 pixljs: CFLAGS += -D__STACK_SIZE=8192

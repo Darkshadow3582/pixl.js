@@ -53,7 +53,7 @@ static void amiidb_scene_amiibo_game_list_init(app_amiidb_t *app) {
     while (p_link->game_id > 0) {
         if (p_link->game_id == cur_game_id) {
             total++;
-            if (p_link->head == app->cur_amiibo->head && p_link->tail == app->cur_amiibo->tail) {
+            if (db_link_get_head(p_link) == app->cur_amiibo->head && db_link_get_tail(p_link) == app->cur_amiibo->tail) {
                 focus = total - 1;
             }
         }
@@ -77,7 +77,7 @@ static void amiidb_scene_amiibo_game_list_update(app_amiidb_t *app) {
         if (p_link->game_id == cur_game_id) {
             index++;
             if (index == focus) {
-                app->cur_amiibo = get_amiibo_by_id(p_link->head, p_link->tail);
+                app->cur_amiibo = db_link_get_amiibo(p_link);
                 break;
             }
         }

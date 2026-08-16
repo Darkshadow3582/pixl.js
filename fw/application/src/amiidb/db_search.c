@@ -22,9 +22,17 @@ const db_amiibo_t * get_amiibo_by_id(uint32_t head, uint32_t tail){
 }
 
 const db_link_t* get_link_by_id(uint8_t game_id, uint32_t head, uint32_t tail){
+    // Resolve the amiibo to its index in amiibo_list first; links reference
+    // amiibo by index instead of storing a duplicate (head, tail).
+    const db_amiibo_t *amiibo = get_amiibo_by_id(head, tail);
+    if (amiibo == 0) {
+        return 0;
+    }
+    uint16_t amiibo_idx = (uint16_t)(amiibo - amiibo_list);
+
     const db_link_t *link = link_list;
     while(link->game_id > 0){
-        if(link->game_id == game_id && link->head == head && link->tail == tail){
+        if(link->game_id == game_id && link->amiibo_idx == amiibo_idx){
             return link;
         }
         link += 1;
@@ -38,5 +46,6 @@ bool is_valid_amiibo_v3(uint32_t head, uint32_t tail){
 
 const char* get_amiibo_display_name(const db_amiibo_t *amiibo){
      uint8_t language = settings_get_data()->language;
-    return language == LANGUAGE_ZH_HANS  && amiibo->name_cn[0] != '\0' ? amiibo->name_cn : amiibo->name_en;
+     const char *name_cn = db_amiibo_get_name_cn(amiibo);
+    return language == LANGUAGE_ZH_HANS  && name_cn[0] != '\0' ? name_cn : db_amiibo_get_name_en(amiibo);
 }

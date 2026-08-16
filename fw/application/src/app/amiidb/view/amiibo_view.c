@@ -104,7 +104,7 @@ static void amiibo_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) {
     const db_amiibo_t *amd = get_amiibo_by_id(head, tail);
     if (amd != NULL) {
         const char *name =
-            (getLanguage() == LANGUAGE_ZH_TW || getLanguage() == LANGUAGE_ZH_HANS) && strlen(amd->name_cn) > 0 ? amd->name_cn : amd->name_en;
+            (getLanguage() == LANGUAGE_ZH_TW || getLanguage() == LANGUAGE_ZH_HANS) && strlen(db_amiibo_get_name_cn(amd)) > 0 ? db_amiibo_get_name_cn(amd) : db_amiibo_get_name_en(amd);
 
         if (ntag->read_only) {
             mui_canvas_set_font(p_canvas, u8g2_font_siji_t_6x10);
@@ -143,11 +143,11 @@ static void amiibo_view_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas) {
         } else if (link != NULL) {
             const char *notes;
             if (getLanguage() == LANGUAGE_ZH_HANS) {
-                notes = link->note_cn;
+                notes = db_link_get_note_cn(link);
             } else if (getLanguage() == LANGUAGE_IT_IT) {
-                notes = link->note_it;
+                notes = db_link_get_note_it(link);
             } else {
-                notes = link->note_en;
+                notes = db_link_get_note_en(link);
             }
             p_amiibo_view->desc_total =
                 mui_element_autowrap_text_box(p_canvas, clip_win_cur.x, clip_win_cur.y, clip_win_cur.w, clip_win_cur.h,

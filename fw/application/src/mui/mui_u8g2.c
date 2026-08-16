@@ -255,7 +255,7 @@ void mui_u8g2_set_contrast_level(uint8_t value) {
         value = 60;
     }
 #endif
-    u8g2_SetContrast(&p_mui->u8g2, (value - 1) * (255.0 / 99.0));
+    u8g2_SetContrast(&p_mui->u8g2, (value - 1) * (255.0f / 99.0f));
 }
 
 const spi_device_t *mui_u8g2_get_spi_device() { return &m_dev; }

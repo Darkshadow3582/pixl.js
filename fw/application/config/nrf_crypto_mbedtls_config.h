@@ -591,7 +591,7 @@
  * This option is independent of \c MBEDTLS_AES_ROM_TABLES.
  *
  */
-//#define MBEDTLS_AES_FEWER_TABLES
+#define MBEDTLS_AES_FEWER_TABLES
 
 /**
  * \def MBEDTLS_CAMELLIA_SMALL_MEMORY
@@ -607,15 +607,13 @@
  *
  * Enable Cipher Block Chaining mode (CBC) for symmetric ciphers.
  */
-#define MBEDTLS_CIPHER_MODE_CBC
-
+//#define MBEDTLS_CIPHER_MODE_CBC
 /**
  * \def MBEDTLS_CIPHER_MODE_CFB
  *
  * Enable Cipher Feedback mode (CFB) for symmetric ciphers.
  */
-#define MBEDTLS_CIPHER_MODE_CFB
-
+//#define MBEDTLS_CIPHER_MODE_CFB
 /**
  * \def MBEDTLS_CIPHER_MODE_CTR
  *
@@ -628,15 +626,13 @@
  *
  * Enable Output Feedback mode (OFB) for symmetric ciphers.
  */
-#define MBEDTLS_CIPHER_MODE_OFB
-
+//#define MBEDTLS_CIPHER_MODE_OFB
 /**
  * \def MBEDTLS_CIPHER_MODE_XTS
  *
  * Enable Xor-encrypt-xor with ciphertext stealing mode (XTS) for AES.
  */
-#define MBEDTLS_CIPHER_MODE_XTS
-
+//#define MBEDTLS_CIPHER_MODE_XTS
 /**
  * \def MBEDTLS_CIPHER_NULL_CIPHER
  *
@@ -2023,8 +2019,7 @@
  *      MBEDTLS_TLS_PSK_WITH_CAMELLIA_128_GCM_SHA256
  *      MBEDTLS_TLS_PSK_WITH_CAMELLIA_128_CBC_SHA256
  */
-#define MBEDTLS_CAMELLIA_C
-
+//#define MBEDTLS_CAMELLIA_C
 /**
  * \def MBEDTLS_ARIA_C
  *
@@ -2089,8 +2084,7 @@
  * This module enables the AES-CCM ciphersuites, if other requisites are
  * enabled as well.
  */
-#define MBEDTLS_CCM_C
-
+//#define MBEDTLS_CCM_C
 /**
  * \def MBEDTLS_CERTS_C
  *
@@ -2110,8 +2104,7 @@
  *
  * Module:  library/chacha20.c
  */
-#define MBEDTLS_CHACHA20_C
-
+//#define MBEDTLS_CHACHA20_C
 /**
  * \def MBEDTLS_CHACHAPOLY_C
  *
@@ -2121,8 +2114,7 @@
  *
  * This module requires: MBEDTLS_CHACHA20_C, MBEDTLS_POLY1305_C
  */
-#define MBEDTLS_CHACHAPOLY_C
-
+//#define MBEDTLS_CHACHAPOLY_C
 /**
  * \def MBEDTLS_CIPHER_C
  *
@@ -2146,8 +2138,7 @@
  * Requires: MBEDTLS_AES_C or MBEDTLS_DES_C
  *
  */
-#define MBEDTLS_CMAC_C
-
+//#define MBEDTLS_CMAC_C
 /**
  * \def MBEDTLS_CTR_DRBG_C
  *
@@ -2334,8 +2325,7 @@
  * This module enables the AES-GCM and CAMELLIA-GCM ciphersuites, if other
  * requisites are enabled as well.
  */
-#define MBEDTLS_GCM_C
-
+//#define MBEDTLS_GCM_C
 /**
  * \def MBEDTLS_HAVEGE_C
  *
@@ -2467,8 +2457,7 @@
  *            it, and considering stronger message digests instead.
  *
  */
-#define MBEDTLS_MD5_C
-
+//#define MBEDTLS_MD5_C
 /**
  * \def MBEDTLS_MEMORY_BUFFER_ALLOC_C
  *
@@ -2692,8 +2681,7 @@
  * Module:  library/poly1305.c
  * Caller:  library/chachapoly.c
  */
-#define MBEDTLS_POLY1305_C
-
+//#define MBEDTLS_POLY1305_C
 /**
  * \def MBEDTLS_RIPEMD160_C
  *
@@ -2776,8 +2764,7 @@
  *
  * This module adds support for SHA-384 and SHA-512.
  */
-#define MBEDTLS_SHA512_C
-
+//#define MBEDTLS_SHA512_C
 /**
  * \def MBEDTLS_SSL_CACHE_C
  *
