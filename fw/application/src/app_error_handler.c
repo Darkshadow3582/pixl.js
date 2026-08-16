@@ -12,6 +12,7 @@
 #include "mui_core.h"
 #include "nrf_delay.h"
 #include "cache.h"
+#include "crash_log.h"
 
 
 /*lint -save -e14 */
@@ -22,6 +23,21 @@
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     __disable_irq();
+
+    // Record the fault in the persistent crash log before resetting.
+    uint32_t fault_id = CRASH_FAULT_HARDFAULT;
+#if defined(SOFTDEVICE_PRESENT) && SOFTDEVICE_PRESENT
+    if (id == NRF_FAULT_ID_SD_ASSERT || id == NRF_FAULT_ID_APP_MEMACC) {
+        fault_id = CRASH_FAULT_SDK_ASSERT;
+    }
+#endif
+    if (id == NRF_FAULT_ID_SDK_ASSERT) {
+        fault_id = CRASH_FAULT_SDK_ASSERT;
+    } else if (id == NRF_FAULT_ID_SDK_ERROR) {
+        fault_id = CRASH_FAULT_SDK_ERROR;
+    }
+    crash_log_capture_error(fault_id, pc, info);
+
     NRF_LOG_FINAL_FLUSH();
 
 #ifndef DEBUG
@@ -90,26 +106,8 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 
 
 
-void HardFault_Handler(void)
-{
-    uint32_t *sp = (uint32_t *) __get_MSP(); // Get stack pointer
-    uint32_t ia = sp[12]; // Get instruction address from stack
-
-    printf("Hard Fault at address: 0x%08x\r\n", (unsigned int)ia);
-
-    cache_clean();
-
-#ifndef DEBUG
-    NRF_LOG_WARNING("System reset");
-    NVIC_SystemReset();
-#else
-    // endless loop here to wait debugger attach
-    NRF_BREAKPOINT_COND;
-    while(1)
-        ;
-#endif
-
-}
+/* HardFault_Handler / MemManage / BusFault / UsageFault / NMI are defined in
+ * interrupt_handler.c with crash-log capture. */
 
 void _exit(int status){
     NRF_LOG_WARNING("System reset: %d", status);

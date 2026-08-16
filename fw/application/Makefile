@@ -14,6 +14,7 @@ BOARD ?= OLED
 FW_TOP_SYMBOLS ?= 20
 FW_TOP_OBJECTS ?= 20
 
+
 $(OUTPUT_DIRECTORY)/pixljs.out: \
   LINKER_SCRIPT  := ../ld/application.ld
 
@@ -178,6 +179,7 @@ SRC_FILES += \
   $(PROJ_DIR)/mui_qrcode_helper.c \
   $(PROJ_DIR)/app_error_handler.c \
   $(PROJ_DIR)/interrupt_handler.c \
+  $(PROJ_DIR)/debug/crash_log.c \
   $(PROJ_DIR)/libc_nano_stubs.c \
   $(PROJ_DIR)/hal/hal_spi_bus.c \
   $(PROJ_DIR)/hal/hal_spi_flash.c \
@@ -552,6 +554,7 @@ INC_FOLDERS += \
   $(PROJ_DIR)/mui/view \
   $(PROJ_DIR)/core \
   $(PROJ_DIR)/ntag \
+  $(PROJ_DIR)/debug \
   $(PROJ_DIR)/mod \
   $(PROJ_DIR)/mod/vfs \
   $(PROJ_DIR)/mod/ble \

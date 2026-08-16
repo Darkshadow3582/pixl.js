@@ -131,6 +131,12 @@ SECTIONS
 
 INCLUDE "nrf_common.ld"
 
+/* Crash debug facility: stack bounds as plain linker symbols (the SDK's
+ * __StackLimit/__StackTop names collide with CMSIS declarations). The crash
+ * log itself lives in the .noinit region. */
+PROVIDE(crash_stack_limit = __StackLimit);
+PROVIDE(crash_stack_top = __StackTop);
+
 /* Linker script to configure memory regions. */
 
 SECTIONS

@@ -57,6 +57,7 @@
 #include "nrf_log_ctrl.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "app_button.h"
 #include "app_timer.h"
@@ -98,6 +99,8 @@
 #include "i18n/language.h"
 #include "settings.h"
 
+#include "crash_log.h"
+
 #define APP_SCHED_MAX_EVENT_SIZE 4 /**< Maximum size of scheduler events. */
 #define APP_SCHED_QUEUE_SIZE 16    /**< Maximum number of events in the scheduler queue. */
 
@@ -109,6 +112,66 @@
 int8_t g_usb_led_marquee_enable = 0; /** dummy for chameleon */
 
 // #define SPI_FLASH
+
+/*
+ * Render multi-line ASCII text on the u8g2 buffer (like mui_panic, but
+ * standalone so it can be used from the boot path). Only used to display
+ * the crash report.
+ */
+static void crash_screen_draw(u8g2_t *p_u8g2, const char *text) {
+    u8g2_ClearBuffer(p_u8g2);
+    u8g2_SetFont(p_u8g2, u8g2_font_wqy12_t_gb2312a);
+    u8g2_DrawBox(p_u8g2, 0, 0, 128, 12);
+    u8g2_SetDrawColor(p_u8g2, 0);
+    u8g2_DrawUTF8(p_u8g2, 20, 10, "!!! CRASH !!!");
+    u8g2_SetDrawColor(p_u8g2, 1);
+
+    uint8_t x = 0;
+    uint8_t y = 24;
+    uint8_t m = u8g2_GetMaxCharWidth(p_u8g2);
+    uint32_t i = 0;
+    while (text[i] != 0 && y < 64) {
+        if (text[i] == '\n') {
+            x = 0;
+            y += 12;
+            i++;
+            continue;
+        }
+        uint8_t w = u8g2_DrawGlyph(p_u8g2, x, y, text[i]);
+        x += w;
+        if (x > 128 - m) {
+            x = 0;
+            y += 12;
+        }
+        i++;
+    }
+    u8g2_SendBuffer(p_u8g2);
+}
+
+/*
+ * Show the crash report left by the previous session: draws it on screen
+ * for CRASH_SCREEN_HOLD_MS, then clears the pending flag.
+ */
+static void crash_screen_show(mui_t *p_mui) {
+    crash_log_t *log = crash_log_get();
+    char buf[160];
+
+    snprintf(buf, sizeof(buf), "TYPE=%s\nPC=0x%08X\nLR=0x%08X\nFAULT=0x%08X\nRESET=%s\nSTACK=%uB\nUP=%us #%u",
+             crash_log_fault_name(log->fault_id),
+             (unsigned)log->pc, (unsigned)log->lr, (unsigned)log->cfsr,
+             crash_log_reset_reason_str(log->boot_reset_reason),
+             (unsigned)log->stack_usage, (unsigned)log->uptime_s,
+             (unsigned)log->seq);
+
+    crash_screen_draw(&p_mui->u8g2, buf);
+
+    /* hold the screen for a while */
+    for (uint32_t i = 0; i < 60; i++) { /* 60 x 100ms = 6s */
+        nrf_delay_ms(100);
+    }
+
+    crash_log_clear();
+}
 
 /**
  *@brief Function for initializing logging.
@@ -153,6 +216,8 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event) {
     case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
 
         NRF_LOG_DEBUG("go sleep");
+
+
 
         mini_app_launcher_sleep(mini_app_launcher());
 
@@ -235,6 +300,9 @@ static uint32_t check_wakeup_src(void) {
 int main(void) {
     ret_code_t err_code;
 
+    // Crash debug facility: must run before RESETREAS is consumed.
+    bool crash_pending = crash_log_init();
+
     log_init();
 
     APP_SCHED_INIT(APP_SCHED_MAX_EVENT_SIZE, APP_SCHED_QUEUE_SIZE);
@@ -292,16 +360,30 @@ int main(void) {
     mui_t *p_mui = mui();
     mui_init(p_mui);
 
+    if (crash_pending) {
+        // Previous session crashed: clear stale NFC cache, then show the
+        // crash report on screen before continuing to the normal UI.
+        cache_clean();
+        crash_screen_show(p_mui);
+    }
+
     mini_app_launcher_t *p_launcher = mini_app_launcher();
     mini_app_launcher_init(p_launcher, wakeup_reason);
 
     NRF_LOG_FLUSH();
 
+    uint32_t loop_cnt = 0;
     while (1) {
 
         app_sched_execute();
         mui_tick(p_mui);
         NRF_LOG_FLUSH();
+
+        // Track peak stack usage (~every 256 loop iterations).
+        if ((loop_cnt++ & 0xFF) == 0) {
+            crash_log_stack_check();
+        }
+
         nrf_pwr_mgmt_run();
     }
 }

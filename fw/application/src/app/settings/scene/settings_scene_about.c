@@ -7,6 +7,8 @@
 #include "utils2.h"
 #include "version2.h"
 #include "mui_icons.h"
+#include "crash_log.h"
+#include <stdio.h>
 
 
 static void settings_scene_about_list_view_on_selected(mui_list_view_event_t event, mui_list_view_t *p_list_view,
@@ -24,6 +26,21 @@ void settings_scene_about_on_enter(void *user_data) {
     mui_list_view_add_item(app->p_list_view, ICON_FILE, _T(APP_SET_ABOUT_OPEN_SOURCE_PROJECT), NULL_USER_DATA);
     mui_list_view_add_item(app->p_list_view, ICON_FILE, _T(APP_SET_ABOUT_LGPL_LICENSE), NULL_USER_DATA);
     mui_list_view_add_item(app->p_list_view, ICON_FILE, "github.com/solosky/pixl.js", NULL_USER_DATA);
+
+    // Crash / reset diagnostics (see src/debug/crash_log.c)
+    char diag[48];
+    crash_log_t *log = crash_log_get();
+    if (log->seq > 0) {
+        snprintf(diag, sizeof(diag), "Crash count: %u", (unsigned)log->seq);
+        mui_list_view_add_item(app->p_list_view, ICON_FILE, diag, NULL_USER_DATA);
+    }
+    if (log->boot_reset_reason != 0) {
+        snprintf(diag, sizeof(diag), "Last reset: %s (0x%X)",
+                 crash_log_reset_reason_str(log->boot_reset_reason),
+                 (unsigned)log->boot_reset_reason);
+        mui_list_view_add_item(app->p_list_view, ICON_FILE, diag, NULL_USER_DATA);
+    }
+
     mui_list_view_add_item(app->p_list_view, ICON_BACK, getLangString(_L_BACK), NULL_USER_DATA);
 
     mui_list_view_set_selected_cb(app->p_list_view, settings_scene_about_list_view_on_selected);
