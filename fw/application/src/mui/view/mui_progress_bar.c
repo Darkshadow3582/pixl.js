@@ -17,7 +17,7 @@ static void mui_progress_bar_on_draw(mui_view_t *p_view, mui_canvas_t *p_canvas)
     float percent =
         p_mui_progress_bar->current_value / (float)(p_mui_progress_bar->max_value - p_mui_progress_bar->min_value);
     mui_canvas_draw_rframe(p_canvas, 0, (canvas_height - font_height) / 2, canvas_width, font_height, 1);
-    mui_canvas_draw_box(p_canvas, 1, (canvas_height - font_height) / 2, ceil((canvas_width - 2) * percent),
+    mui_canvas_draw_box(p_canvas, 1, (canvas_height - font_height) / 2, ceilf((canvas_width - 2) * percent),
                         font_height);
 
     char txt[32];
