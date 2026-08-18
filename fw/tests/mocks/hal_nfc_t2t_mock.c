@@ -9,7 +9,7 @@
 static hal_nfc_callback_t s_callback = NULL;
 static void *s_callback_context = NULL;
 
-uint8_t hal_mock_last_tx[128];
+uint8_t hal_mock_last_tx[512];
 size_t hal_mock_last_tx_len = 0;
 int hal_mock_tx_count = 0;
 uint8_t hal_mock_last_ack_nack = 0;

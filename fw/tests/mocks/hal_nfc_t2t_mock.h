@@ -7,7 +7,7 @@
 #include "hal_nfc_t2t.h"
 
 /* captured state, readable from tests */
-extern uint8_t hal_mock_last_tx[128];
+extern uint8_t hal_mock_last_tx[512];
 extern size_t hal_mock_last_tx_len;
 extern int hal_mock_tx_count;
 extern uint8_t hal_mock_last_ack_nack;

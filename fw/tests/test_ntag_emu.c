@@ -254,6 +254,164 @@ static void test_set_tag_resets_state(void) {
     TF_CHECK_MEM(hal_mock_last_tx, ntag_emu_get_current_tag()->data, 16);
 }
 
+/* ---- boundary guard tests (PR #428: prevent sequential scan freeze) ---- */
+
+static void test_zero_length_frame(void) {
+    TF_CASE("empty NFC frame is NAKed");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    hal_mock_fire_event(HAL_NFC_EVENT_COMMAND, NULL, 0);
+    TF_CHECK_EQ(hal_mock_ack_nack_count, 1);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_read_boundary(void) {
+    TF_CASE("READ at the last valid block works, one past it is NAKed");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    // block 131: offset 524 == 540 - 16, still readable
+    uint8_t ok[] = {0x30, 131};
+    hal_mock_send_command(ok, sizeof(ok));
+    TF_CHECK_EQ(hal_mock_last_tx_len, 16);
+    TF_CHECK_MEM(hal_mock_last_tx, &ntag_emu_get_current_tag()->data[131 * 4], 16);
+
+    // block 132 would read past the buffer
+    hal_mock_reset();
+    uint8_t bad[] = {0x30, 132};
+    hal_mock_send_command(bad, sizeof(bad));
+    TF_CHECK_EQ(hal_mock_tx_count, 0);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // truncated READ frame (command only)
+    hal_mock_reset();
+    uint8_t trunc[] = {0x30};
+    hal_mock_send_command(trunc, sizeof(trunc));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_write_boundary(void) {
+    TF_CASE("WRITE at the last valid page works, out of range is NAKed");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    // block 131: offset 524, well within 540 - 4
+    uint8_t ok[] = {0xA2, 131, 0xDE, 0xAD, 0xBE, 0xEF};
+    hal_mock_send_command(ok, sizeof(ok));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0xA);
+    TF_CHECK_MEM(&ntag_emu_get_current_tag()->data[131 * 4], ok + 2, 4);
+
+    // block 135 writes past the buffer
+    hal_mock_reset();
+    uint8_t bad[] = {0xA2, 135, 0xDE, 0xAD, 0xBE, 0xEF};
+    hal_mock_send_command(bad, sizeof(bad));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // N2 write with truncated frame (needs 7 bytes)
+    hal_mock_reset();
+    uint8_t n2_short[] = {0xA5, 0x10, 0x01, 0xDE, 0xAD, 0xBE};
+    hal_mock_send_command(n2_short, sizeof(n2_short));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_fast_read_boundary(void) {
+    TF_CASE("FAST_READ rejects inverted/oversized/out-of-range spans");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    // max span that still fits the 255-byte NFC buffer: pages 0..62 (252 bytes)
+    uint8_t ok[] = {0x3A, 0x00, 62};
+    hal_mock_send_command(ok, sizeof(ok));
+    TF_CHECK_EQ(hal_mock_last_tx_len, 252);
+    TF_CHECK_MEM(hal_mock_last_tx, ntag_emu_get_current_tag()->data, 252);
+
+    // end page before start page
+    hal_mock_reset();
+    uint8_t inverted[] = {0x3A, 0x10, 0x01};
+    hal_mock_send_command(inverted, sizeof(inverted));
+    TF_CHECK_EQ(hal_mock_tx_count, 0);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // span larger than the 255-byte NFC buffer (64+ pages)
+    hal_mock_reset();
+    uint8_t oversized[] = {0x3A, 0x00, 64};
+    hal_mock_send_command(oversized, sizeof(oversized));
+    TF_CHECK_EQ(hal_mock_tx_count, 0);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // range past the end of the tag data
+    hal_mock_reset();
+    uint8_t past_end[] = {0x3A, 0x80, 0xFF};
+    hal_mock_send_command(past_end, sizeof(past_end));
+    TF_CHECK_EQ(hal_mock_tx_count, 0);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // truncated frame
+    hal_mock_reset();
+    uint8_t trunc[] = {0x3A, 0x00};
+    hal_mock_send_command(trunc, sizeof(trunc));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_pwd_auth_truncated(void) {
+    TF_CASE("PWD_AUTH with truncated frame is NAKed");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    uint8_t trunc[] = {0x1B, 0x11, 0x22};
+    hal_mock_send_command(trunc, sizeof(trunc));
+    TF_CHECK_EQ(hal_mock_tx_count, 0);
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_fast_write_boundary(void) {
+    TF_CASE("N2 FAST_WRITE respects buffer bounds");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    // valid: write 4 bytes at block 134 (offset 536, 540-536=4 left)
+    uint8_t ok[] = {0xAE, 134, 0x00, 4, 0xDE, 0xAD, 0xBE, 0xEF};
+    hal_mock_send_command(ok, sizeof(ok));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0xA);
+    TF_CHECK_MEM(&ntag_emu_get_current_tag()->data[134 * 4], ok + 4, 4);
+
+    // out of range: 4 bytes at block 135
+    hal_mock_reset();
+    uint8_t bad[] = {0xAE, 135, 0x00, 4, 0xDE, 0xAD, 0xBE, 0xEF};
+    hal_mock_send_command(bad, sizeof(bad));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // datasize larger than the frame actually carries
+    hal_mock_reset();
+    uint8_t short_frame[] = {0xAE, 0x10, 0x00, 8, 0xDE, 0xAD, 0xBE, 0xEF};
+    hal_mock_send_command(short_frame, sizeof(short_frame));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+}
+
+static void test_nfc_fast_write_truncated(void) {
+    TF_CASE("NFC FAST_WRITE with truncated frame is NAKed");
+    hal_mock_reset();
+    ntag_t tag = make_tag(NTAG_215);
+    ntag_emu_init(&tag);
+
+    uint8_t trunc[] = {0xA6, 0xF0};
+    hal_mock_send_command(trunc, sizeof(trunc));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0x0);
+
+    // well-formed fast write is ACKed (data ignored by design)
+    hal_mock_reset();
+    uint8_t ok[] = {0xA6, 0xF0, 0x0F, 0xDE, 0xAD};
+    hal_mock_send_command(ok, sizeof(ok));
+    TF_CHECK_EQ(hal_mock_last_ack_nack, 0xA);
+}
+
 int main(void) {
     test_init_sets_nfcid1();
     test_read_command();
@@ -268,5 +426,13 @@ int main(void) {
     test_sector_select();
     test_field_off_events();
     test_set_tag_resets_state();
+
+    test_zero_length_frame();
+    test_read_boundary();
+    test_write_boundary();
+    test_fast_read_boundary();
+    test_pwd_auth_truncated();
+    test_fast_write_boundary();
+    test_nfc_fast_write_truncated();
     TF_MAIN_END();
 }
