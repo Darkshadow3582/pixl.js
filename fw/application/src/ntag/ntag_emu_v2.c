@@ -170,7 +170,7 @@ static void nfc_received_process(const uint8_t *p_data, size_t data_length, uint
         break;
     case N2_CMD_FAST_READ: // TODO
         NRF_LOG_INFO("N2E Fast Read slot %d:", p_data[3]);
-    case NFC_CMD_FAST_READ:
+    case NFC_CMD_FAST_READ:;
         int start_page = block_num + (ntag_emu.sector * 256);
         int end_page = p_data[2] + (ntag_emu.sector * 256);
         int page_count = end_page - start_page + 1;
