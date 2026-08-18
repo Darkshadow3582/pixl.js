@@ -31,7 +31,7 @@ SRC_HELPER     := $(APP_SRC)/amiibo_helper.c $(SRC_NTAG_STORE) $(SRC_AMIITOOL)
 MOCKS_COMMON := $(MOCK_DIR)/utils2_stub.c $(MOCK_DIR)/vfs_stub.c
 MOCK_CRYPTO  := $(MOCK_DIR)/nrf_crypto_mock.c
 
-TEST_BINS := $(addprefix $(BUILD)/,test_ntag_store test_ntag_emu test_vfs_meta test_amiitool test_amiibo_helper)
+TEST_BINS := $(addprefix $(BUILD)/,test_ntag_store test_ntag_emu test_vfs_meta test_amiitool test_amiibo_helper test_switch_read)
 
 all: $(TEST_BINS)
 
@@ -58,6 +58,11 @@ OBJS_VFS_META := $(BUILD)/test_vfs_meta.o $(BUILD)/vfs_meta.o
 OBJS_AMIITOOL := $(BUILD)/test_amiitool.o $(BUILD)/amiibo.o $(BUILD)/keygen.o $(BUILD)/drbg.o \
                  $(BUILD)/nrf_crypto_mock.o
 
+OBJS_SWITCH := $(BUILD)/test_switch_read.o $(BUILD)/amiibo_helper.o $(BUILD)/ntag_store.o \
+               $(BUILD)/ntag_emu_v2.o $(BUILD)/hal_nfc_t2t_mock.o $(BUILD)/app_scheduler_mock.o \
+               $(BUILD)/amiibo.o $(BUILD)/keygen.o $(BUILD)/drbg.o $(BUILD)/nrf_crypto_mock.o \
+               $(BUILD)/utils2_stub.o $(BUILD)/vfs_stub.o $(BUILD)/db_stub.o
+
 OBJS_HELPER := $(BUILD)/test_amiibo_helper.o $(BUILD)/amiibo_helper.o $(BUILD)/ntag_store.o \
                $(BUILD)/amiibo.o $(BUILD)/keygen.o $(BUILD)/drbg.o $(BUILD)/nrf_crypto_mock.o \
                $(BUILD)/utils2_stub.o $(BUILD)/vfs_stub.o $(BUILD)/db_stub.o
@@ -75,6 +80,9 @@ $(BUILD)/test_amiitool: $(OBJS_AMIITOOL)
 	$(CC) $(CFLAGS) -o $@ $^ $(OPENSSL)
 
 $(BUILD)/test_amiibo_helper: $(OBJS_HELPER)
+	$(CC) $(CFLAGS) -o $@ $^ $(OPENSSL)
+
+$(BUILD)/test_switch_read: $(OBJS_SWITCH)
 	$(CC) $(CFLAGS) -o $@ $^ $(OPENSSL)
 
 $(BUILD)/%.o: %.c | $(BUILD)

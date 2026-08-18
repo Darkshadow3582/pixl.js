@@ -23,6 +23,7 @@ macOS 自带环境通常可直接运行；Ubuntu 需要 `libssl-dev`。
 | test_vfs_meta | `src/mod/vfs/vfs_meta.c` | 元数据编码/解码往返 |
 | test_amiitool | `components/amiitool` | DRBG 确定性、keygen、密钥加载校验、amiibo 加解密 pack/unpack 往返、篡改检测 |
 | test_amiibo_helper | `src/amiibo_helper.c` | CRC16-MCRF4XX、UUID/密码替换规则、amiibo 生成与重签 |
+| test_switch_read | `ntag_emu_v2.c` + `amiibo_helper.c` | 重放主机读取 amiibo 的 NFC 命令序列（GET_VERSION → READ page3 → PWD_AUTH(UID 派生密码) → FAST_READ 三段 0-59/60-119/120-134），并验证全标签顺序扫描 |
 
 ## 结构
 
