@@ -622,9 +622,10 @@ OPT = -Os -ffunction-sections -fdata-sections
 endif
 # Enable link time optimization for release builds: cross-TU inlining,
 # dead code elimination and string constant merging save a lot of flash.
-ifeq ($(RELEASE), 1)
-OPT += -flto
-endif
+# LTO is not feasible to enable in this projects because lots of sections callback registration like .sdh_ble_observers
+# ifeq ($(RELEASE), 1)
+# OPT += -flto
+# endif
 
 # C flags common to all targets
 CFLAGS += $(OPT)
@@ -640,7 +641,7 @@ CFLAGS += -DNRF52_PAN_74
 CFLAGS += -DNRF_SD_BLE_API_VERSION=7
 CFLAGS += -DS112
 CFLAGS += -DSOFTDEVICE_PRESENT
-CFLAGS += -DLV_LVGL_H_INCLUDE_SIMPLE 
+CFLAGS += -DLV_LVGL_H_INCLUDE_SIMPLE
 CFLAGS += -DBOARD_$(BOARD)
 ifneq ($(RELEASE), 1)
 CFLAGS += -DDEBUG
@@ -763,7 +764,7 @@ version:
 settingsgen:
 	nrfutil settings generate --family NRF52 --application $(OUTPUT_DIRECTORY)/pixljs.hex --application-version $(APP_VERSION) --bootloader-version 1 --bl-settings-version 1 $(OUTPUT_DIRECTORY)/settings.hex
 
-ota: 
+ota:
 	nrfutil pkg generate --application $(OUTPUT_DIRECTORY)/pixljs.hex --application-version $(APP_VERSION) --hw-version 52 --sd-req 0x0103 --key-file ../bootloader/priv.pem $(OUTPUT_DIRECTORY)/pixjs_ota_v$(APP_VERSION).zip
 
 full: settingsgen
