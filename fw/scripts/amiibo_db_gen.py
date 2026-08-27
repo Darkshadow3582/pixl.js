@@ -35,6 +35,22 @@ def get_prorject_directory():
     return os.path.abspath(os.path.dirname(__file__)+"/../")
 
 
+def fetch_amiibo_from_api():
+    try:
+        conn = urlopen("https://www.amiiboapi.com/api/amiibo/", timeout=5000)
+        body = json.loads(conn.read())
+        amiibos = list()
+        for ami in body["amiibo"]: 
+            amiibo = Amiibo()
+            amiibo.id = ami["head"] + ami["tail"]
+            amiibo.name_en = ami["name"]
+            amiibo.game_series = ami["gameSeries"]
+            amiibos.append(amiibo)
+        return amiibos
+    except Exception as e:
+        print("Error: %s" % e)
+        return list()   
+
 
 def read_amiibo_from_csv():
     csv_file = get_prorject_directory() + "/data/amiidb_amiibo.csv"
