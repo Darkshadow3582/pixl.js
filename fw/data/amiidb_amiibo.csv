@@ -26,10 +26,13 @@
 0100000004180902,Link - Tears of the Kingdom,林克 - 王国之泪
 35080000040f1802,Magnamalo,怨虎龙
 3509000004101802,Palico,随从艾露猫
-35090100042b1802,Palico,随从艾露猫
+35090100042b1802,Palico Malzeno,随从艾露猫
 350a000004111802,Palamute,随从牙猎犬
-350a0100042c1802,Palamute,随从牙猎犬
+350a0100042c1802,Palamute Malzeno,随从牙猎犬
 350b0000042d1802,Malzeno,爵银龙
+350c000004fa0f02,Ratha, 
+350d000004fb0f02,Ratha V, 
+350e000004fc0f02,Rudy, 
 3500010002e10f02,One-Eyed Rathalos and Rider - Male,独眼雄火龙与男骑士
 3500020002e20f02,One-Eyed Rathalos and Rider - Female,独眼雄火龙与女骑士
 3501000002e30f02,Nabiru,纳比露
@@ -54,6 +57,11 @@
 0015000003670102,Goomba,板栗仔
 0023000003680102,Koopa Troopa,诺库龟
 0000000000340102,Mario,马力欧
+0000050004e90102,Mario and Luma, 
+0004100004ea0102,Rosalina and Lumas, 
+0004000004c10102,Elephant Mario, 
+000a010004c20102,Captain Toad & Talking Flower, 
+0025010004c30102,Poplin & Prince Florian, 
 0007000002630102,Wario,瓦力欧
 21000000000b0002,Marth,马尔斯
 2101000000180002,Ike,艾克
@@ -119,21 +127,24 @@
 0800030000400402,Inkling Squid,鱿鱼族鱿鱼形态
 0800030002610402,Inkling Squid - Orange,鱿鱼族鱿鱼形态 - 橙色
 08000300036b0402,Inkling Squid - Neon Purple,鱿鱼族鱿鱼形态 - 霓虹紫
-08010000025d0402,Callie,小拟
-08020000025e0402,Marie,小萤
-0803000003760402,Pearl,小姬
+08010000025d0402,Mar,小拟
+08020000025e0402,Tina,小萤
+0803000003760402,Perla,小姬
 0804000003770402,Marina,饭田
 08050100038e0402,Octoling Girl,章鱼族女孩
 08050200038f0402,Octoling Boy,章鱼族男孩
 08050200041b0402,Octoling - Blue,章鱼族 - 蓝色
 0805030003900402,Octoling Octopus,章鱼族章鱼形态
-0807000004330402,Shiver,莎莎
-0808000004340402,Frye,曼曼
-0809000004350402,Big Man,鬼福
+0807000004330402,Megan,莎莎
+0808000004340402,Angie,曼曼
+0809000004350402,Rayan,鬼福
+0807000004f70402,Megan Riders,莎莎
+0808000004f80402,Angie Riders,曼曼
+0809000004f90402,Rayan Riders,鬼福
 08060100041c0402,Smallfry,小鲑鱼
-0801000004360402,Callie - Alterna,小拟 - 幻界
-0802000004370402,Marie - Alterna,小萤 - 幻界
-0803000004380402,Pearl - Side Order,小姬 - 秩序篇
+0801000004360402,Mar - Alterna,小拟 - 幻界
+0802000004370402,Tina - Alterna,小萤 - 幻界
+0803000004380402,Perla - Side Order,小姬 - 秩序篇
 0804000004390402,Marina - Side Order,饭田 - 秩序篇
 00240000038d0002,Piranha Plant,吞食花
 00c00000037b0002,King K. Rool,库鲁鲁王
@@ -883,7 +894,7 @@
 34c3000004ac1d02,Jamie,杰米
 34c4000004ae1d02,Kimberly,金伯莉
 00080100042f1a02,Donkey Kong and Pauline,咚奇刚与宝莉
-05c00000043b1302,Samus,萨姆斯
+05c00000043b1302,Samus MP4,萨姆斯
 05c00000043a1302,Samus & Vi-O-La,萨姆斯&薇奥拉
 0001000404401c02,Luigi - My Mario Wooden Blocks,
 0003000404421c02,Yoshi - My Mario Wooden Blocks,
