@@ -1,3 +1,4 @@
+#!/usb/bin/env python3
 # download latest amiibo data and merge to amiibo_data.csv
 
 
