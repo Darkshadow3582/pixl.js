@@ -92,7 +92,6 @@
 0580000000050002,Fox,火狐
 3480000000310002,Mega Man,洛克人
 3200000000300002,Sonic,索尼克
-08000100025f0402,Inkling Girl - Lime Green,鱿鱼族女孩 - 青柠绿
 0600000000120002,Captain Falcon,飞隼队长
 0008000000030002,Donkey Kong,咚奇刚
 1f000000000a0002,Kirby,卡比
@@ -117,24 +116,25 @@
 0002000000360102,Peach,碧姬公主
 00800102035d0302,Poochy,波奇
 22400000002b0002,Shulk,修尔克
-08000100003e0402,Inkling Girl - SP1,鱿鱼族女孩
-0800010003690402,Inkling Girl - SP2,鱿鱼族女孩 - 霓虹粉
 0800010003820002,Inkling - Smash,鱿鱼族
-0800010004150402,Inkling - SP3,鱿鱼族 - 黄色
+08000100003e0402,Inkling Girl - SP1,鱿鱼族女孩
+08000100025f0402,Inkling Girl - Lime Green SP1,鱿鱼族女孩 - 青柠绿
 08000200003f0402,Inkling Boy - SP1,鱿鱼族男孩
 0800020002600402,Inkling Boy - Purple SP1,鱿鱼族男孩 - 紫色
-08000200036a0402,Inkling Boy - Neon Green SP1,鱿鱼族男孩 - 霓虹绿
 0800030000400402,Inkling Squid - Green SP1,鱿鱼族鱿鱼形态
 0800030002610402,Inkling Squid - Orange SP1,鱿鱼族鱿鱼形态 - 橙色
+0800010003690402,Inkling Girl - Neon Pink SP2,鱿鱼族女孩 - 霓虹粉
+08000200036a0402,Inkling Boy - Neon Green SP2,鱿鱼族男孩 - 霓虹绿
 08000300036b0402,Inkling Squid - Neon Purple SP2,鱿鱼族鱿鱼形态 - 霓虹紫
+08050100038e0402,Octoling Girl SP2,章鱼族女孩
+08050200038f0402,Octoling Boy SP2,章鱼族男孩
+0805030003900402,Octoling Octopus SP2,章鱼族章鱼形态
+0800010004150402,Inkling - SP3,鱿鱼族 - 黄色
+08050200041b0402,Octoling - Blue SP3,章鱼族 - 蓝色
 08010000025d0402,Mar,小拟
 08020000025e0402,Tina,小萤
 0803000003760402,Perla,小姬
 0804000003770402,Marina,饭田
-08050100038e0402,Octoling Girl SP2,章鱼族女孩
-08050200038f0402,Octoling Boy SP2,章鱼族男孩
-08050200041b0402,Octoling - Blue SP3,章鱼族 - 蓝色
-0805030003900402,Octoling Octopus SP2,章鱼族章鱼形态
 0807000004330402,Megan,莎莎
 0808000004340402,Angie,曼曼
 0809000004350402,Rayan,鬼福
